@@ -9,6 +9,6 @@ namespace GroupMeClientAvalonia.ViewModels
     {
         public string Greeting => "Welcome to Avalonia!";
 
-        public ChatsViewModel ChatsView { get; set; } = new ChatsViewModel();
+        public GroupMeClientAvalonia.Views.Controls.InlineReadSentMarkerControl ChatsView { get; set; } = new Views.Controls.InlineReadSentMarkerControl();
     }
 }

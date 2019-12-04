@@ -16,6 +16,20 @@
   </ItemGroup>
 
   <ItemGroup>
+    <AvaloniaResource Remove="Views\Controls\AvatarControl.xaml" />
+    <AvaloniaResource Remove="Views\Controls\InlineReadSentMarkerControl.xaml" />
+    <AvaloniaResource Remove="Views\Controls\InlineTimestampControl.xaml" />
+    <AvaloniaResource Remove="Views\Controls\MultiLikeControl.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Views\Controls\AvatarControl.xaml" />
+    <None Remove="Views\Controls\InlineReadSentMarkerControl.xaml" />
+    <None Remove="Views\Controls\InlineTimestampControl.xaml" />
+    <None Remove="Views\Controls\MultiLikeControl.xaml" />
+  </ItemGroup>
+  
+  <ItemGroup>
     <PackageReference Include="Avalonia" Version="0.8.3" />
     <PackageReference Include="Avalonia.Desktop" Version="0.8.3" />
     <PackageReference Include="Avalonia.ReactiveUI" Version="0.8.3" />
@@ -27,19 +41,28 @@
   </ItemGroup>
   
   <ItemGroup>
-    <Folder Include="Converters\" />
-  </ItemGroup>
-  
-  <ItemGroup>
-    <Compile Update="Views\ChatsView.xaml.cs">
-      <DependentUpon>%(Filename)</DependentUpon>
-    </Compile>
-  </ItemGroup>
-  
-  <ItemGroup>
-    <None Update="Views\ChatsView.xaml">
+    <EmbeddedResource Include="Views\Controls\AvatarControl.xaml">
       <Generator>MSBuild:Compile</Generator>
-    </None>
+    </EmbeddedResource>
   </ItemGroup>
-
+  
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Controls\InlineReadSentMarkerControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Controls\InlineTimestampControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Controls\MultiLikeControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  
+ 
 </Project>
