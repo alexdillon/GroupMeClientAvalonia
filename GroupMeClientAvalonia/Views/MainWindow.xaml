@@ -13,8 +13,6 @@
     </Design.DataContext>
 
   <Grid>
-    <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-
-    <UserControl Content="{Binding ChatsView}" BorderBrush="Red" BorderThickness="10" />  
+    <UserControl Content="{Binding ChatsViewModel}" BorderBrush="Red" BorderThickness="10" />  
   </Grid>
 </Window>

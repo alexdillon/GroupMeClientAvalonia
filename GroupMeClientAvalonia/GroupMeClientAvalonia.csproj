@@ -33,6 +33,13 @@
     <PackageReference Include="Avalonia" Version="0.8.3" />
     <PackageReference Include="Avalonia.Desktop" Version="0.8.3" />
     <PackageReference Include="Avalonia.ReactiveUI" Version="0.8.3" />
+    <PackageReference Include="DynamicData" Version="6.13.21" />
+    <PackageReference Include="GitInfo" Version="2.0.21">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="GroupMeClientPlugin" Version="1.0.4" />
+    <PackageReference Include="MessageBox.Avalonia" Version="0.8.3" />
     <PackageReference Include="MvvmLightLibsStd10" Version="5.4.1.1" />
     <PackageReference Include="NuGet.CommandLine" Version="5.3.1">
       <PrivateAssets>all</PrivateAssets>
@@ -62,6 +69,10 @@
     <EmbeddedResource Include="Views\Controls\MultiLikeControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
+  </ItemGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Desktop\GroupMeClient\GroupMeClientApi\GroupMeClientApi.csproj" />
   </ItemGroup>
   
  

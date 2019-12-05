@@ -6,8 +6,160 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="GroupMeClientAvalonia.Views.ChatsView">
 
-    <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+  <!--<UserControl.Resources>
+    <ResourceDictionary>
+      <BooleanToVisibilityConverter x:Key="boolToVisibilityConverter" />
 
-   
+      --><!--<Style TargetType="{x:Type ToggleButton}"
+             BasedOn="{StaticResource MahApps.Metro.Styles.MetroButton}"
+             x:Key="FlatButtonNoCaps">
+        <Setter Property="Controls:ButtonHelper.PreserveTextCase" Value="True"/>
+      </Style>--><!--
+    </ResourceDictionary>
+  </UserControl.Resources>-->
+
+  <Grid>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition>
+        <!--<ColumnDefinition.Style>
+          <Style TargetType="{x:Type ColumnDefinition}">
+            <Setter Property="Width" Value="350" />
+            <Style.Triggers>
+              <DataTrigger Binding="{Binding IsChecked, ElementName=toggleMiniSidebar}" Value="True">
+                <Setter Property="Width" Value="100" />
+              </DataTrigger>
+            </Style.Triggers>
+          </Style>
+        </ColumnDefinition.Style>-->
+      </ColumnDefinition>
+      <ColumnDefinition Width="*" />
+    </Grid.ColumnDefinitions>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="*" />
+    </Grid.RowDefinitions>
+
+    <!--Chats Header-->
+    <Grid Grid.Column="0" Grid.Row="0" >
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*" />
+      </Grid.ColumnDefinitions>
+      <Grid.RowDefinitions>
+        <RowDefinition/>
+        <RowDefinition Height="*" />
+      </Grid.RowDefinitions>
+
+      <Grid Grid.Row="0" Background="White">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition />
+          <ColumnDefinition Width="*" />
+          <ColumnDefinition />
+          <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+          <RowDefinition Height="55"/>
+        </Grid.RowDefinitions>
+
+        <ToggleButton Grid.Column="0"
+                      IsChecked="{Binding MiniBarModeEnabled, Mode=TwoWay}"
+                      HorizontalAlignment="Left" VerticalAlignment="Center"
+                      Margin="15,0,0,0"
+                      FontSize="17" FontWeight="SemiBold"
+                      BorderThickness="0"
+                      Background="White"
+                      Focusable="False"
+                      Content="Chats"
+                      x:Name="toggleMiniSidebar" />
+
+        <!--Controls:TextBoxHelper.Watermark="Search..."-->
+        <TextBox Grid.Column="1"
+                 IsVisible="{Binding IsChecked, ElementName=toggleSearchBox}"
+                 AcceptsReturn="False"
+                 Height="35"
+                 Margin="10,0,0,0"
+                 BorderThickness="0"
+                 Text="{Binding GroupChatFilter, Mode=TwoWay}"
+                 x:Name="searchTextBox"/>
+
+        <!--extensions:EventFocusAttachment.ElementToFocus="{Binding ElementName=searchTextBox}"-->
+        <ToggleButton Grid.Column="2"
+                      Width="35" Height="35"
+                      BorderThickness="0"
+                      HorizontalAlignment="Left"
+                      x:Name="toggleSearchBox"
+                      Command="{Binding SearchToggled}"
+                      CommandParameter="{Binding Path=IsChecked, RelativeSource={RelativeSource Self}}">
+          <ToggleButton.ContentTemplate>
+            <DataTemplate>
+              <!--<iconPacks:PackIconMaterial Width="15" Height="15" Foreground="#637182" Kind="Magnify"/>-->
+            </DataTemplate>
+          </ToggleButton.ContentTemplate>
+        </ToggleButton>
+
+        <Button Grid.Column="3"
+                Width="35" Height="35"
+                BorderThickness="0"
+                Foreground="#637182"
+                Margin="5,0,0,0"
+                Command="{Binding Path=MarkAllAsRead}"
+                CommandParameter="{Binding Path=.}">
+
+          <Button.ContentTemplate>
+            <DataTemplate>
+              <!--<iconPacks:PackIconEntypo Width="15" Height="15" Foreground="#637182" Kind="Unread"/>-->
+            </DataTemplate>
+          </Button.ContentTemplate>
+        </Button>
+
+        <Border Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="0" BorderBrush="#637182" BorderThickness="0,0,0,1" Margin="0,0,15,0"/>
+      </Grid>
+
+      <!--All Groups and Chats List-->
+      <ScrollViewer Grid.Row="1"
+                    VerticalScrollBarVisibility="Visible"
+                    VerticalAlignment="Stretch">
+        <ItemsControl Items="{Binding SortedFilteredGroupChats}">
+          <ItemsControl.ItemsPanel>
+            <ItemsPanelTemplate>
+              <StackPanel>
+                <!--<i:Interaction.Behaviors>
+                  <ic:FluidMoveBehavior AppliesTo="Children" Duration="0:0:00.5" Tag="DataContext">
+                    <ic:FluidMoveBehavior.EaseX>
+                      <BackEase EasingMode="EaseInOut" Amplitude="0.5"/>
+                    </ic:FluidMoveBehavior.EaseX>
+                    <ic:FluidMoveBehavior.EaseY>
+                      <BackEase EasingMode="EaseInOut" Amplitude="0.5"/>
+                    </ic:FluidMoveBehavior.EaseY>
+                  </ic:FluidMoveBehavior>
+                </i:Interaction.Behaviors>-->
+              </StackPanel>
+            </ItemsPanelTemplate>
+          </ItemsControl.ItemsPanel>
+
+          <ItemsControl.ItemTemplate>
+            <DataTemplate>
+              <ContentControl Content="{Binding Path=.}"/>
+            </DataTemplate>
+          </ItemsControl.ItemTemplate>
+        </ItemsControl>
+      </ScrollViewer>
+    </Grid>
+
+    <!--Opened Groups and Chats-->
+    <ItemsControl Items="{Binding Path=ActiveGroupsChats}" Grid.Column="1" Grid.Row="0">
+      <ItemsControl.ItemsPanel>
+        <ItemsPanelTemplate>
+          <UniformGrid Rows="1" />
+        </ItemsPanelTemplate>
+      </ItemsControl.ItemsPanel>
+
+      <ItemsControl.ItemTemplate>
+        <DataTemplate>
+          <ContentControl Content="{Binding Path=.}"
+                          HorizontalAlignment="Stretch"
+                          Margin="5,5,5,5" />
+        </DataTemplate>
+      </ItemsControl.ItemTemplate>
+    </ItemsControl>
+  </Grid>
 
 </UserControl>
