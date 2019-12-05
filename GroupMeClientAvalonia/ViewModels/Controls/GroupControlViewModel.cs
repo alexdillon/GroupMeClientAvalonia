@@ -102,50 +102,50 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
             }
         }
 
-        ///// <summary>
-        ///// Gets a string showing the most recent post in this Group or Chat.
-        ///// </summary>
-        //public ObservableCollection<Inline> QuickPreview
-        //{
-        //    get
-        //    {
-        //        var latestPreviewMessage = this.MessageContainer.LatestMessage;
+        /// <summary>
+        /// Gets an string showing the most recent post in this Group or Chat.
+        /// </summary>
+        public string QuickPreview
+        {
+            get
+            {
+                var latestPreviewMessage = this.MessageContainer.LatestMessage;
 
-        //        var sender = latestPreviewMessage.Name;
-        //        var attachments = latestPreviewMessage.Attachments;
-        //        var message = latestPreviewMessage.Text;
+                var sender = latestPreviewMessage.Name;
+                var attachments = latestPreviewMessage.Attachments;
+                var message = latestPreviewMessage.Text;
 
-        //        bool wasImageSent = false;
-        //        foreach (var attachment in attachments)
-        //        {
-        //            if (attachment.GetType() == typeof(GroupMeClientApi.Models.Attachments.ImageAttachment))
-        //            {
-        //                wasImageSent = true;
-        //            }
-        //        }
+                bool wasImageSent = false;
+                foreach (var attachment in attachments)
+                {
+                    if (attachment.GetType() == typeof(GroupMeClientApi.Models.Attachments.ImageAttachment))
+                    {
+                        wasImageSent = true;
+                    }
+                }
 
-        //        var result = new ObservableCollection<Inline>();
+                var result = new System.IO.StringWriter();
 
-        //        if (wasImageSent)
-        //        {
-        //            result.Add(new Run($"{sender} shared a picture"));
-        //        }
-        //        else
-        //        {
-        //            result.Add(new Bold(new Run(sender) { FontWeight = FontWeights.SemiBold }));
-        //            result.Add(new Run($": {message}"));
-        //        }
+                if (wasImageSent)
+                {
+                    result.Write($"{sender} shared a picture"); // TODO bold sender
+                }
+                else
+                {
+                    result.Write($"{sender}"); // TODO bold
+                    result.Write($": {message}");
+                }
 
-        //        return result;
-        //    }
-        //}
+                return result.ToString();
+            }
+        }
 
         private void RaisePropertyChangeForAll()
         {
             // since RaisePropertyChanged(string.empty) doesn't seem to work correctly...
             this.RaisePropertyChanged(nameof(this.Avatar));
             this.RaisePropertyChanged(nameof(this.LastUpdatedFriendlyTime));
-            //this.RaisePropertyChanged(nameof(this.QuickPreview));
+            this.RaisePropertyChanged(nameof(this.QuickPreview));
             this.RaisePropertyChanged(nameof(this.Title));
             this.RaisePropertyChanged(nameof(this.LastUpdated));
         }

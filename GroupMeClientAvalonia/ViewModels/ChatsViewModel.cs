@@ -48,12 +48,14 @@ namespace GroupMeClientAvalonia.ViewModels
             this.MarkAllAsRead = new RelayCommand(this.MarkAllGroupsChatsRead);
             this.SearchToggled = new RelayCommand<bool>((t) => this.GroupChatFilter = t ? this.GroupChatFilter : string.Empty);
 
-            this.SortedFilteredGroupChats =
-                this.AllGroupsChats.AsObservableList()
+            this.SortedFilteredGroupChats = new ObservableCollectionExtended<GroupControlViewModel>();
+
+            this.AllGroupsChats.AsObservableList()
                 .Connect()
                 .Filter(o => (o as GroupControlViewModel).Title.ToLower().Contains(this.GroupChatFilter.ToLower()))
-                .Sort(SortExpressionComparer<GroupControlViewModel>.Ascending(g => g.LastUpdated))
-                .AsObservableList();
+                .Sort(SortExpressionComparer<GroupControlViewModel>.Descending(g => g.LastUpdated))
+                .Bind(this.SortedFilteredGroupChats)
+                .Subscribe();
 
             _ = this.Loaded();
         }
@@ -62,7 +64,7 @@ namespace GroupMeClientAvalonia.ViewModels
         /// Gets a view of the Groups and Chats that are sorted and filtered to
         /// display in the left-panel.
         /// </summary>
-        public IObservableList<GroupControlViewModel> SortedFilteredGroupChats { get; private set; }
+        public IObservableCollection<GroupControlViewModel> SortedFilteredGroupChats { get; private set; }
 
         /// <summary>
         /// Gets a collection of all the Groups and Chats currently opened.

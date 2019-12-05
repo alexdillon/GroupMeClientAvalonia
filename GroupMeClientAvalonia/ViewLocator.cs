@@ -14,15 +14,18 @@ namespace GroupMeClientAvalonia
         {
             var name = data.GetType().FullName.Replace("ViewModel", "View");
             var type = Type.GetType(name);
-
             if (type != null)
             {
                 return (Control)Activator.CreateInstance(type);
             }
-            else
+            
+            type = Type.GetType(name.Substring(0, name.LastIndexOf("View")));
+            if (type != null)
             {
-                return new TextBlock { Text = "Not Found: " + name };
+                return (Control)Activator.CreateInstance(type);
             }
+
+            return new TextBlock { Text = "Not Found: " + name };
         }
 
         public bool Match(object data)
