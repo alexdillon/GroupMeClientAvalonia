@@ -7,7 +7,7 @@ using Avalonia.Controls;
 using Avalonia.Interactivity;
 using GalaSoft.MvvmLight.Command;
 
-namespace GroupMeClient.Extensions
+namespace GroupMeClientAvalonia.Extensions
 {
     /// <summary>
     /// <see cref="ListBoxWithPosition"/> provides a ListBox control that reports on scroll position.
