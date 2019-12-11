@@ -20,7 +20,7 @@
 
   <Grid>
     <Grid.ColumnDefinitions>
-      <ColumnDefinition Width="450">
+      <ColumnDefinition Width="350">
         <!--<ColumnDefinition.Style>
           <Style TargetType="{x:Type ColumnDefinition}">
             <Setter Property="Width" Value="350" />
@@ -76,11 +76,9 @@
                       x:Name="toggleSearchBox"
                       Command="{Binding SearchToggled}"
                       CommandParameter="{Binding Path=IsChecked, RelativeSource={RelativeSource Self}}">
-          <ToggleButton.ContentTemplate>
-            <DataTemplate>
-              <!--<iconPacks:PackIconMaterial Width="15" Height="15" Foreground="#637182" Kind="Magnify"/>-->
-            </DataTemplate>
-          </ToggleButton.ContentTemplate>
+          <ToggleButton.Content>
+            <DrawingPresenter Width="15" Height="15" Drawing="{DynamicResource Material.Magnify}" />
+          </ToggleButton.Content>
         </ToggleButton>
 
         <Button Grid.Column="3"
@@ -91,11 +89,9 @@
                 Command="{Binding Path=MarkAllAsRead}"
                 CommandParameter="{Binding Path=.}">
 
-          <Button.ContentTemplate>
-            <DataTemplate>
-              <!--<iconPacks:PackIconEntypo Width="15" Height="15" Foreground="#637182" Kind="Unread"/>-->
-            </DataTemplate>
-          </Button.ContentTemplate>
+          <Button.Content>
+            <DrawingPresenter Width="15" Height="15" Drawing="{DynamicResource Entypo+.Unread}" />
+          </Button.Content>
         </Button>
 
         <Border Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="0" BorderBrush="#637182" BorderThickness="0,0,0,1" Margin="0,0,15,0"/>

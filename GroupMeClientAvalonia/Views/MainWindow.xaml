@@ -14,6 +14,6 @@
     </Design.DataContext>
 
   <Grid>
-    <UserControl Content="{Binding ChatsViewModel}" BorderBrush="Red" BorderThickness="10" />  
+    <UserControl Content="{Binding ChatsViewModel}" BorderBrush="Red" BorderThickness="3" />  
   </Grid>
 </Window>
