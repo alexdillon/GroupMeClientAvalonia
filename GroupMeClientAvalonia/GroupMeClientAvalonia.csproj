@@ -92,9 +92,14 @@
   </ItemGroup>
   
   <ItemGroup>
+    <Folder Include="Notifications\Display\WpfToast\" />
+  </ItemGroup>
+  
+  <ItemGroup>
     <EmbeddedResource Include="Views\Controls\GroupContentsControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
   </ItemGroup>
+  
  
 </Project>

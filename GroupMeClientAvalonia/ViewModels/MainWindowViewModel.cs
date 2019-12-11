@@ -5,6 +5,8 @@ using System.IO;
 using System.Text;
 using Avalonia;
 using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Messaging;
+using GroupMeClientAvalonia.Notifications;
 
 namespace GroupMeClientAvalonia.ViewModels
 {
@@ -34,7 +36,7 @@ namespace GroupMeClientAvalonia.ViewModels
 
         private Settings.SettingsManager SettingsManager { get; set; }
 
-        //private NotificationRouter NotificationRouter { get; set; }
+        private NotificationRouter NotificationRouter { get; set; }
 
         //private UpdateAssist UpdateAssist { get; set; }
 
@@ -87,7 +89,7 @@ namespace GroupMeClientAvalonia.ViewModels
                 //this.CacheContext = new Caching.CacheContext(this.CachePath);
                 this.GroupMeClient.ImageDownloader = new GroupMeClientApi.CachedImageDownloader(this.ImageCachePath);
 
-                //this.NotificationRouter = new NotificationRouter(this.GroupMeClient);
+                this.NotificationRouter = new NotificationRouter(this.GroupMeClient);
 
                 this.ChatsViewModel = new ChatsViewModel(this.GroupMeClient, this.SettingsManager);
                 //this.SearchViewModel = new SearchViewModel(this.GroupMeClient, this.CacheContext);
@@ -110,7 +112,7 @@ namespace GroupMeClientAvalonia.ViewModels
         {
             //this.ToastHolderManager = new ToastHolderViewModel();
 
-            //this.NotificationRouter.RegisterNewSubscriber(this.ChatsViewModel);
+            this.NotificationRouter.RegisterNewSubscriber(this.ChatsViewModel);
             //this.NotificationRouter.RegisterNewSubscriber(PopupNotificationProvider.CreatePlatformNotificationProvider());
             //this.NotificationRouter.RegisterNewSubscriber(PopupNotificationProvider.CreateInternalNotificationProvider(this.ToastHolderManager));
         }
