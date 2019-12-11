@@ -79,7 +79,7 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
             this.Settings = settings;
             this.TopBarAvatar = new AvatarControlViewModel(this.MessageContainer, this.MessageContainer.Client.ImageDownloader);
 
-            _ = this.LoadMoreAsync();
+            //_ = this.LoadMoreAsync();
         }
 
         /// <summary>
@@ -309,7 +309,7 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
                     results = await this.MessageContainer.GetMessagesAsync(GroupMeClientApi.MessageRetreiveMode.BeforeId, this.FirstDisplayedMessage.Id);
                 }
 
-                await this.UpdateDisplay(scrollViewer, results);
+                //await this.UpdateDisplay(scrollViewer, results);
 
                 // if everything was successful, reset the reliability monitor
                 this.ReliabilityStateMachine.Succeeded();

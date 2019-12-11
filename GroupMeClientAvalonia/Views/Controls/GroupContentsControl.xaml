@@ -1,0 +1,366 @@
+﻿<UserControl x:Class="GroupMeClientAvalonia.Views.Controls.GroupContentsControl"
+             xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:controls="clr-namespace:GroupMeClientAvalonia.Views.Controls"
+             xmlns:extensions="clr-namespace:GroupMeClientAvalonia.Extensions"
+             mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="700"
+             Background="#F7F7F7">
+
+  <!--<UserControl.Resources>
+    <CollectionViewSource Source="{Binding Path=Messages}" x:Key="MessagesViewSource">
+      <CollectionViewSource.SortDescriptions>
+        <scm:SortDescription PropertyName="Id" Direction="Ascending"/>
+      </CollectionViewSource.SortDescriptions>
+    </CollectionViewSource>
+
+    <BooleanToVisibilityConverter x:Key="boolToVisibilityConverter"/>
+    <converters:NullToVisibilityConverter x:Key="nullToVisibilityConverter"/>
+  </UserControl.Resources>-->
+
+  <Grid ColumnDefinitions="*"
+        RowDefinitions="Auto,7,*,Auto">
+
+    <!--Top Bar-->
+    <Grid Grid.Column="0" Grid.Row="0" Background="White"
+          ColumnDefinitions="Auto,*,Auto"
+          RowDefinitions="50">
+
+      <!--Top Bar Avatar-->
+      <controls:AvatarControl
+          Grid.Column="0"
+          Width="40" Height="40"
+          Margin="10,0,10,0"
+          DataContext="{Binding TopBarAvatar}"/>
+
+      <!--Group Name and Plugins Drop Down Menu Button-->
+      <ToggleButton Grid.Column="1"
+                    BorderThickness="0"
+                    HorizontalAlignment="Left"
+                    FontSize="17" FontWeight="SemiBold"
+                    x:Name="toggleGroupOptionsButton">
+
+        <!--<ToggleButton.Style>
+          <Style TargetType="{x:Type ToggleButton}">
+            <Setter Property="Template">
+              <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ToggleButton}">
+                  <Border HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="border" Background="White">
+                    <ContentPresenter Margin="5"/>
+                  </Border>
+                  <ControlTemplate.Triggers>
+                    <Trigger Property="IsChecked" Value="true">
+                      <Setter Property="Background" TargetName="border" Value="White"/>
+                    </Trigger>
+                  </ControlTemplate.Triggers>
+                </ControlTemplate>
+              </Setter.Value>
+            </Setter>
+          </Style>
+        </ToggleButton.Style>-->
+
+        <!--Toggle Button Content-->
+        <Grid ColumnDefinitions="*,Auto">
+
+          <!--<Grid.Resources>
+            <iconPacks:Octicons x:Key="ArrowDown" Width="15" Height="15" Kind="TriangleDown"></iconPacks:Octicons>
+            <iconPacks:Octicons x:Key="ArrowUp" Width="15" Height="15" Kind="TriangleUp"></iconPacks:Octicons>
+          </Grid.Resources>-->
+
+          <!--Chat Name Label-->
+          <!--TextTrimming="CharacterEllipsis"-->
+          <TextBlock Grid.Column="0"
+                  HorizontalAlignment="Stretch" VerticalAlignment="Center"
+                  Height="NaN"
+                  FontSize="17" FontWeight="SemiBold"
+                  TextWrapping="NoWrap"
+                  Text="{Binding Title}">
+          </TextBlock>
+
+          <!--Plugin Dropdown Arrow-->
+          <TextBlock Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <!--<Label.Style>
+              <Style TargetType="{x:Type Label}">
+                <Setter Property="Content" Value="{StaticResource ArrowDown}" />
+
+                <Style.Triggers>
+                  <DataTrigger Binding="{Binding IsChecked, ElementName=toggleGroupOptionsButton}" Value="True">
+                    <Setter Property="Content" Value="{StaticResource ArrowUp}" />
+                  </DataTrigger>
+                </Style.Triggers>
+              </Style>
+            </Label.Style>-->
+          </TextBlock>
+        </Grid>
+      </ToggleButton>
+
+      <!--Close Group Button-->
+      <!---->
+      <Button Grid.Column="2"
+              HorizontalAlignment="Right"
+              Width="35" Height="35"
+              BorderThickness="0"
+              Command="{Binding Path=CloseGroup}"
+              CommandParameter="{Binding Path=.}">
+        <DrawingPresenter Width="15" Height="15" Drawing="{DynamicResource Material.Close}" />
+      </Button>
+
+      <!--Top Bar Underline-->
+      <Border Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0" BorderBrush="#637182" BorderThickness="0,0,0,1"/>
+    </Grid>
+
+    <!--ItemsSource="{Binding Source={StaticResource MessagesViewSource}}"-->
+    <!--Messages List-->
+    <!--extensions:ListBoxWithPosition-->
+    <!--extensions:ListBoxExtensions.AutoScrollToEnd="True"
+    extensions:ListBoxExtensions.ScrollToTop="{Binding ReloadView}"-->
+    <!--extensions:FileDragDropHelper.IsFileDragDropEnabled="True"
+    extensions:FileDragDropHelper.FileDragDropTarget="{Binding}"-->
+    <!--VirtualizingStackPanel.IsVirtualizing="True"
+    VirtualizingStackPanel.VirtualizationMode="Standard"
+    VirtualizingStackPanel.ScrollUnit="Pixel"-->
+    <!--AllowDrop="True"-->
+
+    <ListBox
+        Grid.Row="2" Grid.Column="0"
+        BorderThickness="0"
+        Background="#F7F7F7"
+        UseLayoutRounding="True"
+        SelectionMode="Multiple"
+        ScrollViewer.VerticalScrollBarVisibility="Visible"
+        ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+        x:Name="messagesList">
+
+      <!--<ListBox.ItemContainerStyle>
+        <Style TargetType="{x:Type ListBoxItem}">
+          <Setter Property="HorizontalContentAlignment" Value="Left"/>
+          <Setter Property="VerticalContentAlignment" Value="Top"/>
+          <Setter Property="Focusable" Value="{Binding Path=DataContext.IsSelectionAllowed, RelativeSource={RelativeSource AncestorType=controls:GroupContentsControl}}"/>
+
+          -->
+      <!--Sometimes, the ListBoxItem will not adjust when multiple chats are rapidly opened. Bind the width to solve it.-->
+      <!--
+          <Setter Property="Width" Value="{Binding Path=ViewportWidth, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ScrollViewer}}"/>
+
+          <Setter Property="Template">
+            <Setter.Value>
+              <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                <Border BorderThickness="0"
+                        x:Name="highlightBorder"
+                        Margin="0" >
+                  <ContentPresenter />
+                </Border>
+
+                <ControlTemplate.Triggers>
+                  <Trigger Property="IsSelected" Value="true">
+                    <Setter TargetName="highlightBorder" Property="BorderThickness" Value="3"/>
+                    <Setter TargetName="highlightBorder" Property="BorderBrush" Value="#1873BA"/>
+                  </Trigger>
+                </ControlTemplate.Triggers>
+              </ControlTemplate>
+            </Setter.Value>
+          </Setter>
+        </Style>
+      </ListBox.ItemContainerStyle>-->
+
+      <ListBox.ItemTemplate>
+        <DataTemplate>
+          <UserControl
+              Content="{Binding Path=.}"
+              SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}" />
+        </DataTemplate>
+      </ListBox.ItemTemplate>
+
+      <!--<i:Interaction.Triggers>
+        <i:EventTrigger EventName="SelectionChanged">
+          <i:InvokeCommandAction Command="{Binding DataContext.SelectionChangedCommand, RelativeSource={RelativeSource AncestorType=controls:GroupContentsControl}}"
+                                 CommandParameter="{Binding SelectedItems, ElementName=messagesList}" />
+        </i:EventTrigger>
+      </i:Interaction.Triggers>-->
+    </ListBox>
+
+    <!--Scroll-To-Bottom Button-->
+    <!--Visibility="{Binding IsNotAtBottom, ElementName=messagesList, Converter={StaticResource boolToVisibilityConverter}}"
+     Command="{Binding ElementName=messagesList, Path=ScrollToEnd}"-->
+    <Button Grid.Row="2"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Bottom"
+            Margin="0,0,30,20"
+            Background="#637182"
+            BorderBrush="#637182"
+           >
+      <Button.Content>
+        <DrawingPresenter Drawing="{DynamicResource FeatherIcons.ArrowDown}"
+                          Width="17" Height="17"
+                          VerticalAlignment="Center"
+                          HorizontalAlignment="Center"
+                          Margin="10" />
+      </Button.Content>
+    </Button>
+
+    <!--Plugins Dropdown List-->
+    <!--Visibility="{Binding IsChecked, ElementName=toggleGroupOptionsButton, Converter={StaticResource boolToVisibilityConverter}}"-->
+    <Border Grid.Row="2"
+            VerticalAlignment="Top"
+            BorderThickness="20,10,20,30"
+            BorderBrush="White"
+            IsVisible="{Binding IsChecked, ElementName=toggleGroupOptionsButton}">
+      <StackPanel Orientation="Vertical">
+        <!--Regular Plugins-->
+        <ItemsControl Items="{Binding GroupChatPlugins}" Background="White">
+          <ItemsControl.ItemTemplate>
+            <DataTemplate>
+              <Button
+                  Content="{Binding PluginName}"
+                  Command="{Binding RelativeSource={RelativeSource FindAncestor, 
+                                         AncestorType={x:Type controls:GroupContentsControl}}, Path=DataContext.GroupChatPluginActivated}"
+                  CommandParameter="{Binding Path=.}"
+                  HorizontalContentAlignment="Left"
+                  Foreground="#414A59"
+                  BorderThickness="0"
+                  FontSize="14"
+                  FontWeight="SemiBold"
+                  Margin="5">
+              </Button>
+            </DataTemplate>
+          </ItemsControl.ItemTemplate>
+
+          <ItemsControl.ItemsPanel>
+            <ItemsPanelTemplate>
+              <StackPanel />
+            </ItemsPanelTemplate>
+          </ItemsControl.ItemsPanel>
+        </ItemsControl>
+
+        <!--Cache Plugins-->
+        <ItemsControl Items="{Binding GroupChatCachePlugins}" Background="White">
+          <ItemsControl.ItemTemplate>
+            <DataTemplate>
+              <Button
+                  Content="{Binding PluginName}"
+                  Command="{Binding RelativeSource={RelativeSource FindAncestor, 
+                                         AncestorType={x:Type controls:GroupContentsControl}}, Path=DataContext.GroupChatCachePluginActivated}"
+                  CommandParameter="{Binding Path=.}"
+                  HorizontalContentAlignment="Left"
+                  Foreground="#414A59"
+                  BorderThickness="0"
+                  FontSize="14"
+                  FontWeight="SemiBold"
+                  Margin="5">
+
+              </Button>
+            </DataTemplate>
+          </ItemsControl.ItemTemplate>
+
+          <ItemsControl.ItemsPanel>
+            <ItemsPanelTemplate>
+              <StackPanel />
+            </ItemsPanelTemplate>
+          </ItemsControl.ItemsPanel>
+        </ItemsControl>
+      </StackPanel>
+    </Border>
+
+    <!--Send Message Bar-->
+    <Grid Grid.Row="3"
+          Background="White"
+          ColumnDefinitions="40,*,Auto,Auto"
+          RowDefinitions="*, Auto">
+      <!--<Grid.RowDefinitions>
+        <RowDefinition Height="*"/>
+        <RowDefinition Height="Auto" MinHeight="50"/>
+      </Grid.RowDefinitions>-->
+
+      <!--Send Bar Top Line-->
+      <Border Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="4"
+              BorderBrush="#637182" BorderThickness="0,0,0,1"
+              Height="4"
+              Margin="0,0,0,0"
+              VerticalAlignment="Bottom"/>
+
+      <!--Message Effects Button-->
+      <!--Background="White"
+      Foreground="#637182"-->
+      <DrawingPresenter Drawing="{DynamicResource FontAwesome.ReactBrands}"
+                        Grid.Row="1" Grid.Column="0"
+                        Width="15" Height="15"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Center"
+                        Margin="0" >
+        
+      <!--<i:Interaction.Triggers>
+          <i:EventTrigger EventName="MouseDown" >
+            <i:InvokeCommandAction Command="{Binding OpenMessageSuggestions}" />
+          </i:EventTrigger>
+        </i:Interaction.Triggers>-->
+      </DrawingPresenter>
+
+      <!--Message Text Box-->
+      <!--extensions:MultiLineSendBox-->
+      <!--extensions:FileDragDropHelper.IsFileDragDropEnabled="True"
+      extensions:FileDragDropHelper.FileDragDropTarget="{Binding}"
+      SpellCheck.IsEnabled="True"-->
+      <!--VerticalContentAlignment="Center"-->
+      <TextBox
+          Grid.Row="1" Grid.Column="1"
+          MinHeight="49"
+          HorizontalAlignment="Stretch"
+          VerticalAlignment="Center"
+          BorderBrush="Transparent"
+          BorderThickness="0"
+          FontSize="15"
+          AcceptsReturn="True"
+          TextWrapping="Wrap"
+          Watermark="Send a Message..."
+          Text="{Binding Path=TypedMessageContents, Mode=TwoWay}">
+
+        <!--<i:Interaction.Triggers>
+          <i:EventTrigger EventName="Send">
+            <i:InvokeCommandAction Command="{Binding Path=SendMessage}"/>
+          </i:EventTrigger>
+        </i:Interaction.Triggers>-->
+      </TextBox>
+
+      <!--Plus Button-->
+      <!--Background="White"
+      Foreground="#637182"-->
+      <DrawingPresenter Drawing="{DynamicResource Material.Plus}"
+                  Grid.Row="1" Grid.Column="2"
+                  Width="15" Height="15"
+                  VerticalAlignment="Center"
+                  HorizontalAlignment="Center"
+                  Margin="0,0,20,0">
+        <!--<i:Interaction.Triggers>
+          <i:EventTrigger EventName="MouseDown" >
+            <i:InvokeCommandAction Command="{Binding SendAttachment}" />
+          </i:EventTrigger>
+        </i:Interaction.Triggers>-->
+      </DrawingPresenter>
+
+      <!--Send Message Button-->
+      <!--Foreground="#637182"-->
+      <DrawingPresenter Drawing="{DynamicResource MaterialDesign.Send}"
+                  Grid.Row="1" Grid.Column="3"
+                  Width="15" Height="15"
+                  VerticalAlignment="Center"
+                  HorizontalAlignment="Center"
+                  Margin="0,0,30,0">
+        <!--<i:Interaction.Triggers>
+          <i:EventTrigger EventName="MouseDown" >
+            <i:InvokeCommandAction Command="{Binding SendMessage}" />
+          </i:EventTrigger>
+        </i:Interaction.Triggers>-->
+      </DrawingPresenter>
+    </Grid>
+
+    <!--Popup Dialog-->
+    <!--
+    <controls:Popup Grid.RowSpan="4"
+                    Grid.ColumnSpan="1"
+                    DataContext="{Binding Path=.}"
+                    Visibility="{Binding SmallDialog, Converter={StaticResource nullToVisibilityConverter}}">
+      <UserControl Content="{Binding SmallDialog}" />
+    </controls:Popup>-->
+  </Grid>
+</UserControl>

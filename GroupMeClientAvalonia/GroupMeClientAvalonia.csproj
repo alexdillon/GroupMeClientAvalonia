@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <AvaloniaResource Remove="Views\Controls\AvatarControl.xaml" />
+    <AvaloniaResource Remove="Views\Controls\GroupContentsControl.xaml" />
     <AvaloniaResource Remove="Views\Controls\GroupControl.xaml" />
     <AvaloniaResource Remove="Views\Controls\InlineReadSentMarkerControl.xaml" />
     <AvaloniaResource Remove="Views\Controls\InlineTimestampControl.xaml" />
@@ -27,6 +28,7 @@
 
   <ItemGroup>
     <None Remove="Views\Controls\AvatarControl.xaml" />
+    <None Remove="Views\Controls\GroupContentsControl.xaml" />
     <None Remove="Views\Controls\GroupControl.xaml" />
     <None Remove="Views\Controls\InlineReadSentMarkerControl.xaml" />
     <None Remove="Views\Controls\InlineTimestampControl.xaml" />
@@ -89,5 +91,10 @@
     <ProjectReference Include="..\..\..\..\Desktop\GroupMeClient\GroupMeClientApi\GroupMeClientApi.csproj" />
   </ItemGroup>
   
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Controls\GroupContentsControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
  
 </Project>
