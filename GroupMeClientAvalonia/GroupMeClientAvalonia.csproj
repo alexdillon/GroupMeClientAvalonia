@@ -25,6 +25,7 @@
     <AvaloniaResource Remove="Views\Controls\GroupControl.xaml" />
     <AvaloniaResource Remove="Views\Controls\InlineReadSentMarkerControl.xaml" />
     <AvaloniaResource Remove="Views\Controls\InlineTimestampControl.xaml" />
+    <AvaloniaResource Remove="Views\Controls\MessageControl.xaml" />
     <AvaloniaResource Remove="Views\Controls\MultiLikeControl.xaml" />
   </ItemGroup>
 
@@ -36,6 +37,7 @@
     <None Remove="Views\Controls\GroupControl.xaml" />
     <None Remove="Views\Controls\InlineReadSentMarkerControl.xaml" />
     <None Remove="Views\Controls\InlineTimestampControl.xaml" />
+    <None Remove="Views\Controls\MessageControl.xaml" />
     <None Remove="Views\Controls\MultiLikeControl.xaml" />
   </ItemGroup>
   
@@ -109,6 +111,12 @@
   
   <ItemGroup>
     <EmbeddedResource Include="Notifications\Display\WpfToast\ToastNotification.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Controls\MessageControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
   </ItemGroup>

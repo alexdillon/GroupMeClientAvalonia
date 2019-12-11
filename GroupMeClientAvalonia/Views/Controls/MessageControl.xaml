@@ -1,0 +1,189 @@
+﻿<UserControl x:Class="GroupMeClientAvalonia.Views.Controls.MessageControl"
+             xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:controls="clr-namespace:GroupMeClientAvalonia.Views.Controls"
+             xmlns:extensions="clr-namespace:GroupMeClientAvalonia.Extensions"
+             mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="200">
+
+  <Grid Background="{Binding MessageColor}">
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="55" />
+      <ColumnDefinition Width="*"/>
+      <ColumnDefinition Width="Auto" />
+    </Grid.ColumnDefinitions>
+
+    <Grid.RowDefinitions>
+      <RowDefinition Height="10"/>
+      <RowDefinition Height="*" />
+      <RowDefinition Height="Auto" />
+    </Grid.RowDefinitions>
+
+    <controls:AvatarControl
+            Grid.Column="0" Grid.Row="1"
+            Width="40" Height="40" VerticalAlignment="Top"
+            DataContext="{Binding Avatar}">
+
+      <!--<i:Interaction.Triggers>
+        <i:EventTrigger EventName="MouseRightButtonDown" >
+          <i:InvokeCommandAction Command="{Binding Path=DataContext.ToggleMessageDetails, RelativeSource={RelativeSource AncestorType=controls:MessageControl}}" />
+        </i:EventTrigger>
+      </i:Interaction.Triggers>-->
+    </controls:AvatarControl>
+
+    <StackPanel Grid.Column="1" Grid.Row="1">
+      <TextBlock Text="{Binding Sender}" FontSize="12" Foreground="#637182" />
+
+      <ItemsControl Items="{Binding AttachedItems}">
+        <ItemsControl.ItemTemplate>
+          <DataTemplate>
+            <UserControl
+                MaxWidth="700"
+                HorizontalAlignment="Left"
+                Content="{Binding Path=.}"/>
+          </DataTemplate>
+        </ItemsControl.ItemTemplate>
+
+        <ItemsControl.ItemsPanel>
+          <ItemsPanelTemplate>
+            <WrapPanel />
+          </ItemsPanelTemplate>
+        </ItemsControl.ItemsPanel>
+      </ItemsControl>
+
+      <TextBlock Margin="0,0,0,20">
+        <!--<extensions:SelectableTextBlock
+            FontSize="15"
+            TextWrapping="Wrap"
+            extensions:TextBlockExtensions.InlineList="{Binding Inlines}"/>-->
+      </TextBlock>
+    </StackPanel>
+
+    <Grid Grid.Column="2" Grid.Row="1"
+          MaxHeight="60"
+          VerticalAlignment="Top"
+          Background="Transparent"
+          x:Name="likeButtonArea">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="15" />
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="10" />
+      </Grid.RowDefinitions>
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="3"/>
+        <ColumnDefinition Width="Auto" />
+        <ColumnDefinition Width="12"/>
+      </Grid.ColumnDefinitions>
+      <!--<iconPacks:PackIconFontAwesome Width="17" Height="17"
+                                     Grid.Row="1"
+                                     Grid.Column="1"
+                                     HorizontalAlignment="Center"
+                                     Kind="{Binding LikeStatus}" Foreground="{Binding LikeColor}"
+                                     Background="Transparent" />-->
+
+      <!--Padding="0,17,0,0"-->
+      <TextBlock
+          Grid.Row="1"
+          Grid.Column="1"
+          HorizontalAlignment="Center"
+          Foreground="#637182" FontSize="10" FontWeight="Thin"
+          Text="{Binding LikeCount}" />
+
+      <!--<i:Interaction.Triggers>
+        <i:EventTrigger EventName="MouseDown" >
+          <i:InvokeCommandAction Command="{Binding LikeAction}" />
+        </i:EventTrigger>
+      </i:Interaction.Triggers>-->
+    </Grid>
+
+    <!--<Canvas x:Name="likesCanvas"
+            Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" Margin="0,-45,16,0"
+            Background="Transparent">
+
+      --><!--Use a trigger to change the visibility of the liker's popup area--><!--
+      <Canvas.Style>
+        <Style TargetType="{x:Type Canvas}">
+          <Setter Property="Visibility" Value="Visible" />
+          <Style.Triggers>
+            <MultiDataTrigger>
+              <MultiDataTrigger.Conditions>
+                <Condition Binding="{Binding Path=LikeCount, Converter={StaticResource isZeroConverter}}" Value="True" />
+              </MultiDataTrigger.Conditions>
+              <Setter Property="Visibility" Value="Collapsed" />
+            </MultiDataTrigger>
+
+            <MultiDataTrigger>
+              <MultiDataTrigger.Conditions>
+                <Condition Binding="{Binding IsMouseOver, ElementName=likeButtonArea}" Value="False" />
+                <Condition Binding="{Binding IsMouseOver, ElementName=likesCanvas}" Value="False" />
+              </MultiDataTrigger.Conditions>
+              <Setter Property="Visibility" Value="Hidden" />
+            </MultiDataTrigger>
+          </Style.Triggers>
+        </Style>
+      </Canvas.Style>
+
+      <Grid Width="{Binding ActualWidth, ElementName=likesCanvas}">
+        <Border BorderThickness="1" CornerRadius="5"
+                    BorderBrush="#637182" Background="#F7F7F7"
+                    Width="Auto" Height="65" HorizontalAlignment="Right">
+
+          <ItemsControl Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3"
+                        Margin="7"
+                        VirtualizingStackPanel.IsVirtualizing="True"
+                        VirtualizingStackPanel.ScrollUnit="Pixel"
+                        ScrollViewer.CanContentScroll="True">
+
+            <ItemsControl.Style>
+              <Style TargetType="{x:Type ItemsControl}">
+                <Style.Triggers>
+                  <DataTrigger Binding="{Binding Visibility, ElementName=likesCanvas}" Value="Visible">
+                    <Setter Property="ItemsSource" Value="{Binding Path=LikedByAvatars}" />
+                  </DataTrigger>
+                </Style.Triggers>
+              </Style>
+            </ItemsControl.Style>
+
+            <ItemsControl.ItemTemplate>
+              <DataTemplate>
+                <controls:AvatarControl Content="{Binding Path=.}" Width="35" Height="35" Margin="3,0,3,0" />
+              </DataTemplate>
+            </ItemsControl.ItemTemplate>
+
+            <ItemsControl.ItemsPanel>
+              <ItemsPanelTemplate>
+                <VirtualizingStackPanel
+                    Orientation="Horizontal"
+                    VirtualizationMode="Recycling" />
+              </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+          </ItemsControl>
+        </Border>
+      </Grid>
+    </Canvas>-->
+
+    <StackPanel Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3"
+                Orientation="Vertical"
+                Background="LightGray"
+                Height="45"
+                IsVisible="{Binding ShowDetails}">
+
+      <!--Padding="20,0,0,0"
+      ContentStringFormat="Sent: {0}"-->
+      <TextBlock Text="{Binding SentTimeString}"
+                 FontWeight="Regular"
+                 FontSize="11"
+                 Foreground="#637182"
+                 />
+
+      <!--ContentStringFormat="Client: {0}"
+       Padding="20,0,0,0"-->
+      <TextBlock Text="{Binding SenderPlatform}"
+                 FontWeight="Regular"
+                 FontSize="11"
+                 Foreground="#637182"
+                />
+    </StackPanel>
+  </Grid>
+</UserControl>

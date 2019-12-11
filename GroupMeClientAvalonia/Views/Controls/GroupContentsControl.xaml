@@ -5,16 +5,12 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:controls="clr-namespace:GroupMeClientAvalonia.Views.Controls"
              xmlns:extensions="clr-namespace:GroupMeClientAvalonia.Extensions"
+             xmlns:i="clr-namespace:Avalonia.Xaml.Interactivity;assembly=Avalonia.Xaml.Interactivity"
+             xmlns:ia="clr-namespace:Avalonia.Xaml.Interactions.Core;assembly=Avalonia.Xaml.Interactions"
              mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="700"
              Background="#F7F7F7">
 
   <!--<UserControl.Resources>
-    <CollectionViewSource Source="{Binding Path=Messages}" x:Key="MessagesViewSource">
-      <CollectionViewSource.SortDescriptions>
-        <scm:SortDescription PropertyName="Id" Direction="Ascending"/>
-      </CollectionViewSource.SortDescriptions>
-    </CollectionViewSource>
-
     <BooleanToVisibilityConverter x:Key="boolToVisibilityConverter"/>
     <converters:NullToVisibilityConverter x:Key="nullToVisibilityConverter"/>
   </UserControl.Resources>-->
@@ -62,12 +58,6 @@
 
         <!--Toggle Button Content-->
         <Grid ColumnDefinitions="*,Auto">
-
-          <!--<Grid.Resources>
-            <iconPacks:Octicons x:Key="ArrowDown" Width="15" Height="15" Kind="TriangleDown"></iconPacks:Octicons>
-            <iconPacks:Octicons x:Key="ArrowUp" Width="15" Height="15" Kind="TriangleUp"></iconPacks:Octicons>
-          </Grid.Resources>-->
-
           <!--Chat Name Label-->
           <!--TextTrimming="CharacterEllipsis"-->
           <TextBlock Grid.Column="0"
@@ -79,24 +69,20 @@
           </TextBlock>
 
           <!--Plugin Dropdown Arrow-->
-          <TextBlock Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <!--<Label.Style>
-              <Style TargetType="{x:Type Label}">
-                <Setter Property="Content" Value="{StaticResource ArrowDown}" />
-
-                <Style.Triggers>
-                  <DataTrigger Binding="{Binding IsChecked, ElementName=toggleGroupOptionsButton}" Value="True">
-                    <Setter Property="Content" Value="{StaticResource ArrowUp}" />
-                  </DataTrigger>
-                </Style.Triggers>
-              </Style>
-            </Label.Style>-->
-          </TextBlock>
+          <DrawingPresenter Grid.Column="1" Width="15" Height="15" Name="PluginMenuDropdownLabel" Drawing="{DynamicResource Ionicons.ArrowDropdownMD}">
+            <i:Interaction.Behaviors>
+              <ia:DataTriggerBehavior Binding="{Binding IsChecked, ElementName=toggleGroupOptionsButton}" ComparisonCondition="Equal" Value="True">
+                <ia:ChangePropertyAction TargetObject="{Binding #PluginMenuDropdownLabel}" PropertyName="Drawing" Value="{DynamicResource Ionicons.ArrowDropdownMD}"/>
+              </ia:DataTriggerBehavior>
+              <ia:DataTriggerBehavior Binding="{Binding IsChecked, ElementName=toggleGroupOptionsButton}" ComparisonCondition="NotEqual" Value="True">
+                <ia:ChangePropertyAction TargetObject="{Binding #PluginMenuDropdownLabel}" PropertyName="Drawing" Value="{DynamicResource Ionicons.ArrowDropupMD}"/>
+              </ia:DataTriggerBehavior>
+            </i:Interaction.Behaviors>
+          </DrawingPresenter>
         </Grid>
       </ToggleButton>
 
       <!--Close Group Button-->
-      <!---->
       <Button Grid.Column="2"
               HorizontalAlignment="Right"
               Width="35" Height="35"
@@ -122,15 +108,15 @@
     VirtualizingStackPanel.ScrollUnit="Pixel"-->
     <!--AllowDrop="True"-->
 
-    <ListBox
-        Grid.Row="2" Grid.Column="0"
-        BorderThickness="0"
-        Background="#F7F7F7"
-        UseLayoutRounding="True"
-        SelectionMode="Multiple"
-        ScrollViewer.VerticalScrollBarVisibility="Visible"
-        ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-        x:Name="messagesList">
+    <ListBox Items="{Binding SortedMessages}"
+             Grid.Row="2" Grid.Column="0"
+             BorderThickness="0"
+             Background="#F7F7F7"
+             UseLayoutRounding="True"
+             SelectionMode="Multiple"
+             ScrollViewer.VerticalScrollBarVisibility="Visible"
+             ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+             x:Name="messagesList">
 
       <!--<ListBox.ItemContainerStyle>
         <Style TargetType="{x:Type ListBoxItem}">
@@ -166,9 +152,10 @@
 
       <ListBox.ItemTemplate>
         <DataTemplate>
+          <!--SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}"-->
           <UserControl
               Content="{Binding Path=.}"
-              SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}" />
+              />
         </DataTemplate>
       </ListBox.ItemTemplate>
 
@@ -200,7 +187,6 @@
     </Button>
 
     <!--Plugins Dropdown List-->
-    <!--Visibility="{Binding IsChecked, ElementName=toggleGroupOptionsButton, Converter={StaticResource boolToVisibilityConverter}}"-->
     <Border Grid.Row="2"
             VerticalAlignment="Top"
             BorderThickness="20,10,20,30"

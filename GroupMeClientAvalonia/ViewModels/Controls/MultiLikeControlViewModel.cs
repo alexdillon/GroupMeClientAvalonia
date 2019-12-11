@@ -138,7 +138,7 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
             var loadingControl = new LoadingControlViewModel();
             this.GroupContentsControlViewModel.SmallDialog = loadingControl;
 
-            foreach (var message in this.GroupContentsControlViewModel.Messages)
+            foreach (var message in this.GroupContentsControlViewModel.SortedMessages)
             {
                 var id = long.Parse(message.Id);
                 if (id >= oldestId && id <= newestId && message is MessageControlViewModel mcvm)

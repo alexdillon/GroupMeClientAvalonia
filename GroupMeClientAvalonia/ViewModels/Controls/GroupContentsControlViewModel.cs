@@ -5,17 +5,17 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using GroupMeClientAvalonia.Utilities;
 using GroupMeClientApi.Models;
-using Microsoft.Win32;
 using GroupMeClientAvalonia.Extensions;
 using Avalonia.Controls;
 using Avalonia;
+using DynamicData;
+using DynamicData.Binding;
 
 namespace GroupMeClientAvalonia.ViewModels.Controls
 {
@@ -36,7 +36,7 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
         /// </summary>
         public GroupContentsControlViewModel()
         {
-            this.Messages = new ObservableCollection<MessageControlViewModelBase>();
+            this.Messages = new SourceList<MessageControlViewModelBase>();
 
             this.ReloadSem = new SemaphoreSlim(1, 1);
 
@@ -65,6 +65,13 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
             }
 
             this.GroupChatPlugins.Add(new MultiLikeControlViewModel.MultiLikePseudoPlugin(this));
+
+            this.SortedMessages = new ObservableCollectionExtended<MessageControlViewModelBase>();
+            this.Messages.AsObservableList()
+                .Connect()
+                .Sort(SortExpressionComparer<MessageControlViewModelBase>.Ascending(m => m.Id))
+                .Bind(this.SortedMessages)
+                .Subscribe();
         }
 
         /// <summary>
@@ -79,7 +86,7 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
             this.Settings = settings;
             this.TopBarAvatar = new AvatarControlViewModel(this.MessageContainer, this.MessageContainer.Client.ImageDownloader);
 
-            //_ = this.LoadMoreAsync();
+            _ = this.LoadMoreAsync();
         }
 
         /// <summary>
@@ -125,9 +132,9 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
         public ICommand SelectionChangedCommand { get; }
 
         /// <summary>
-        /// Gets the collection of ViewModels for <see cref="Message"/>s to be displayed.
+        /// Gets the collection of ViewModels for <see cref="Message"/>s to be displayed, in sorted order.
         /// </summary>
-        public ObservableCollection<MessageControlViewModelBase> Messages { get; }
+        public IObservableCollection<MessageControlViewModelBase> SortedMessages { get; private set; }
 
         /// <summary>
         /// Gets the collection of available Group/Chat UI Plugins to display.
@@ -212,6 +219,8 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
             set { this.Set(() => this.IsSelectionAllowed, ref this.isSelectionAllowed, value); }
         }
 
+        private SourceList<MessageControlViewModelBase> Messages { get; }
+
         private SemaphoreSlim ReloadSem { get; }
 
         private Message FirstDisplayedMessage { get; set; } = null;
@@ -242,7 +251,7 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
         /// <param name="message">The message containing the updated list of likers.</param>
         public void UpdateMessageLikes(Message message)
         {
-            var msgVm = this.Messages.FirstOrDefault(m => m.Id == message.Id);
+            var msgVm = this.Messages.Items.FirstOrDefault(m => m.Id == message.Id);
             if (msgVm is MessageControlViewModel messageVm)
             {
                 messageVm.UpdateLikers(message.FavoritedBy);
@@ -258,7 +267,7 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
 
             try
             {
-                foreach (var msg in this.Messages)
+                foreach (var msg in this.Messages.Items)
                 {
                     (msg as IDisposable)?.Dispose();
                 }
@@ -309,7 +318,7 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
                     results = await this.MessageContainer.GetMessagesAsync(GroupMeClientApi.MessageRetreiveMode.BeforeId, this.FirstDisplayedMessage.Id);
                 }
 
-                //await this.UpdateDisplay(scrollViewer, results);
+                await this.UpdateDisplay(scrollViewer, results);
 
                 // if everything was successful, reset the reliability monitor
                 this.ReliabilityStateMachine.Succeeded();
@@ -336,123 +345,124 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
             }
 
             //await Avalonia.Threading.Dispatcher.InvokeAsync(() =>
-            //{
-            //    // the code that's accessing UI properties
-            //    double originalHeight = scrollViewer?.Height ?? 0.0;
-            //    if (originalHeight != 0)
-            //    {
-            //        // prevent the At Top event from firing while we are adding new messages  
-            //    //  scrollViewer.ScrollToVerticalOffset(1);
-            //    }
+            {
+                // the code that's accessing UI properties
+                double originalHeight = scrollViewer?.Height ?? 0.0;
+                if (originalHeight != 0)
+                {
+                    // prevent the At Top event from firing while we are adding new messages  
+                    //  scrollViewer.ScrollToVerticalOffset(1);
+                }
 
-            //    var maxTimeDifference = TimeSpan.FromMinutes(15);
+                var maxTimeDifference = TimeSpan.FromMinutes(15);
 
-            //    // Messages retrieved with the before_id parameter are returned in descending order
-            //    // Reverse iterate through the messages collection to go newest->oldest
-            //    for (int i = messages.Count - 1; i >= 0; i--)
-            //    {
-            //        var msg = messages.ElementAt(i);
+                // Messages retrieved with the before_id parameter are returned in descending order
+                // Reverse iterate through the messages collection to go newest->oldest
+                for (int i = messages.Count - 1; i >= 0; i--)
+                {
+                    var msg = messages.ElementAt(i);
 
-            //        var oldMsg = this.Messages.FirstOrDefault(m => m.Id == msg.Id);
+                    var oldMsg = this.Messages.Items.FirstOrDefault(m => m.Id == msg.Id);
 
-            //        if (oldMsg == null)
-            //        {
-            //            // add new message
-            //            var msgVm = new MessageControlViewModel(
-            //                msg,
-            //                showPreviewsOnlyForMultiImages: this.Settings.UISettings.ShowPreviewsForMultiImages);
-            //            this.Messages.Add(msgVm);
+                    if (oldMsg == null)
+                    {
+                        // add new message
+                        var msgVm = new MessageControlViewModel(
+                            msg,
+                            showPreviewsOnlyForMultiImages: this.Settings.UISettings.ShowPreviewsForMultiImages);
+                        this.Messages.Add(msgVm);
 
-            //            // add an inline timestamp if needed
-            //            if (msg.CreatedAtTime.Subtract(this.LastMarkerTime) > maxTimeDifference)
-            //            {
-            //                var messageId = long.Parse(msg.Id);
-            //                var timeStampId = (messageId - 1).ToString();
+                        // add an inline timestamp if needed
+                        if (msg.CreatedAtTime.Subtract(this.LastMarkerTime) > maxTimeDifference)
+                        {
+                            var messageId = long.Parse(msg.Id);
+                            var timeStampId = (messageId - 1).ToString();
 
-            //                this.Messages.Add(new InlineTimestampControlViewModel(msg.CreatedAtTime, timeStampId, msgVm.MessageColor));
-            //                this.LastMarkerTime = msg.CreatedAtTime;
-            //            }
-            //        }
-            //        else
-            //        {
-            //            // update an existing one if needed
-            //            oldMsg.Message = msg;
-            //        }
-            //    }
+                            this.Messages.Add(new InlineTimestampControlViewModel(msg.CreatedAtTime, timeStampId, msgVm.MessageColor));
+                            this.LastMarkerTime = msg.CreatedAtTime;
+                        }
+                    }
+                    else
+                    {
+                        // update an existing one if needed
+                        oldMsg.Message = msg;
+                    }
+                }
 
-            //    // process read receipt and sent receipts
-            //    if (this.MessageContainer.ReadReceipt != null)
-            //    {
-            //        // Remove old markers
-            //        var toRemove = this.Messages.OfType<InlineReadSentMarkerControlViewModel>().ToList();
-            //        foreach (var marker in toRemove)
-            //        {
-            //            this.Messages.Remove(marker);
-            //        }
+                // process read receipt and sent receipts
+                if (this.MessageContainer.ReadReceipt != null)
+                {
+                    // Remove old markers
+                    var toRemove = this.Messages.Items.OfType<InlineReadSentMarkerControlViewModel>().ToList();
+                    foreach (var marker in toRemove)
+                    {
+                        this.Messages.Remove(marker);
+                    }
 
-            //        // Attach a "Read Receipt" if the read message is displayed.
-            //        var matchedMessage = this.Messages.FirstOrDefault(m => m.Id == this.MessageContainer.ReadReceipt.MessageId);
-            //        if (matchedMessage != null)
-            //        {
-            //            var msgId = long.Parse(matchedMessage.Id);
+                    // Attach a "Read Receipt" if the read message is displayed.
+                    var matchedMessage = this.Messages.Items.FirstOrDefault(m => m.Id == this.MessageContainer.ReadReceipt.MessageId);
+                    if (matchedMessage != null)
+                    {
+                        var msgId = long.Parse(matchedMessage.Id);
 
-            //            var readMarker = new InlineReadSentMarkerControlViewModel(
-            //                this.MessageContainer.ReadReceipt.ReadAtTime,
-            //                true,
-            //                (msgId + 1).ToString(),
-            //                (matchedMessage as MessageControlViewModel).MessageColor);
+                        var readMarker = new InlineReadSentMarkerControlViewModel(
+                            this.MessageContainer.ReadReceipt.ReadAtTime,
+                            true,
+                            (msgId + 1).ToString(),
+                            (matchedMessage as MessageControlViewModel).MessageColor);
 
-            //            this.Messages.Add(readMarker);
-            //        }
+                        this.Messages.Add(readMarker);
+                    }
 
-            //        // Attach a "Sent Receipt" to the last message confirmed sent by GroupMe
-            //        var me = this.MessageContainer.WhoAmI();
-            //        var lastSentMessage = this.Messages
-            //            .OfType<MessageControlViewModel>()
-            //            .OrderByDescending(m => m.Id)
-            //            .FirstOrDefault(m => m.Message.UserId == me.Id);
+                    // Attach a "Sent Receipt" to the last message confirmed sent by GroupMe
+                    var me = this.MessageContainer.WhoAmI();
+                    var lastSentMessage = this.Messages.Items
+                        .OfType<MessageControlViewModel>()
+                        .OrderByDescending(m => m.Id)
+                        .FirstOrDefault(m => m.Message.UserId == me.Id);
 
-            //        if (lastSentMessage != null && lastSentMessage != matchedMessage)
-            //        {
-            //            var msgId = long.Parse(lastSentMessage.Id);
+                    if (lastSentMessage != null && lastSentMessage != matchedMessage)
+                    {
+                        var msgId = long.Parse(lastSentMessage.Id);
 
-            //            var sentMarker = new InlineReadSentMarkerControlViewModel(
-            //                lastSentMessage.Message.CreatedAtTime,
-            //                false,
-            //                (msgId + 1).ToString(),
-            //                (lastSentMessage as MessageControlViewModel).MessageColor);
+                        var sentMarker = new InlineReadSentMarkerControlViewModel(
+                            lastSentMessage.Message.CreatedAtTime,
+                            false,
+                            (msgId + 1).ToString(),
+                            (lastSentMessage as MessageControlViewModel).MessageColor);
 
-            //            this.Messages.Add(sentMarker);
-            //        }
+                        this.Messages.Add(sentMarker);
+                    }
 
-            //        // Send a Read Receipt for the last message received
-            //        var lastReceivedMessage = this.Messages
-            //            .OfType<MessageControlViewModel>()
-            //            .OrderByDescending(m => m.Id)
-            //            .FirstOrDefault(m => m.Message.UserId != me.Id);
+                    // Send a Read Receipt for the last message received
+                    var lastReceivedMessage = this.Messages.Items
+                        .OfType<MessageControlViewModel>()
+                        .OrderByDescending(m => m.Id)
+                        .FirstOrDefault(m => m.Message.UserId != me.Id);
 
-            //        if (lastReceivedMessage != null && this.MessageContainer is Chat c)
-            //        {
-            //            var result = Task.Run(async () => await c.SendReadReceipt(lastReceivedMessage.Message)).Result;
-            //        }
-            //    }
+                    if (lastReceivedMessage != null && this.MessageContainer is Chat c)
+                    {
+                        var result = Task.Run(async () => await c.SendReadReceipt(lastReceivedMessage.Message)).Result;
+                    }
+                }
 
-            //    if (originalHeight != 0)
-            //    {
-            //        // Calculate the offset where the last message the user was looking at is
-            //        // Scroll back to there so new messages appear on top, above screen
-            //        //scrollViewer.UpdateLayout();
-            //        //double newHeight = scrollViewer?.ExtentHeight ?? 0.0;
-            //        //double difference = newHeight - originalHeight;
+                if (originalHeight != 0)
+                {
+                    // Calculate the offset where the last message the user was looking at is
+                    // Scroll back to there so new messages appear on top, above screen
+                    //scrollViewer.UpdateLayout();
+                    //double newHeight = scrollViewer?.ExtentHeight ?? 0.0;
+                    //double difference = newHeight - originalHeight;
 
-            //        //scrollViewer.ScrollToVerticalOffset(difference);
-            //    }
+                    //scrollViewer.ScrollToVerticalOffset(difference);
+                }
 
-            //    if (messages.Count > 0)
-            //    {
-            //        this.FirstDisplayedMessage = messages.Last();
-            //    }
-            //});
+                if (messages.Count > 0)
+                {
+                    this.FirstDisplayedMessage = messages.Last();
+                }
+            }
+            //);
         }
 
         private async Task SendMessageAsync()

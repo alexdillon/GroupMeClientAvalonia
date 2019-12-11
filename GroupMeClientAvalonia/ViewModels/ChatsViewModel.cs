@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -16,9 +15,7 @@ using GroupMeClientApi.Models;
 using GroupMeClientApi.Push;
 using GroupMeClientApi.Push.Notifications;
 using Avalonia;
-using Avalonia.Data;
 using System.Reactive.Linq;
-using System.Dynamic;
 using DynamicData;
 using DynamicData.Binding;
 
