@@ -18,6 +18,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <AvaloniaResource Remove="Notifications\Display\WpfToast\ToastHolder.xaml" />
+    <AvaloniaResource Remove="Notifications\Display\WpfToast\ToastNotification.xaml" />
     <AvaloniaResource Remove="Views\Controls\AvatarControl.xaml" />
     <AvaloniaResource Remove="Views\Controls\GroupContentsControl.xaml" />
     <AvaloniaResource Remove="Views\Controls\GroupControl.xaml" />
@@ -27,6 +29,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Notifications\Display\WpfToast\ToastHolder.xaml" />
+    <None Remove="Notifications\Display\WpfToast\ToastNotification.xaml" />
     <None Remove="Views\Controls\AvatarControl.xaml" />
     <None Remove="Views\Controls\GroupContentsControl.xaml" />
     <None Remove="Views\Controls\GroupControl.xaml" />
@@ -92,11 +96,19 @@
   </ItemGroup>
   
   <ItemGroup>
-    <Folder Include="Notifications\Display\WpfToast\" />
+    <EmbeddedResource Include="Views\Controls\GroupContentsControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
   </ItemGroup>
   
   <ItemGroup>
-    <EmbeddedResource Include="Views\Controls\GroupContentsControl.xaml">
+    <EmbeddedResource Include="Notifications\Display\WpfToast\ToastHolder.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  
+  <ItemGroup>
+    <EmbeddedResource Include="Notifications\Display\WpfToast\ToastNotification.xaml">
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
   </ItemGroup>

@@ -14,6 +14,13 @@
     </Design.DataContext>
 
   <Grid>
-    <UserControl Content="{Binding ChatsViewModel}" BorderBrush="Red" BorderThickness="3" />  
+    <UserControl Content="{Binding ChatsViewModel}" BorderBrush="Red" BorderThickness="3" />
+
+    <!--In-App Toast Area-->
+    <UserControl HorizontalAlignment="Right"
+                 VerticalAlignment="Top"
+                 Width="250"
+                 Margin="0,60,5,0"
+                 Content="{Binding ToastHolderManager}" />
   </Grid>
 </Window>

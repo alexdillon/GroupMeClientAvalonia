@@ -1,0 +1,41 @@
+﻿<UserControl x:Class="GroupMeClientAvalonia.Notifications.Display.WpfToast.ToastNotification"
+             xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:controls="clr-namespace:GroupMeClientAvalonia.Views.Controls"
+             mc:Ignorable="d" d:DesignWidth="250" d:DesignHeight="100">
+  
+  <Grid ColumnDefinitions="Auto,*,Auto">
+    <Border Grid.ColumnSpan="3" Height="65" Background="White">
+      <!--<Border.Effect>
+        <DropShadowEffect Opacity="0.5" ShadowDepth="1" BlurRadius="2" />
+      </Border.Effect>-->
+    </Border>
+
+    <controls:AvatarControl Width="25" Height="25"
+                            Margin="5,0,0,0"
+                            Content="{Binding Avatar}"/>
+    <!--TextTrimming="CharacterEllipsis"-->
+    <TextBlock Grid.Column="1"
+                Foreground="Black"
+                FontSize="11"
+                FontWeight="Regular"
+                Text="{Binding Message}"
+                TextWrapping="Wrap"
+                MaxHeight="50"
+                VerticalAlignment="Center"
+                Margin="5"/>
+
+    <Button Grid.Column="2"
+            Margin="1"
+            VerticalAlignment="Top"
+            Width="20"
+            Height="20"
+            BorderThickness="0"
+            Command="{Binding Path=CloseAction}"
+            CommandParameter="{Binding Path=.}">
+      <DrawingPresenter Width="8" Height="8" Drawing="{DynamicResource Material.Close}" />
+    </Button>
+  </Grid>
+</UserControl>

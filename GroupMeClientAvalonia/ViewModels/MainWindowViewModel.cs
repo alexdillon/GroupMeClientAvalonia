@@ -7,6 +7,8 @@ using Avalonia;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Messaging;
 using GroupMeClientAvalonia.Notifications;
+using GroupMeClientAvalonia.Notifications.Display;
+using GroupMeClientAvalonia.Notifications.Display.WpfToast;
 
 namespace GroupMeClientAvalonia.ViewModels
 {
@@ -19,6 +21,11 @@ namespace GroupMeClientAvalonia.ViewModels
         {
             this.InitializeClient();
         }
+
+        /// <summary>
+        /// Gets the Toast Holder Manager for this application.
+        /// </summary>
+        public ToastHolderViewModel ToastHolderManager { get; private set; }
 
         private string DataRoot => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "MicroCube", "GroupMe Desktop Client");
 
@@ -110,11 +117,11 @@ namespace GroupMeClientAvalonia.ViewModels
 
         private void RegisterNotifications()
         {
-            //this.ToastHolderManager = new ToastHolderViewModel();
+            this.ToastHolderManager = new ToastHolderViewModel();
 
             this.NotificationRouter.RegisterNewSubscriber(this.ChatsViewModel);
             //this.NotificationRouter.RegisterNewSubscriber(PopupNotificationProvider.CreatePlatformNotificationProvider());
-            //this.NotificationRouter.RegisterNewSubscriber(PopupNotificationProvider.CreateInternalNotificationProvider(this.ToastHolderManager));
+            this.NotificationRouter.RegisterNewSubscriber(PopupNotificationProvider.CreateInternalNotificationProvider(this.ToastHolderManager));
         }
 
         private void MainWindow_Closing(object sender, CancelEventArgs e)
