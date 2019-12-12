@@ -17,12 +17,6 @@
     </ia:EventTriggerBehavior>
   </i:Interaction.Behaviors>
   
-  <!--<i:Interaction>
-    <i:EventTrigger EventName="MouseLeftButtonDown">
-      <i:InvokeCommandAction Command="{Binding Path=GroupSelected}" CommandParameter="{Binding Path=.}"/>
-    </i:EventTrigger>
-  </i:Interaction.Triggers>-->
-
   <Grid ColumnDefinitions="80,195,60"
         RowDefinitions="Auto, *"
         Margin="0,15,15,0">
@@ -77,18 +71,10 @@
         <ia:DataTriggerBehavior Binding="{Binding TotalUnreadCount}" ComparisonCondition="GreaterThan" Value="0">
           <ia:ChangePropertyAction TargetObject="{Binding #UnreadBubble}" PropertyName="IsVisible" Value="True"/>
         </ia:DataTriggerBehavior>
+        <ia:DataTriggerBehavior Binding="{Binding TotalUnreadCount}" ComparisonCondition="Equal" Value="0">
+          <ia:ChangePropertyAction TargetObject="{Binding #UnreadBubble}" PropertyName="IsVisible" Value="False"/>
+        </ia:DataTriggerBehavior>
       </i:Interaction.Behaviors>
-      
-      <!--<TextBlock.Style>
-        <Style TargetType="{x:Type TextBlock}">
-          <Setter Property="Visibility" Value="Hidden" />
-          <Style.Triggers>
-            <DataTrigger Binding="{Binding Path=TotalUnreadCount, Converter={StaticResource isZeroConverter}}" Value="False">
-              <Setter Property="Visibility" Value="Visible" />
-            </DataTrigger>
-          </Style.Triggers>
-        </Style>
-      </TextBlock.Style>-->
 
       <TextBlock.Background>
         <VisualBrush>

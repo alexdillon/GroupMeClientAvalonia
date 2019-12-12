@@ -5,6 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:controls="clr-namespace:GroupMeClientAvalonia.Views.Controls"
              xmlns:extensions="clr-namespace:GroupMeClientAvalonia.Extensions"
+             FontFamily="Segoe UI"
              mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="200">
 
   <Grid Background="{Binding MessageColor}">
@@ -52,7 +53,9 @@
         </ItemsControl.ItemsPanel>
       </ItemsControl>
 
-      <TextBlock Margin="0,0,0,20">
+      <TextBlock Margin="0,0,0,20"
+                 FontSize="15"
+                 Text="{Binding Text}">
         <!--<extensions:SelectableTextBlock
             FontSize="15"
             TextWrapping="Wrap"

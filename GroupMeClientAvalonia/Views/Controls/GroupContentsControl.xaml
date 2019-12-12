@@ -10,11 +10,6 @@
              mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="700"
              Background="#F7F7F7">
 
-  <!--<UserControl.Resources>
-    <BooleanToVisibilityConverter x:Key="boolToVisibilityConverter"/>
-    <converters:NullToVisibilityConverter x:Key="nullToVisibilityConverter"/>
-  </UserControl.Resources>-->
-
   <Grid ColumnDefinitions="*"
         RowDefinitions="Auto,7,*,Auto">
 
@@ -30,34 +25,26 @@
           Margin="10,0,10,0"
           DataContext="{Binding TopBarAvatar}"/>
 
+      
       <!--Group Name and Plugins Drop Down Menu Button-->
       <ToggleButton Grid.Column="1"
                     BorderThickness="0"
                     HorizontalAlignment="Left"
                     FontSize="17" FontWeight="SemiBold"
+                    Background="White"
                     x:Name="toggleGroupOptionsButton">
 
-        <!--<ToggleButton.Style>
-          <Style TargetType="{x:Type ToggleButton}">
-            <Setter Property="Template">
-              <Setter.Value>
-                <ControlTemplate TargetType="{x:Type ToggleButton}">
-                  <Border HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="border" Background="White">
-                    <ContentPresenter Margin="5"/>
-                  </Border>
-                  <ControlTemplate.Triggers>
-                    <Trigger Property="IsChecked" Value="true">
-                      <Setter Property="Background" TargetName="border" Value="White"/>
-                    </Trigger>
-                  </ControlTemplate.Triggers>
-                </ControlTemplate>
-              </Setter.Value>
-            </Setter>
+        <ToggleButton.Styles>
+          <Style Selector="ToggleButton:checked /template/ ContentPresenter">
+            <Setter Property="Background" Value="White"/>
           </Style>
-        </ToggleButton.Style>-->
-
-        <!--Toggle Button Content-->
-        <Grid ColumnDefinitions="*,Auto">
+          <Style Selector="ToggleButton:pressed /template/ ContentPresenter">
+            <Setter Property="Background" Value="White"/>
+          </Style>
+        </ToggleButton.Styles>
+        
+        <!--Toggle Button Content, The Group Name and the Dropdown Arrow-->
+        <Grid ColumnDefinitions="*,Auto" Background="White">
           <!--Chat Name Label-->
           <!--TextTrimming="CharacterEllipsis"-->
           <TextBlock Grid.Column="0"
@@ -69,13 +56,13 @@
           </TextBlock>
 
           <!--Plugin Dropdown Arrow-->
-          <DrawingPresenter Grid.Column="1" Width="15" Height="15" Name="PluginMenuDropdownLabel" Drawing="{DynamicResource Ionicons.ArrowDropdownMD}">
+          <DrawingPresenter Grid.Column="1" Width="15" Height="15" Margin="0,10,0,0" Name="PluginMenuDropdownLabel" Drawing="{DynamicResource Ionicons.ArrowDropdownMD}">
             <i:Interaction.Behaviors>
               <ia:DataTriggerBehavior Binding="{Binding IsChecked, ElementName=toggleGroupOptionsButton}" ComparisonCondition="Equal" Value="True">
-                <ia:ChangePropertyAction TargetObject="{Binding #PluginMenuDropdownLabel}" PropertyName="Drawing" Value="{DynamicResource Ionicons.ArrowDropdownMD}"/>
+                <ia:ChangePropertyAction TargetObject="{Binding #PluginMenuDropdownLabel}" PropertyName="Drawing" Value="{DynamicResource Ionicons.ArrowDropupMD}"/>
               </ia:DataTriggerBehavior>
               <ia:DataTriggerBehavior Binding="{Binding IsChecked, ElementName=toggleGroupOptionsButton}" ComparisonCondition="NotEqual" Value="True">
-                <ia:ChangePropertyAction TargetObject="{Binding #PluginMenuDropdownLabel}" PropertyName="Drawing" Value="{DynamicResource Ionicons.ArrowDropupMD}"/>
+                <ia:ChangePropertyAction TargetObject="{Binding #PluginMenuDropdownLabel}" PropertyName="Drawing" Value="{DynamicResource Ionicons.ArrowDropdownMD}"/>
               </ia:DataTriggerBehavior>
             </i:Interaction.Behaviors>
           </DrawingPresenter>
@@ -87,6 +74,7 @@
               HorizontalAlignment="Right"
               Width="35" Height="35"
               BorderThickness="0"
+              Background="White"
               Command="{Binding Path=CloseGroup}"
               CommandParameter="{Binding Path=.}">
         <DrawingPresenter Width="15" Height="15" Drawing="{DynamicResource Material.Close}" />
@@ -118,6 +106,44 @@
              ScrollViewer.HorizontalScrollBarVisibility="Disabled"
              x:Name="messagesList">
 
+      <ListBox.Styles>
+        <Style Selector="ListBoxItem">
+          <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+          <Setter Property="VerticalContentAlignment" Value="Top"/>
+          <!--<Setter Property="Focusable" Value="{Binding Path=DataContext.IsSelectionAllowed, RelativeSource={RelativeSource AncestorType=controls:GroupContentsControl}}"/>-->
+          <Setter Property="Margin" Value="0" />
+
+          <!--Sometimes, the ListBoxItem will not adjust when multiple chats are rapidly opened. Bind the width to solve it.-->
+          <Setter Property="Width" Value="300"/>
+
+          <Setter Property="Template">
+            <Setter.Value>
+              <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                <Border BorderThickness="0"
+                        x:Name="highlightBorder"
+                        Margin="0" >
+                  <ContentPresenter Name="PART_ContentPresenter"
+                                    Background="{TemplateBinding Background}"
+                                    BorderBrush="Transparent"
+                                    BorderThickness="0"
+                                    ContentTemplate="{TemplateBinding ContentTemplate}"
+                                    Content="{TemplateBinding Content}"
+                                    Padding="0"
+                                    VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                    HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"/>
+                </Border>
+                <!--<ControlTemplate.Triggers>
+                  <Trigger Property="IsSelected" Value="true">
+                    <Setter TargetName="highlightBorder" Property="BorderThickness" Value="3"/>
+                    <Setter TargetName="highlightBorder" Property="BorderBrush" Value="#1873BA"/>
+                  </Trigger>
+                </ControlTemplate.Triggers>-->
+              </ControlTemplate>
+            </Setter.Value>
+          </Setter>
+        </Style>
+      </ListBox.Styles>
+      
       <!--<ListBox.ItemContainerStyle>
         <Style TargetType="{x:Type ListBoxItem}">
           <Setter Property="HorizontalContentAlignment" Value="Left"/>
@@ -128,34 +154,13 @@
       <!--Sometimes, the ListBoxItem will not adjust when multiple chats are rapidly opened. Bind the width to solve it.-->
       <!--
           <Setter Property="Width" Value="{Binding Path=ViewportWidth, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ScrollViewer}}"/>
-
-          <Setter Property="Template">
-            <Setter.Value>
-              <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                <Border BorderThickness="0"
-                        x:Name="highlightBorder"
-                        Margin="0" >
-                  <ContentPresenter />
-                </Border>
-
-                <ControlTemplate.Triggers>
-                  <Trigger Property="IsSelected" Value="true">
-                    <Setter TargetName="highlightBorder" Property="BorderThickness" Value="3"/>
-                    <Setter TargetName="highlightBorder" Property="BorderBrush" Value="#1873BA"/>
-                  </Trigger>
-                </ControlTemplate.Triggers>
-              </ControlTemplate>
-            </Setter.Value>
-          </Setter>
         </Style>
       </ListBox.ItemContainerStyle>-->
 
       <ListBox.ItemTemplate>
         <DataTemplate>
           <!--SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}"-->
-          <UserControl
-              Content="{Binding Path=.}"
-              />
+          <UserControl Content="{Binding Path=.}" />
         </DataTemplate>
       </ListBox.ItemTemplate>
 

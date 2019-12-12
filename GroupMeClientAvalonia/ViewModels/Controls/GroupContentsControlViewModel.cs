@@ -344,7 +344,7 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
                 return;
             }
 
-            //await Avalonia.Threading.Dispatcher.InvokeAsync(() =>
+            Avalonia.Threading.Dispatcher.UIThread.Post(() =>
             {
                 // the code that's accessing UI properties
                 double originalHeight = scrollViewer?.Height ?? 0.0;
@@ -462,7 +462,7 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
                     this.FirstDisplayedMessage = messages.Last();
                 }
             }
-            //);
+            );
         }
 
         private async Task SendMessageAsync()

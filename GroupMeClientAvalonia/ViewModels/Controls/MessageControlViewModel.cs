@@ -146,6 +146,24 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
             }
         }
 
+        /// <summary>
+        /// Gets the contents of the message, without any additional formatting.
+        /// </summary>
+        public string Text
+        {
+            get
+            {
+                var text = this.Message.Text ?? string.Empty;
+
+                if (!string.IsNullOrEmpty(this.HiddenText))
+                {
+                    text = text.Replace(this.HiddenText, string.Empty);
+                }
+
+                return text;
+            }
+        }
+
         ///// <summary>
         ///// Gets a collection of inline text blocks to display for the message.
         ///// </summary>
