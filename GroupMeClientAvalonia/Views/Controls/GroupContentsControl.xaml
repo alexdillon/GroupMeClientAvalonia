@@ -25,7 +25,6 @@
           Margin="10,0,10,0"
           DataContext="{Binding TopBarAvatar}"/>
 
-      
       <!--Group Name and Plugins Drop Down Menu Button-->
       <ToggleButton Grid.Column="1"
                     BorderThickness="0"
@@ -49,7 +48,6 @@
           <!--TextTrimming="CharacterEllipsis"-->
           <TextBlock Grid.Column="0"
                   HorizontalAlignment="Stretch" VerticalAlignment="Center"
-                  Height="NaN"
                   FontSize="17" FontWeight="SemiBold"
                   TextWrapping="NoWrap"
                   Text="{Binding Title}">
@@ -106,15 +104,18 @@
              ScrollViewer.HorizontalScrollBarVisibility="Disabled"
              x:Name="messagesList">
 
+      <i:Interaction.Behaviors>
+        <extensions:InfiniteScrollBehavior ReachedTopCommand="{Binding ReloadView}" />
+      </i:Interaction.Behaviors>
+
       <ListBox.Styles>
         <Style Selector="ListBoxItem">
-          <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+          <Setter Property="HorizontalContentAlignment" Value="Left"/>
           <Setter Property="VerticalContentAlignment" Value="Top"/>
           <!--<Setter Property="Focusable" Value="{Binding Path=DataContext.IsSelectionAllowed, RelativeSource={RelativeSource AncestorType=controls:GroupContentsControl}}"/>-->
-          <Setter Property="Margin" Value="0" />
 
-          <!--Sometimes, the ListBoxItem will not adjust when multiple chats are rapidly opened. Bind the width to solve it.-->
-          <Setter Property="Width" Value="300"/>
+          <!--Binding the width seems to be essential in Avalonia to prevent the message from overflowing on the right side-->
+          <Setter Property="Width" Value="{Binding $parent[0].Bounds.Width}"/>
 
           <Setter Property="Template">
             <Setter.Value>
@@ -130,7 +131,8 @@
                                     Content="{TemplateBinding Content}"
                                     Padding="0"
                                     VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                    HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"/>
+                                    HorizontalContentAlignment="Stretch"
+                                    Margin="0,0,20,0"/>
                 </Border>
                 <!--<ControlTemplate.Triggers>
                   <Trigger Property="IsSelected" Value="true">
@@ -143,24 +145,10 @@
           </Setter>
         </Style>
       </ListBox.Styles>
-      
-      <!--<ListBox.ItemContainerStyle>
-        <Style TargetType="{x:Type ListBoxItem}">
-          <Setter Property="HorizontalContentAlignment" Value="Left"/>
-          <Setter Property="VerticalContentAlignment" Value="Top"/>
-          <Setter Property="Focusable" Value="{Binding Path=DataContext.IsSelectionAllowed, RelativeSource={RelativeSource AncestorType=controls:GroupContentsControl}}"/>
-
-          -->
-      <!--Sometimes, the ListBoxItem will not adjust when multiple chats are rapidly opened. Bind the width to solve it.-->
-      <!--
-          <Setter Property="Width" Value="{Binding Path=ViewportWidth, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ScrollViewer}}"/>
-        </Style>
-      </ListBox.ItemContainerStyle>-->
 
       <ListBox.ItemTemplate>
         <DataTemplate>
-          <!--SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}"-->
-          <UserControl Content="{Binding Path=.}" />
+          <ContentControl Content="{Binding Path=.}" />
         </DataTemplate>
       </ListBox.ItemTemplate>
 
@@ -180,8 +168,7 @@
             VerticalAlignment="Bottom"
             Margin="0,0,30,20"
             Background="#637182"
-            BorderBrush="#637182"
-           >
+            BorderBrush="#637182" >
       <Button.Content>
         <DrawingPresenter Drawing="{DynamicResource FeatherIcons.ArrowDown}"
                           Width="17" Height="17"
@@ -353,5 +340,6 @@
                     Visibility="{Binding SmallDialog, Converter={StaticResource nullToVisibilityConverter}}">
       <UserControl Content="{Binding SmallDialog}" />
     </controls:Popup>-->
-  </Grid>
+  
+</Grid>
 </UserControl>
