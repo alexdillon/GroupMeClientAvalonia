@@ -3,35 +3,37 @@
              xmlns:vm="clr-namespace:GroupMeClientAvalonia.ViewModels"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:converters="clr-namespace:GroupMeClientAvalonia.Converters"
+             xmlns:i="clr-namespace:Avalonia.Xaml.Interactivity;assembly=Avalonia.Xaml.Interactivity"
+             xmlns:ia="clr-namespace:Avalonia.Xaml.Interactions.Core;assembly=Avalonia.Xaml.Interactions"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="GroupMeClientAvalonia.Views.ChatsView">
 
-  <!--<UserControl.Resources>
+  <UserControl.Resources>
     <ResourceDictionary>
-      <BooleanToVisibilityConverter x:Key="boolToVisibilityConverter" />
-
-      <Style TargetType="{x:Type ToggleButton}"
-             BasedOn="{StaticResource MahApps.Metro.Styles.MetroButton}"
-             x:Key="FlatButtonNoCaps">
-        <Setter Property="Controls:ButtonHelper.PreserveTextCase" Value="True"/>
-      </Style>
+      <converters:InverseBoolConverter x:Key="inverseBoolConverter" />
     </ResourceDictionary>
-  </UserControl.Resources>-->
+  </UserControl.Resources>
+
+  <UserControl.Styles>
+    <Style Selector="Button.RoundedMenu">
+      <Setter Property="Background" Value="#F7F7F7" />
+    </Style>
+    <Style Selector="Button.RoundedMenu /template/ ContentPresenter">
+      <Setter Property="CornerRadius" Value="5"/>
+    </Style>
+    
+    <Style Selector="ToggleButton.RoundedMenu">
+      <Setter Property="Background" Value="#F7F7F7" />
+    </Style>
+    <Style Selector="ToggleButton.RoundedMenu /template/ ContentPresenter">
+      <Setter Property="CornerRadius" Value="5"/>
+    </Style>
+  </UserControl.Styles>
 
   <Grid>
     <Grid.ColumnDefinitions>
-      <ColumnDefinition Width="350">
-        <!--<ColumnDefinition.Style>
-          <Style TargetType="{x:Type ColumnDefinition}">
-            <Setter Property="Width" Value="350" />
-            <Style.Triggers>
-              <DataTrigger Binding="{Binding IsChecked, ElementName=toggleMiniSidebar}" Value="True">
-                <Setter Property="Width" Value="100" />
-              </DataTrigger>
-            </Style.Triggers>
-          </Style>
-        </ColumnDefinition.Style>-->
-      </ColumnDefinition>
+      <ColumnDefinition Width="Auto" />
       <ColumnDefinition Width="*" />
     </Grid.ColumnDefinitions>
     <Grid.RowDefinitions>
@@ -42,6 +44,15 @@
     <Grid Grid.Column="0" Grid.Row="0"
           ColumnDefinitions="*"
           RowDefinitions="Auto, *">
+
+      <i:Interaction.Behaviors>
+        <ia:DataTriggerBehavior Binding="{Binding #toggleMiniSidebar.IsChecked}" ComparisonCondition="Equal" Value="True">
+          <ia:ChangePropertyAction PropertyName="Width" Value="90"/>
+        </ia:DataTriggerBehavior>
+        <ia:DataTriggerBehavior Binding="{Binding #toggleMiniSidebar.IsChecked}" ComparisonCondition="NotEqual" Value="True">
+          <ia:ChangePropertyAction PropertyName="Width" Value="350"/>
+        </ia:DataTriggerBehavior>
+      </i:Interaction.Behaviors>
       
       <Grid Grid.Row="0" Background="White"
             ColumnDefinitions="Auto,*,Auto,Auto"
@@ -56,10 +67,19 @@
                       Background="White"
                       Focusable="False"
                       Content="Chats"
-                      x:Name="toggleMiniSidebar" />
+                      x:Name="toggleMiniSidebar">
+          <ToggleButton.Styles>
+            <Style Selector="ToggleButton:checked /template/ ContentPresenter">
+              <Setter Property="Background" Value="White"/>
+            </Style>
+            <Style Selector="ToggleButton:pressed /template/ ContentPresenter">
+              <Setter Property="Background" Value="White"/>
+            </Style>
+          </ToggleButton.Styles>
+        </ToggleButton>
 
         <TextBox Grid.Column="1"
-                 IsVisible="{Binding IsChecked, ElementName=toggleSearchBox}"
+                 IsVisible="{Binding #toggleSearchBox.IsChecked}"
                  AcceptsReturn="False"
                  Height="35"
                  Margin="10,0,0,0"
@@ -71,27 +91,26 @@
         <!--extensions:EventFocusAttachment.ElementToFocus="{Binding ElementName=searchTextBox}"-->
         <ToggleButton Grid.Column="2"
                       Width="35" Height="35"
+                      Classes="RoundedMenu"
                       BorderThickness="0"
                       HorizontalAlignment="Left"
                       x:Name="toggleSearchBox"
+                      IsVisible="{Binding #toggleMiniSidebar.IsChecked, Converter={StaticResource inverseBoolConverter}}"
                       Command="{Binding SearchToggled}"
                       CommandParameter="{Binding Path=IsChecked, RelativeSource={RelativeSource Self}}">
-          <ToggleButton.Content>
             <DrawingPresenter Width="15" Height="15" Drawing="{DynamicResource Material.Magnify}" />
-          </ToggleButton.Content>
         </ToggleButton>
 
         <Button Grid.Column="3"
                 Width="35" Height="35"
+                Classes="RoundedMenu"
                 BorderThickness="0"
                 Foreground="#637182"
                 Margin="5,0,0,0"
+                IsVisible="{Binding #toggleMiniSidebar.IsChecked, Converter={StaticResource inverseBoolConverter}}"
                 Command="{Binding Path=MarkAllAsRead}"
                 CommandParameter="{Binding Path=.}">
-
-          <Button.Content>
             <DrawingPresenter Width="15" Height="15" Drawing="{DynamicResource Entypo+.Unread}" />
-          </Button.Content>
         </Button>
 
         <Border Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="0" BorderBrush="#637182" BorderThickness="0,0,0,1" Margin="0,0,15,0"/>
