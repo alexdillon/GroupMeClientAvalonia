@@ -1,0 +1,75 @@
+﻿<UserControl x:Class="GroupMeClientAvalonia.Views.Controls.Attachments.GenericLinkAttachmentControl"
+             xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:i="clr-namespace:Avalonia.Xaml.Interactivity;assembly=Avalonia.Xaml.Interactivity"
+             xmlns:ia="clr-namespace:Avalonia.Xaml.Interactions.Core;assembly=Avalonia.Xaml.Interactions"
+             FontFamily="Segoe UI"
+             Background="White"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450">
+
+  <i:Interaction.Behaviors>
+    <ia:EventTriggerBehavior EventName="PointerPressed">
+      <ia:InvokeCommandAction Command="{Binding Clicked}"/>
+    </ia:EventTriggerBehavior>
+  </i:Interaction.Behaviors>
+
+  <!--ForceCursor=true-->
+  <Grid Cursor="Hand">
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="*"/>
+    </Grid.ColumnDefinitions>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="*"/>
+      <RowDefinition Height="Auto"/>
+    </Grid.RowDefinitions>
+
+    <Image Grid.Row="0"
+           Grid.RowSpan="2"
+           MaxWidth="300"
+           MaxHeight="250"
+           MinWidth="200"
+           MinHeight="200"
+           VerticalAlignment="Stretch"
+           HorizontalAlignment="Stretch"
+           Source="{Binding RenderedImage}" />
+
+    <StackPanel Grid.Row="1">
+      <StackPanel.Background>
+        <SolidColorBrush Color="Black" Opacity="0.4"/>
+      </StackPanel.Background>
+
+      <!--TextTrimming="CharacterEllipsis"-->
+      <!--Padding="5"-->
+      <Decorator Padding="5">
+        
+      
+      <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center"
+                 TextWrapping="NoWrap" 
+                 Text="{Binding Title}"
+                 Foreground="White" FontWeight="SemiBold"
+                 Margin="10,0,0,0"/>
+      </Decorator>
+      
+      <Grid Margin="10,0,0,0">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="Auto"/>
+          <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+          <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Image Grid.Row="0" Grid.Column="0"
+               Width="15"
+               HorizontalAlignment="Left"
+               Source="{Binding FaviconImage}" />
+
+        <TextBlock Grid.Row="0" Grid.Column="1"
+                   Text="{Binding Site}"
+                   Foreground="White"/>
+      </Grid>
+    </StackPanel>
+  </Grid>
+</UserControl>

@@ -20,6 +20,9 @@
   <ItemGroup>
     <AvaloniaResource Remove="Notifications\Display\WpfToast\ToastHolder.xaml" />
     <AvaloniaResource Remove="Notifications\Display\WpfToast\ToastNotification.xaml" />
+    <AvaloniaResource Remove="Views\Controls\Attachments\GenericLinkAttachmentControl.xaml" />
+    <AvaloniaResource Remove="Views\Controls\Attachments\GroupMeImageAttachmentControl.xaml" />
+    <AvaloniaResource Remove="Views\Controls\Attachments\TwitterAttachmentControl.xaml" />
     <AvaloniaResource Remove="Views\Controls\AvatarControl.xaml" />
     <AvaloniaResource Remove="Views\Controls\GroupContentsControl.xaml" />
     <AvaloniaResource Remove="Views\Controls\GroupControl.xaml" />
@@ -32,6 +35,9 @@
   <ItemGroup>
     <None Remove="Notifications\Display\WpfToast\ToastHolder.xaml" />
     <None Remove="Notifications\Display\WpfToast\ToastNotification.xaml" />
+    <None Remove="Views\Controls\Attachments\GenericLinkAttachmentControl.xaml" />
+    <None Remove="Views\Controls\Attachments\GroupMeImageAttachmentControl.xaml" />
+    <None Remove="Views\Controls\Attachments\TwitterAttachmentControl.xaml" />
     <None Remove="Views\Controls\AvatarControl.xaml" />
     <None Remove="Views\Controls\GroupContentsControl.xaml" />
     <None Remove="Views\Controls\GroupControl.xaml" />
@@ -121,5 +127,22 @@
     </EmbeddedResource>
   </ItemGroup>
   
- 
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Controls\Attachments\GenericLinkAttachmentControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Controls\Attachments\GroupMeImageAttachmentControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Controls\Attachments\TwitterAttachmentControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  
 </Project>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Avalonia.Media.Imaging;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using GroupMeClientApi;
@@ -13,7 +14,7 @@ namespace GroupMeClientAvalonia.ViewModels.Controls.Attachments
     /// </summary>
     public class GroupMeImageAttachmentControlViewModel : LinkAttachmentBaseViewModel, IDisposable
     {
-        private System.IO.Stream imageAttachmentStream;
+        private IBitmap imageAttachmentStream;
         private bool isLoading;
 
         /// <summary>
@@ -63,7 +64,7 @@ namespace GroupMeClientAvalonia.ViewModels.Controls.Attachments
         /// <summary>
         /// Gets the attached image.
         /// </summary>
-        public System.IO.Stream ImageAttachmentStream
+        public IBitmap ImageAttachmentStream
         {
             get { return this.imageAttachmentStream; }
             internal set { this.Set(() => this.ImageAttachmentStream, ref this.imageAttachmentStream, value); }
@@ -123,7 +124,7 @@ namespace GroupMeClientAvalonia.ViewModels.Controls.Attachments
                 return;
             }
 
-            this.ImageAttachmentStream = new System.IO.MemoryStream(image);
+            this.ImageAttachmentStream = Utilities.ImageUtils.BytesToImageSource(image);
             this.IsLoading = false;
         }
 
