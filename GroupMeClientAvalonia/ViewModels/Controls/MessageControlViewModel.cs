@@ -11,6 +11,7 @@ using GalaSoft.MvvmLight.Command;
 using GroupMeClientAvalonia.ViewModels.Controls.Attachments;
 using GroupMeClientApi.Models;
 using GroupMeClientApi.Models.Attachments;
+using Avalonia;
 
 namespace GroupMeClientAvalonia.ViewModels.Controls
 {
@@ -219,27 +220,30 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
             }
         }
 
-        ///// <summary>
-        ///// Gets the icon to display for the like status of this <see cref="Message"/>.
-        ///// </summary>
-        //public MahApps.Metro.IconPacks.PackIconFontAwesomeKind LikeStatus
-        //{
-        //    get
-        //    {
-        //        if (!this.ShowLikers)
-        //        {
-        //            return MahApps.Metro.IconPacks.PackIconFontAwesomeKind.None;
-        //        }
-        //        else if (this.Message.FavoritedBy.Count > 0)
-        //        {
-        //            return MahApps.Metro.IconPacks.PackIconFontAwesomeKind.HeartSolid;
-        //        }
-        //        else
-        //        {
-        //            return MahApps.Metro.IconPacks.PackIconFontAwesomeKind.HeartRegular;
-        //        }
-        //    }
-        //}
+        /// <summary>
+        /// Gets the icon to display for the like status of this <see cref="Message"/>.
+        /// </summary>
+        public object LikeStatus
+        {
+            get
+            {
+                if (!this.ShowLikers)
+                {
+                    return Application.Current.Resources["FontAwesome.HeartSolid"];
+                    //return MahApps.Metro.IconPacks.PackIconFontAwesomeKind.None;
+                }
+                else if (this.Message.FavoritedBy.Count > 0)
+                {
+                    return Application.Current.Resources["FontAwesome.HeartSolid"];
+                    //return MahApps.Metro.IconPacks.PackIconFontAwesomeKind.HeartSolid;
+                }
+                else
+                {
+                    return Application.Current.Resources["FontAwesome.HeartRegular"];
+                    //return MahApps.Metro.IconPacks.PackIconFontAwesomeKind.HeartRegular;
+                }
+            }
+        }
 
         /// <summary>
         /// Gets the brush color to render the like icon with for this <see cref="Message"/>.
