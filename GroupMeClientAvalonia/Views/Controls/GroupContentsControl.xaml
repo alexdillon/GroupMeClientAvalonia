@@ -114,6 +114,7 @@
           <Setter Property="HorizontalContentAlignment" Value="Left"/>
           <Setter Property="VerticalContentAlignment" Value="Top"/>
           <Setter Property="Focusable" Value="{Binding Path=DataContext.IsSelectionAllowed, RelativeSource={RelativeSource AncestorType=controls:GroupContentsControl}}"/>
+          <Setter Property="ClipToBounds" Value="False" />
           
           <Setter Property="Template">
             <Setter.Value>
@@ -145,7 +146,8 @@
 
       <ListBox.ItemTemplate>
         <DataTemplate>
-          <ContentControl Content="{Binding Path=.}" />
+          <ContentControl Content="{Binding Path=.}"
+                          ClipToBounds="False"/>
         </DataTemplate>
       </ListBox.ItemTemplate>
 

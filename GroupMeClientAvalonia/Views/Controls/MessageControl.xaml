@@ -9,6 +9,7 @@
              xmlns:converters="clr-namespace:GroupMeClientAvalonia.Converters"
              xmlns:extensions="clr-namespace:GroupMeClientAvalonia.Extensions"
              FontFamily="Segoe UI"
+             ClipToBounds="False"
              mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="200">
 
   <UserControl.Resources>
@@ -80,6 +81,7 @@
         <RowDefinition Height="15" />
         <RowDefinition Height="Auto" />
         <RowDefinition Height="10" />
+        <RowDefinition Height="10" />
       </Grid.RowDefinitions>
       <Grid.ColumnDefinitions>
         <ColumnDefinition Width="3"/>
@@ -98,13 +100,12 @@
                                      Kind="{Binding LikeStatus}" Foreground="{Binding LikeColor}"
                                      Background="Transparent" />-->
 
-      <!--Padding="0,17,0,0"-->
-      <TextBlock
-          Grid.Row="1"
-          Grid.Column="1"
-          HorizontalAlignment="Center"
-          Foreground="#637182" FontSize="10" FontWeight="Thin"
-          Text="{Binding LikeCount}" />
+      <TextBlock Grid.Row="2" Grid.Column="1"
+                 HorizontalAlignment="Center"
+                 ClipToBounds="False"
+                 Margin="2,0,0,0"
+                 Foreground="#637182" FontSize="10" FontWeight="Thin"
+                 Text="{Binding LikeCount}" />  
 
       <i:Interaction.Behaviors>
         <ia:EventTriggerBehavior EventName="PointerPressed">
@@ -115,51 +116,46 @@
 
     <Canvas x:Name="likesCanvas"
             Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" Margin="0,-45,20,0"
-            Background="Green"
-            ZIndex="1000">
+            IsVisible="True"
+            Background="Transparent">
 
-      <!--Use a trigger to change the visibility of the liker's popup area-->
-      <!--<Canvas.Styles>
-        <Style Selector="Canvas">
-          <Setter Property="IsVisible" Value="Visible" />
-          <Style.Triggers>
-            <MultiDataTrigger>
-              <MultiDataTrigger.Conditions>
-                <Condition Binding="{Binding Path=LikeCount, Converter={StaticResource isZeroConverter}}" Value="True" />
-              </MultiDataTrigger.Conditions>
-              <Setter Property="Visibility" Value="Collapsed" />
-            </MultiDataTrigger>
+      <!--Without MultiDataTriggers, this is tricky to do in Avalonia....-->
+      <i:Interaction.Behaviors>
+        <!--Make the Liker's Area invisible when the message has no likes-->
+        <ia:DataTriggerBehavior Binding="{Binding LikeCount, Converter={StaticResource isZeroConverter}}" Value="True">
+          <ia:ChangePropertyAction TargetObject="{Binding #likesCanvas}" PropertyName="IsVisible" Value="False" />
+        </ia:DataTriggerBehavior>
+        <ia:DataTriggerBehavior Binding="{Binding LikeCount, Converter={StaticResource isZeroConverter}}" Value="False">
+          <ia:ChangePropertyAction TargetObject="{Binding #likesCanvas}" PropertyName="IsVisible" Value="True" />
+        </ia:DataTriggerBehavior>
 
-            <MultiDataTrigger>
-              <MultiDataTrigger.Conditions>
-                <Condition Binding="{Binding IsMouseOver, ElementName=likeButtonArea}" Value="False" />
-                <Condition Binding="{Binding IsMouseOver, ElementName=likesCanvas}" Value="False" />
-              </MultiDataTrigger.Conditions>
-              <Setter Property="Visibility" Value="Hidden" />
-            </MultiDataTrigger>
-          </Style.Triggers>
-        </Style>
-      </Canvas.Styles>-->
+        <!--Show Liker's Area when hoving over the Like Button Area. Also include the Bubble Area to prevent flickering.-->
+        <ia:DataTriggerBehavior Binding="{Binding #likeButtonArea.IsPointerOver}" Value="True">
+          <ia:ChangePropertyAction TargetObject="{Binding #likesBubble}" PropertyName="IsVisible" Value="True" />
+        </ia:DataTriggerBehavior>
+        <ia:DataTriggerBehavior Binding="{Binding #likesBubble.IsPointerOver}" Value="True">
+          <ia:ChangePropertyAction TargetObject="{Binding #likesBubble}" PropertyName="IsVisible" Value="True" />
+        </ia:DataTriggerBehavior>
+
+        <!--Hide the Liker's Area when leaving-->
+        <ia:DataTriggerBehavior Binding="{Binding #likeButtonArea.IsPointerOver}" Value="False">
+          <ia:ChangePropertyAction TargetObject="{Binding #likesBubble}" PropertyName="IsVisible" Value="False" />
+        </ia:DataTriggerBehavior>
+        <ia:DataTriggerBehavior Binding="{Binding #likesBubble.IsPointerOver}" Value="False">
+          <ia:ChangePropertyAction TargetObject="{Binding #likesBubble}" PropertyName="IsVisible" Value="False" />
+        </ia:DataTriggerBehavior>
+      </i:Interaction.Behaviors>
 
       <Grid Width="{Binding $parent[Canvas].Bounds.Width}">
         <Border BorderThickness="1" CornerRadius="5"
-                    BorderBrush="#637182" Background="#F7F7F7"
-                    Width="NaN" Height="65" HorizontalAlignment="Right">
+                BorderBrush="#637182" Background="#F7F7F7"
+                Height="65" HorizontalAlignment="Right"
+                IsVisible="False"
+                x:Name="likesBubble">
 
-          <!--ScrollViewer.CanContentScroll="True"-->
           <ItemsControl Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3"
                         Margin="7"
                         Items="{Binding LikedByAvatars}">
-
-            <!--<ItemsControl.Styles>
-              <Style TargetType="ItemsControl">
-                <Style.Triggers>
-                  <DataTrigger Binding="{Binding Visibility, ElementName=likesCanvas}" Value="Visible">
-                    <Setter Property="ItemsSource" Value="{Binding Path=LikedByAvatars}" />
-                  </DataTrigger>
-                </Style.Triggers>
-              </Style>
-            </ItemsControl.Styles>-->
 
             <ItemsControl.ItemTemplate>
               <DataTemplate>
@@ -169,8 +165,7 @@
 
             <ItemsControl.ItemsPanel>
               <ItemsPanelTemplate>
-                <StackPanel
-                    Orientation="Horizontal" />
+                <StackPanel Orientation="Horizontal" />
               </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
           </ItemsControl>
@@ -178,7 +173,7 @@
       </Grid>
     </Canvas>
 
-    <StackPanel Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3"
+    <StackPanel Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3"
                 Orientation="Vertical"
                 Background="LightGray"
                 Height="45"
