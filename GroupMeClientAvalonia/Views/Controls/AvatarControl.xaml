@@ -17,11 +17,13 @@
 
         <Image Grid.Column="0" Grid.Row="0" 
                Width="NaN" Height="NaN"
-               Source="{Binding AvatarSquare}"/>
+               Source="{Binding AvatarSquare}"
+               RenderOptions.BitmapInterpolationMode="MediumQuality" />
         
         <Ellipse Grid.Column="0" Grid.Row="0" Width="NaN" Height="NaN">
             <Ellipse.Fill>
-                <ImageBrush Source="{Binding AvatarRound}" />
+                <ImageBrush Source="{Binding AvatarRound}"
+                            RenderOptions.BitmapInterpolationMode="MediumQuality"/>
             </Ellipse.Fill>
         </Ellipse>
     </Grid>
