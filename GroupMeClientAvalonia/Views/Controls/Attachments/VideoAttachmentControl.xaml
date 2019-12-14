@@ -1,0 +1,34 @@
+﻿<UserControl x:Class="GroupMeClientAvalonia.Views.Controls.Attachments.VideoAttachmentControl"
+             xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:i="clr-namespace:Avalonia.Xaml.Interactivity;assembly=Avalonia.Xaml.Interactivity"
+             xmlns:ia="clr-namespace:Avalonia.Xaml.Interactions.Core;assembly=Avalonia.Xaml.Interactions"
+             mc:Ignorable="d" d:DesignHeight="200" d:DesignWidth="200"
+             Background="White"
+             FontFamily="Segoe UI">
+
+  <Grid Cursor="Hand">
+    <i:Interaction.Behaviors>
+      <ia:EventTriggerBehavior EventName="PointerPressed">
+        <ia:InvokeCommandAction Command="{Binding Clicked}"/>
+      </ia:EventTriggerBehavior>
+    </i:Interaction.Behaviors>
+    
+    <Image Grid.Row="0"
+           Grid.RowSpan="2"
+           MaxWidth="600"
+           MaxHeight="300"
+           VerticalAlignment="Stretch"
+           HorizontalAlignment="Stretch"
+           Source="{Binding RenderedImage}" />
+
+    <DrawingPresenter Drawing="{DynamicResource MaterialDesign.PlayCircleFilled}"
+                      Width="70" Height="70"
+                      VerticalAlignment="Center"
+                      HorizontalAlignment="Center"
+                      Margin="0"
+                      Opacity="0.8"/>
+  </Grid>
+</UserControl>

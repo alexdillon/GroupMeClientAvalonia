@@ -15,7 +15,6 @@
     </ia:EventTriggerBehavior>
   </i:Interaction.Behaviors>
 
-  <!--ForceCursor=true-->
   <Grid Cursor="Hand">
     <Grid.ColumnDefinitions>
       <ColumnDefinition Width="*"/>
@@ -35,41 +34,33 @@
            HorizontalAlignment="Stretch"
            Source="{Binding RenderedImage}" />
 
-    <StackPanel Grid.Row="1">
-      <StackPanel.Background>
-        <SolidColorBrush Color="Black" Opacity="0.4"/>
-      </StackPanel.Background>
+    <Grid Grid.Row="1"
+          Height="55"
+          RowDefinitions="20,30"
+          ColumnDefinitions="Auto, *">
+      <Grid.Background>
+        <SolidColorBrush Color="Black" Opacity="0.4" />
+      </Grid.Background>
 
-      <!--TextTrimming="CharacterEllipsis"-->
-      <!--Padding="5"-->
-      <Decorator Padding="5">
-        
-      
-      <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center"
-                 TextWrapping="NoWrap" 
+      <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
+                 HorizontalAlignment="Left" VerticalAlignment="Center"
+                 TextWrapping="NoWrap"
                  Text="{Binding Title}"
                  Foreground="White" FontWeight="SemiBold"
-                 Margin="10,0,0,0"/>
-      </Decorator>
-      
-      <Grid Margin="10,0,0,0">
-        <Grid.ColumnDefinitions>
-          <ColumnDefinition Width="Auto"/>
-          <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-          <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
+                 Margin="15,0,0,0"/>
 
-        <Image Grid.Row="0" Grid.Column="0"
-               Width="15"
-               HorizontalAlignment="Left"
-               Source="{Binding FaviconImage}" />
+      <Image Grid.Row="1" Grid.Column="0"
+             Width="15"
+             HorizontalAlignment="Left"
+             VerticalAlignment="Center"
+             Source="{Binding FaviconImage}"
+             Margin="10,0,0,0"/>
 
-        <TextBlock Grid.Row="0" Grid.Column="1"
-                   Text="{Binding Site}"
-                   Foreground="White"/>
-      </Grid>
-    </StackPanel>
+      <TextBlock Grid.Row="1" Grid.Column="1"
+                 Text="{Binding Site}"
+                 VerticalAlignment="Center"
+                 Foreground="White"
+                 Margin="5,0,0,0"/>
+    </Grid>
   </Grid>
 </UserControl>

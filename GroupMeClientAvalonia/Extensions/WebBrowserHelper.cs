@@ -1,4 +1,6 @@
-﻿namespace GroupMeClientAvalonia.Extensions
+﻿using System.Diagnostics;
+
+namespace GroupMeClientAvalonia.Extensions
 {
     /// <summary>
     /// <see cref="WebBrowserHelper"/> provides helper method for interacting with the system browser.
@@ -11,7 +13,12 @@
         /// <param name="url">The url to open.</param>
         public static void OpenUrl(string url)
         {
-            System.Diagnostics.Process.Start(url);
+            var psi = new ProcessStartInfo
+            {
+                FileName = url,
+                UseShellExecute = true
+            };
+            Process.Start(psi);
         }
     }
 }

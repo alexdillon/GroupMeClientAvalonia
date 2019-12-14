@@ -23,6 +23,7 @@
     <AvaloniaResource Remove="Views\Controls\Attachments\GenericLinkAttachmentControl.xaml" />
     <AvaloniaResource Remove="Views\Controls\Attachments\GroupMeImageAttachmentControl.xaml" />
     <AvaloniaResource Remove="Views\Controls\Attachments\TwitterAttachmentControl.xaml" />
+    <AvaloniaResource Remove="Views\Controls\Attachments\VideoAttachmentControl.xaml" />
     <AvaloniaResource Remove="Views\Controls\AvatarControl.xaml" />
     <AvaloniaResource Remove="Views\Controls\GroupContentsControl.xaml" />
     <AvaloniaResource Remove="Views\Controls\GroupControl.xaml" />
@@ -38,6 +39,7 @@
     <None Remove="Views\Controls\Attachments\GenericLinkAttachmentControl.xaml" />
     <None Remove="Views\Controls\Attachments\GroupMeImageAttachmentControl.xaml" />
     <None Remove="Views\Controls\Attachments\TwitterAttachmentControl.xaml" />
+    <None Remove="Views\Controls\Attachments\VideoAttachmentControl.xaml" />
     <None Remove="Views\Controls\AvatarControl.xaml" />
     <None Remove="Views\Controls\GroupContentsControl.xaml" />
     <None Remove="Views\Controls\GroupControl.xaml" />
@@ -141,6 +143,12 @@
   
   <ItemGroup>
     <EmbeddedResource Include="Views\Controls\Attachments\TwitterAttachmentControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Controls\Attachments\VideoAttachmentControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
   </ItemGroup>
