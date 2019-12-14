@@ -97,7 +97,8 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
             saveFileDialog.DefaultExtension = extension;
             saveFileDialog.Filters.Add(new FileDialogFilter() { Name = "Image", Extensions = { extension } });
 
-            var fileName = saveFileDialog.ShowAsync(Application.Current.MainWindow).Result;
+            //TODO: Add Window back in. Broken when upgrading to Avalonia 0.90
+            var fileName = saveFileDialog.ShowAsync(null).Result;
             if (!string.IsNullOrEmpty(fileName))
             {
                 using (var fs = File.OpenWrite(fileName))

@@ -11,6 +11,12 @@ namespace GroupMeClientAvalonia.Converters
         /// <inheritdoc/>
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
+            if (value == null)
+            {
+                // Treat null as false.
+                value = false;
+            }
+
             return !(bool)value;
         }
 

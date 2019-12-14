@@ -482,7 +482,8 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
             var openFileDialog = new OpenFileDialog();
             openFileDialog.Filters.Add(new FileDialogFilter() { Name = "Images", Extensions = { "bmp", "jpg", "jpeg", "png", "gif" } });
 
-            var fileName = openFileDialog.ShowAsync(Application.Current.MainWindow).Result;
+            // TODO: Add window back in (broken when upgrading to Avalonia 0.9.0)
+            var fileName = openFileDialog.ShowAsync(null).Result;
             if (!string.IsNullOrEmpty(fileName.FirstOrDefault()))
             {
                 this.ShowImageSendDialog(File.OpenRead(fileName.FirstOrDefault()));
@@ -558,8 +559,9 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
                     ContentMessage = "Could Not Send Message",
                     Icon = MessageBox.Avalonia.Enums.Icon.Error
                 });
-
-                msg.ShowDialog(Application.Current.MainWindow);
+                
+                // TODO: Add window back in (broken when upgrading to Avalonia 0.9.0)
+                msg.ShowDialog(null);
             }
 
             this.IsSending = false;

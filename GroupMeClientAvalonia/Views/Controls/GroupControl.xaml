@@ -17,9 +17,10 @@
     </ia:EventTriggerBehavior>
   </i:Interaction.Behaviors>
   
-  <Grid ColumnDefinitions="80,195,60"
+  <Grid ColumnDefinitions="80,185,60"
         RowDefinitions="Auto, *"
-        Margin="0,15,15,0">
+        Margin="0,15,15,0"
+        Background="White">
 
     <controls:AvatarControl
             Grid.Column="0" Grid.Row="0" Grid.RowSpan="2"

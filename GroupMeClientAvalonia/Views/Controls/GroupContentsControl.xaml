@@ -98,6 +98,7 @@
              Grid.Row="2" Grid.Column="0"
              BorderThickness="0"
              Background="#F7F7F7"
+             VirtualizationMode="None"
              UseLayoutRounding="True"
              SelectionMode="Multiple"
              ScrollViewer.VerticalScrollBarVisibility="Visible"
@@ -112,11 +113,8 @@
         <Style Selector="ListBoxItem">
           <Setter Property="HorizontalContentAlignment" Value="Left"/>
           <Setter Property="VerticalContentAlignment" Value="Top"/>
-          <!--<Setter Property="Focusable" Value="{Binding Path=DataContext.IsSelectionAllowed, RelativeSource={RelativeSource AncestorType=controls:GroupContentsControl}}"/>-->
-
-          <!--Binding the width seems to be essential in Avalonia to prevent the message from overflowing on the right side-->
-          <Setter Property="Width" Value="{Binding $parent[0].Bounds.Width}"/>
-
+          <Setter Property="Focusable" Value="{Binding Path=DataContext.IsSelectionAllowed, RelativeSource={RelativeSource AncestorType=controls:GroupContentsControl}}"/>
+          
           <Setter Property="Template">
             <Setter.Value>
               <ControlTemplate TargetType="{x:Type ListBoxItem}">
@@ -131,8 +129,7 @@
                                     Content="{TemplateBinding Content}"
                                     Padding="0"
                                     VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                    HorizontalContentAlignment="Stretch"
-                                    Margin="0,0,20,0"/>
+                                    HorizontalContentAlignment="Stretch"/>
                 </Border>
                 <!--<ControlTemplate.Triggers>
                   <Trigger Property="IsSelected" Value="true">
