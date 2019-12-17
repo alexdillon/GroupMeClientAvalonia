@@ -8,6 +8,7 @@
     <Color x:Key="MessageFontColor">#637182</Color>
     <Color x:Key="MessageDetailsColor">#FFD3D3D3</Color>
     <Color x:Key="DividerLineColor">#637182</Color>
+    <Color x:Key="UnreadBubbleForegroundColor">#FFFFFF</Color>
 
     <SolidColorBrush x:Key="LoadingSpinnerDarkBrush" Color="{DynamicResource LoadingSpinnerDarkColor}" />
     <SolidColorBrush x:Key="MessageBackdropBrush" Color="{DynamicResource ThemeControlMidBrush}" />
@@ -16,5 +17,6 @@
     <SolidColorBrush x:Key="MessageDetailsBrush" Color="{DynamicResource MessageDetailsColor}" />
     <SolidColorBrush x:Key="DividerLineBrush" Color="{DynamicResource DividerLineColor}" />
     <SolidColorBrush x:Key="PluginButtonBrush" Color="{DynamicResource ThemeForegroundBrush}" />
+    <SolidColorBrush x:Key="UnreadBubbleForegroundBrush" Color="{DynamicResource UnreadBubbleForegroundColor}"/>
   </Style.Resources>
 </Style>
