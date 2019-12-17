@@ -31,6 +31,7 @@
     <AvaloniaResource Remove="Views\Controls\InlineTimestampControl.xaml" />
     <AvaloniaResource Remove="Views\Controls\MessageControl.xaml" />
     <AvaloniaResource Remove="Views\Controls\MultiLikeControl.xaml" />
+    <AvaloniaResource Remove="Views\Controls\Popup.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -47,6 +48,7 @@
     <None Remove="Views\Controls\InlineTimestampControl.xaml" />
     <None Remove="Views\Controls\MessageControl.xaml" />
     <None Remove="Views\Controls\MultiLikeControl.xaml" />
+    <None Remove="Views\Controls\Popup.xaml" />
   </ItemGroup>
   
   <ItemGroup>
@@ -153,4 +155,9 @@
     </EmbeddedResource>
   </ItemGroup>
   
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Controls\Popup.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
 </Project>
