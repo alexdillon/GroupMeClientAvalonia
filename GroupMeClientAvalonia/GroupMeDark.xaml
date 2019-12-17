@@ -1,0 +1,20 @@
+﻿<Style xmlns="https://github.com/avaloniaui"
+       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+       xmlns:sys="clr-namespace:System;assembly=netstandard">
+
+  <Style.Resources>
+    <Color x:Key="LoadingSpinnerDarkColor">#CC119EDA</Color>
+    <Color x:Key="GroupsSidebarFontColor">#637182</Color>
+    <Color x:Key="MessageFontColor">#637182</Color>
+    <Color x:Key="MessageDetailsColor">#FFD3D3D3</Color>
+    <Color x:Key="DividerLineColor">#637182</Color>
+
+    <SolidColorBrush x:Key="LoadingSpinnerDarkBrush" Color="{DynamicResource LoadingSpinnerDarkColor}" />
+    <SolidColorBrush x:Key="MessageBackdropBrush" Color="{DynamicResource ThemeControlMidBrush}" />
+    <SolidColorBrush x:Key="GroupsSidebarFontBrush" Color="{DynamicResource GroupsSidebarFontColor}" />
+    <SolidColorBrush x:Key="MessageFontBrush" Color="{DynamicResource MessageFontColor}" />
+    <SolidColorBrush x:Key="MessageDetailsBrush" Color="{DynamicResource MessageDetailsColor}" />
+    <SolidColorBrush x:Key="DividerLineBrush" Color="{DynamicResource DividerLineColor}" />
+    <SolidColorBrush x:Key="PluginButtonBrush" Color="{DynamicResource ThemeForegroundBrush}" />
+  </Style.Resources>
+</Style>

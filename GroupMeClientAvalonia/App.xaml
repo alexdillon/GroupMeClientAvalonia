@@ -32,6 +32,11 @@
     <Application.Styles>
         <StyleInclude Source="avares://Avalonia.Themes.Default/DefaultTheme.xaml"/>
         <StyleInclude Source="avares://Avalonia.Themes.Default/Accents/BaseLight.xaml"/>
+      
         <StyleInclude Source="avares://GroupMeClientAvalonia/HamburgerMenu.xaml"/>
+        <StyleInclude Source="avares://MicroCubeAvalonia/DefaultTheme.xaml"/>
+
+      <StyleInclude Source="avares://GroupMeClientAvalonia/GroupMeLight.xaml"/>
+      
     </Application.Styles>
 </Application>

@@ -19,7 +19,7 @@
                             Width="60" Height="60"
                             HorizontalAlignment="Center"
                             Background="Transparent"
-                            Foreground="#CC119EDA"/>
+                            Foreground="{DynamicResource LoadingSpinnerDarkBrush}"/>
 
     <!--<extensions:ZoomBorder x:Name="border" ClipToBounds="False" IsManipulationEnabled="true">-->
     <Border>

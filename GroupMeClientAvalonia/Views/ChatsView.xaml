@@ -17,14 +17,14 @@
 
   <UserControl.Styles>
     <Style Selector="Button.RoundedMenu">
-      <Setter Property="Background" Value="#F7F7F7" />
+      <Setter Property="Background" Value="{DynamicResource MenuButtonLightBrush}" />
     </Style>
     <Style Selector="Button.RoundedMenu /template/ ContentPresenter">
       <Setter Property="CornerRadius" Value="5"/>
     </Style>
     
     <Style Selector="ToggleButton.RoundedMenu">
-      <Setter Property="Background" Value="#F7F7F7" />
+      <Setter Property="Background" Value="{DynamicResource MenuButtonLightBrush}" />
     </Style>
     <Style Selector="ToggleButton.RoundedMenu /template/ ContentPresenter">
       <Setter Property="CornerRadius" Value="5"/>
@@ -54,7 +54,7 @@
         </ia:DataTriggerBehavior>
       </i:Interaction.Behaviors>
       
-      <Grid Grid.Row="0" Background="White"
+      <Grid Grid.Row="0" Background="{DynamicResource ThemeBackgroundBrush}"
             ColumnDefinitions="Auto,*,Auto,Auto"
             RowDefinitions="55">
 
@@ -64,16 +64,16 @@
                       Margin="15,0,0,0"
                       FontSize="17" FontWeight="SemiBold"
                       BorderThickness="0"
-                      Background="White"
+                      Background="{DynamicResource ThemeBackgroundBrush}"
                       Focusable="False"
                       Content="Chats"
                       x:Name="toggleMiniSidebar">
           <ToggleButton.Styles>
             <Style Selector="ToggleButton:checked /template/ ContentPresenter">
-              <Setter Property="Background" Value="White"/>
+              <Setter Property="Background" Value="{DynamicResource ThemeBackgroundBrush}"/>
             </Style>
             <Style Selector="ToggleButton:pressed /template/ ContentPresenter">
-              <Setter Property="Background" Value="White"/>
+              <Setter Property="Background" Value="{DynamicResource ThemeBackgroundBrush}"/>
             </Style>
           </ToggleButton.Styles>
         </ToggleButton>
@@ -113,7 +113,7 @@
             <DrawingPresenter Width="15" Height="15" Drawing="{DynamicResource Entypo+.Unread}" />
         </Button>
 
-        <Border Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="0" BorderBrush="#637182" BorderThickness="0,0,0,1" Margin="0,0,15,0"/>
+        <Border Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="0" BorderBrush="{DynamicResource DividerLineBrush}" BorderThickness="0,0,0,1" Margin="0,0,15,0"/>
       </Grid>
 
       <!--All Groups and Chats List-->

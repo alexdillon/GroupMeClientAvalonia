@@ -1,0 +1,25 @@
+﻿<Style xmlns="https://github.com/avaloniaui"
+       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+       xmlns:sys="clr-namespace:System;assembly=netstandard">
+
+  <Style.Resources>
+    <Color x:Key="LoadingSpinnerDarkColor">#CC119EDA</Color>
+    <Color x:Key="MenuButtonLightColor">#F7F7F7</Color>
+    <Color x:Key="MessageBackdropColor">#F7F7F7</Color>
+    <Color x:Key="GroupsSidebarFontColor">#637182</Color>
+    <Color x:Key="MessageFontColor">#637182</Color>
+    <Color x:Key="MessageDetailsColor">#FFD3D3D3</Color>
+    <Color x:Key="DividerLineColor">#637182</Color>
+    <Color x:Key="PluginButtonFontBrush">#414A59</Color>
+    
+    <SolidColorBrush x:Key="LoadingSpinnerDarkBrush" Color="{DynamicResource LoadingSpinnerDarkColor}"></SolidColorBrush>
+    <SolidColorBrush x:Key="MenuButtonLightBrush" Color="{DynamicResource MenuButtonLightColor}"></SolidColorBrush>
+    <SolidColorBrush x:Key="MessageBackdropBrush" Color="{DynamicResource MessageBackdropColor}"></SolidColorBrush>
+    <SolidColorBrush x:Key="GroupsSidebarFontBrush" Color="{DynamicResource GroupsSidebarFontColor}"></SolidColorBrush>
+    <SolidColorBrush x:Key="MessageFontBrush" Color="{DynamicResource MessageFontColor}"></SolidColorBrush>
+    <SolidColorBrush x:Key="MessageDetailsBrush" Color="{DynamicResource MessageDetailsColor}"></SolidColorBrush>
+    <SolidColorBrush x:Key="DividerLineBrush" Color="{DynamicResource DividerLineColor}"></SolidColorBrush>
+    <SolidColorBrush x:Key="PluginButtonFontColor" Color="{DynamicResource PluginButtonFontBrush}"></SolidColorBrush>
+  </Style.Resources>
+</Style>
+
