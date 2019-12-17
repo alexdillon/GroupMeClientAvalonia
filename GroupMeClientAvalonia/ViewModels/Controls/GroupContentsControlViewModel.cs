@@ -472,7 +472,7 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
                 this.IsSending = true;
                 var newMessage = Message.CreateMessage(
                     this.TypedMessageContents,
-                    guidPrefix: "gmdc");
+                    guidPrefix: "gmdca");
                 await this.SendMessageAsync(newMessage);
             }
         }
@@ -525,7 +525,7 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
             var message = Message.CreateMessage(
                 contents,
                 attachmentsList,
-                "gmdc");
+                guidPrefix: "gmdca");
             bool success = await this.SendMessageAsync(message);
 
             if (success)

@@ -242,10 +242,6 @@
           Background="{DynamicResource ThemeBackgroundBrush}"
           ColumnDefinitions="40,*,Auto,Auto"
           RowDefinitions="*, Auto">
-      <!--<Grid.RowDefinitions>
-        <RowDefinition Height="*"/>
-        <RowDefinition Height="Auto" MinHeight="50"/>
-      </Grid.RowDefinitions>-->
 
       <!--Send Bar Top Line-->
       <Border Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="4"
@@ -263,13 +259,12 @@
                         Width="15" Height="15"
                         VerticalAlignment="Center"
                         HorizontalAlignment="Center"
-                        Margin="0" >
-        
-      <!--<i:Interaction.Triggers>
-          <i:EventTrigger EventName="MouseDown" >
-            <i:InvokeCommandAction Command="{Binding OpenMessageSuggestions}" />
-          </i:EventTrigger>
-        </i:Interaction.Triggers>-->
+                        Margin="0">
+        <i:Interaction.Behaviors>
+          <ia:EventTriggerBehavior EventName="PointerPressed">
+            <ia:InvokeCommandAction Command="{Binding OpenMessageSuggestions}"/>
+          </ia:EventTriggerBehavior>
+        </i:Interaction.Behaviors>
       </DrawingPresenter>
 
       <!--Message Text Box-->
@@ -278,40 +273,38 @@
       extensions:FileDragDropHelper.FileDragDropTarget="{Binding}"
       SpellCheck.IsEnabled="True"-->
       <!--VerticalContentAlignment="Center"-->
-      <TextBox
-          Grid.Row="1" Grid.Column="1"
-          MinHeight="49"
-          HorizontalAlignment="Stretch"
-          VerticalAlignment="Center"
-          BorderBrush="Transparent"
-          BorderThickness="0"
-          FontSize="15"
-          AcceptsReturn="True"
-          TextWrapping="Wrap"
-          Watermark="Send a Message..."
-          Text="{Binding Path=TypedMessageContents, Mode=TwoWay}">
+      <TextBox Grid.Row="1" Grid.Column="1"
+               MinHeight="49"
+               Classes="verticalCenter"
+               HorizontalAlignment="Stretch"
+               VerticalAlignment="Center"
+               BorderBrush="Transparent"
+               BorderThickness="0"
+               FontSize="15"
+               AcceptsReturn="False"
+               TextWrapping="Wrap"
+               Watermark="Send a Message..."
+               Text="{Binding Path=TypedMessageContents, Mode=TwoWay}">
 
-        <!--<i:Interaction.Triggers>
-          <i:EventTrigger EventName="Send">
-            <i:InvokeCommandAction Command="{Binding Path=SendMessage}"/>
-          </i:EventTrigger>
-        </i:Interaction.Triggers>-->
+        <i:Interaction.Behaviors>
+          <extensions:TextBoxSendBehavior SendCommand="{Binding SendMessage}" />
+        </i:Interaction.Behaviors>
       </TextBox>
 
       <!--Plus Button-->
       <!--Background="White"
       Foreground="#637182"-->
       <DrawingPresenter Drawing="{DynamicResource Material.Plus}"
-                  Grid.Row="1" Grid.Column="2"
-                  Width="15" Height="15"
-                  VerticalAlignment="Center"
-                  HorizontalAlignment="Center"
-                  Margin="0,0,20,0">
-        <!--<i:Interaction.Triggers>
-          <i:EventTrigger EventName="MouseDown" >
-            <i:InvokeCommandAction Command="{Binding SendAttachment}" />
-          </i:EventTrigger>
-        </i:Interaction.Triggers>-->
+                        Grid.Row="1" Grid.Column="2"
+                        Width="15" Height="15"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Center"
+                        Margin="0,0,20,0">
+        <i:Interaction.Behaviors>
+          <ia:EventTriggerBehavior EventName="PointerPressed">
+            <ia:InvokeCommandAction Command="{Binding SendAttachment}"/>
+          </ia:EventTriggerBehavior>
+        </i:Interaction.Behaviors>
       </DrawingPresenter>
 
       <!--Send Message Button-->
@@ -322,11 +315,11 @@
                   VerticalAlignment="Center"
                   HorizontalAlignment="Center"
                   Margin="0,0,30,0">
-        <!--<i:Interaction.Triggers>
-          <i:EventTrigger EventName="MouseDown" >
-            <i:InvokeCommandAction Command="{Binding SendMessage}" />
-          </i:EventTrigger>
-        </i:Interaction.Triggers>-->
+        <i:Interaction.Behaviors>
+          <ia:EventTriggerBehavior EventName="PointerPressed">
+            <ia:InvokeCommandAction Command="{Binding SendMessage}"/>
+          </ia:EventTriggerBehavior>
+        </i:Interaction.Behaviors>
       </DrawingPresenter>
     </Grid>
 
@@ -338,6 +331,5 @@
                     Visibility="{Binding SmallDialog, Converter={StaticResource nullToVisibilityConverter}}">
       <UserControl Content="{Binding SmallDialog}" />
     </controls:Popup>-->
-  
 </Grid>
 </UserControl>

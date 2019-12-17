@@ -167,9 +167,13 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
         {
             get
             {
-                if (this.Message.SourceGuid.StartsWith("gmdc"))
+                if (this.Message.SourceGuid.StartsWith("gmdc-"))
                 {
                     return "GroupMe Desktop Client";
+                }
+                else if (this.Message.SourceGuid.StartsWith("gmdca-"))
+                {
+                    return "GroupMe Desktop Client Avalonia";
                 }
                 else if (this.message.SourceGuid.StartsWith("android"))
                 {
