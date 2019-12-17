@@ -101,7 +101,7 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
 
                         var textResults = new SuggestedMessage { Message = text, Plugin = plugin.EffectPluginName };
 
-                        Avalonia.Threading.Dispatcher.UIThread.InvokeAsync(() =>
+                        Avalonia.Threading.Dispatcher.UIThread.Post(() =>
                         {
                             this.GeneratedMessages.Add(textResults);
                         });
