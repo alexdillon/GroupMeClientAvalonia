@@ -18,6 +18,7 @@ using Avalonia;
 using System.Reactive.Linq;
 using DynamicData;
 using DynamicData.Binding;
+using ReactiveUI;
 
 namespace GroupMeClientAvalonia.ViewModels
 {
@@ -47,10 +48,15 @@ namespace GroupMeClientAvalonia.ViewModels
 
             this.SortedFilteredGroupChats = new ObservableCollectionExtended<GroupControlViewModel>();
 
+            var filter = this.WhenValueChanged(t => t.GroupChatFilter)
+                .Throttle(TimeSpan.FromMilliseconds(100))
+                .Select(this.BuildGroupFilter);
+
             this.AllGroupsChats.AsObservableList()
                 .Connect()
-                .Filter(o => (o as GroupControlViewModel).Title.ToLower().Contains(this.GroupChatFilter.ToLower()))
+                .Filter(filter)
                 .Sort(SortExpressionComparer<GroupControlViewModel>.Descending(g => g.LastUpdated))
+                .ObserveOn(RxApp.MainThreadScheduler)
                 .Bind(this.SortedFilteredGroupChats)
                 .Subscribe();
 
@@ -83,16 +89,8 @@ namespace GroupMeClientAvalonia.ViewModels
         /// </summary>
         public string GroupChatFilter
         {
-            get
-            {
-                return this.groupChatFilter;
-            }
-
-            set
-            {
-                this.Set(() => this.GroupChatFilter, ref this.groupChatFilter, value);
-                //this.SortedFilteredGroupChats.Refresh();
-            }
+            get => this.groupChatFilter;
+            set => this.Set(() => this.GroupChatFilter, ref this.groupChatFilter, value);
         }
 
         /// <summary>
@@ -100,15 +98,8 @@ namespace GroupMeClientAvalonia.ViewModels
         /// </summary>
         public bool MiniBarModeEnabled
         {
-            get
-            {
-                return this.miniBarModeEnabled;
-            }
-
-            set
-            {
-                this.Set(() => this.MiniBarModeEnabled, ref this.miniBarModeEnabled, value);
-            }
+            get => this.miniBarModeEnabled;
+            set => this.Set(() => this.MiniBarModeEnabled, ref this.miniBarModeEnabled, value);
         }
 
         private SourceList<GroupControlViewModel> AllGroupsChats { get; }
@@ -124,6 +115,11 @@ namespace GroupMeClientAvalonia.ViewModels
         private ReliabilityStateMachine ReliabilityStateMachine { get; } = new ReliabilityStateMachine();
 
         private Timer RetryTimer { get; set; }
+
+        private Func<GroupControlViewModel, bool> BuildGroupFilter(string searchText)
+        {
+            return group => group.Title.Contains(searchText, StringComparison.OrdinalIgnoreCase);
+        }
 
         /// <inheritdoc/>
         async Task INotificationSink.GroupUpdated(LineMessageCreateNotification notification, IMessageContainer container)

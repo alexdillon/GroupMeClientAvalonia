@@ -82,7 +82,7 @@
                  IsVisible="{Binding #toggleSearchBox.IsChecked}"
                  AcceptsReturn="False"
                  Height="35"
-                 Margin="10,0,0,0"
+                 Margin="10,10,0,0"
                  BorderThickness="0"
                  Watermark="Search..."
                  Text="{Binding GroupChatFilter, Mode=TwoWay}"
