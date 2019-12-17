@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Media.Imaging;
 using GalaSoft.MvvmLight.Command;
 using GroupMeClientApi;
 using GroupMeClientApi.Models.Attachments;
@@ -16,7 +17,7 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
     /// </summary>
     public class ViewImageControlViewModel : GalaSoft.MvvmLight.ViewModelBase, IDisposable
     {
-        private Stream imageAttachmentStream;
+        private IBitmap imageAttachmentStream;
         private bool isLoading;
 
         /// <summary>
@@ -49,7 +50,7 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
         /// <summary>
         /// Gets the attached image.
         /// </summary>
-        public Stream ImageStream
+        public IBitmap ImageStream
         {
             get { return this.imageAttachmentStream; }
             internal set { this.Set(() => this.ImageStream, ref this.imageAttachmentStream, value); }
@@ -83,7 +84,7 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
                 return;
             }
 
-            this.ImageStream = new MemoryStream(image);
+            this.ImageStream = Utilities.ImageUtils.BytesToImageSource(image);
             this.IsLoading = false;
         }
 
@@ -101,21 +102,21 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
             var fileName = saveFileDialog.ShowAsync(null).Result;
             if (!string.IsNullOrEmpty(fileName))
             {
-                using (var fs = File.OpenWrite(fileName))
-                {
-                    this.ImageStream.Seek(0, SeekOrigin.Begin);
-                    this.ImageStream.CopyTo(fs);
-                }
+                //using (var fs = File.OpenWrite(fileName))
+                //{
+                //    this.ImageStream.Seek(0, SeekOrigin.Begin);
+                //    this.ImageStream.CopyTo(fs);
+                //}
             }
         }
 
         private void CopyImageAction()
         {
-            var ms = new MemoryStream();
-            this.ImageStream.Seek(0, SeekOrigin.Begin);
-            this.ImageStream.CopyTo(ms);
+            //var ms = new MemoryStream();
+            //this.ImageStream.Seek(0, SeekOrigin.Begin);
+            //this.ImageStream.CopyTo(ms);
 
-            var image = Utilities.ImageUtils.BytesToImageSource(ms.ToArray());
+            //var image = Utilities.ImageUtils.BytesToImageSource(ms.ToArray());
 
             // TODO
             //System.Windows.Clipboard.SetImage(image as BitmapSource);

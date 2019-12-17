@@ -32,6 +32,7 @@
     <AvaloniaResource Remove="Views\Controls\MessageControl.xaml" />
     <AvaloniaResource Remove="Views\Controls\MultiLikeControl.xaml" />
     <AvaloniaResource Remove="Views\Controls\Popup.xaml" />
+    <AvaloniaResource Remove="Views\Controls\ViewImageControl.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -49,6 +50,7 @@
     <None Remove="Views\Controls\MessageControl.xaml" />
     <None Remove="Views\Controls\MultiLikeControl.xaml" />
     <None Remove="Views\Controls\Popup.xaml" />
+    <None Remove="Views\Controls\ViewImageControl.xaml" />
   </ItemGroup>
   
   <ItemGroup>
@@ -105,6 +107,7 @@
   
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\Desktop\GroupMeClient\GroupMeClientApi\GroupMeClientApi.csproj" />
+    <ProjectReference Include="..\MicroCubeAvalonia\MicroCubeAvalonia.csproj" />
   </ItemGroup>
   
   <ItemGroup>
@@ -160,4 +163,11 @@
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
   </ItemGroup>
+  
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Controls\ViewImageControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  
 </Project>

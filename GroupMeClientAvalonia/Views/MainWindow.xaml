@@ -4,6 +4,7 @@
         xmlns:views="clr-namespace:GroupMeClientAvalonia.Views"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:controls="clr-namespace:GroupMeClientAvalonuia.Views.Controls"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="GroupMeClientAvalonia.Views.MainWindow"
         FontFamily="Segoe UI"
@@ -15,6 +16,8 @@
 
   <Grid>
     <UserControl Content="{Binding ChatsViewModel}" BorderBrush="Red" BorderThickness="3"/>
+
+    <ContentControl Content="{Binding PopupManager}" />
 
     <!--In-App Toast Area-->
     <UserControl HorizontalAlignment="Right"

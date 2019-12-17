@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Text;
+using System.Windows.Input;
 using Avalonia;
 using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using GroupMeClientAvalonia.Notifications;
 using GroupMeClientAvalonia.Notifications.Display;
@@ -21,6 +23,13 @@ namespace GroupMeClientAvalonia.ViewModels
         {
             this.InitializeClient();
         }
+
+
+
+        /// <summary>
+        /// Gets or sets the popup manager to be used for popups 
+        /// </summary>
+        public Controls.PopupViewModel PopupManager { get; set; }
 
         /// <summary>
         /// Gets the Toast Holder Manager for this application.
@@ -107,9 +116,13 @@ namespace GroupMeClientAvalonia.ViewModels
                 //this.CreateMenuItemsRegular();
             }
 
-            //Messenger.Default.Register<Messaging.DialogRequestMessage>(this, this.OpenBigPopup);
-            //this.ClosePopup = new RelayCommand(this.CloseBigPopup);
-            //this.EasyClosePopup = new RelayCommand(this.CloseBigPopup);
+            Messenger.Default.Register<Messaging.DialogRequestMessage>(this, this.OpenBigPopup);
+
+            this.PopupManager = new Controls.PopupViewModel()
+            {
+                ClosePopup = new RelayCommand(this.CloseBigPopup),
+                EasyClosePopup = new RelayCommand(this.CloseBigPopup)
+            };
 
             //this.UpdateAssist = new UpdateAssist();
             //Application.Current.MainWindow.Closing += new CancelEventHandler(this.MainWindow_Closing);
@@ -142,6 +155,21 @@ namespace GroupMeClientAvalonia.ViewModels
             //    this.MenuItems.Add(updatingTab);
             //    this.SelectedItem = updatingTab;
             //}
+        }
+
+        private void OpenBigPopup(Messaging.DialogRequestMessage dialog)
+        {
+            this.PopupManager.PopupDialog = dialog.Dialog;
+        }
+
+        private void CloseBigPopup()
+        {
+            if (this.PopupManager.PopupDialog is IDisposable d)
+            {
+                d.Dispose();
+            }
+
+            this.PopupManager.PopupDialog = null;
         }
     }
 }
