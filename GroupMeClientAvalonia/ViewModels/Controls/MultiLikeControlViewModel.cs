@@ -48,10 +48,7 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
         /// </summary>
         public bool IsEnabled
         {
-            get
-            {
-                return this.isEnabled;
-            }
+            get => this.isEnabled;
 
             set
             {

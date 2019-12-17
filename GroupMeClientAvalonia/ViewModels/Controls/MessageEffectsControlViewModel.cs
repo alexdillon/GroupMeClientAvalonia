@@ -36,10 +36,7 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
         /// </summary>
         public string TypedMessageContents
         {
-            get
-            {
-                return this.typedMessageContents;
-            }
+            get => this.typedMessageContents;
 
             set
             {
@@ -62,16 +59,15 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
         /// </summary>
         public string SelectedMessageContents
         {
-            get { return this.selectedMessageContents; }
-            set { this.Set(() => this.SelectedMessageContents, ref this.selectedMessageContents, value); }
+            get => this.selectedMessageContents;
+            set => this.Set(() => this.SelectedMessageContents, ref this.selectedMessageContents, value);
         }
 
         private CancellationTokenSource GeneratorCancel { get; set; }
 
         private void GenerateResults(CancellationToken cancellationToken)
         {
-            // TODO WHY?
-            Avalonia.Threading.Dispatcher.UIThread.InvokeAsync(() =>
+            Avalonia.Threading.Dispatcher.UIThread.Post(() =>
             {
                 this.GeneratedMessages.Clear();
             });

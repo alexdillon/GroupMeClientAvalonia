@@ -102,11 +102,8 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
         /// </summary>
         public override Message Message
         {
-            get
-            {
-                return this.message;
-            }
-
+            get => this.message;
+            
             set
             {
                 if (this.message == value)
@@ -127,8 +124,8 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
         /// </summary>
         public AvatarControlViewModel Avatar
         {
-            get { return this.avatar; }
-            private set { this.Set(() => this.Avatar, ref this.avatar, value); }
+            get => this.avatar;
+            private set => this.Set(() => this.Avatar, ref this.avatar, value);
         }
 
         /// <summary>
@@ -136,15 +133,8 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
         /// </summary>
         public bool ShowDetails
         {
-            get
-            {
-                return this.showDetails;
-            }
-
-            set
-            {
-                this.Set(() => this.ShowDetails, ref this.showDetails, value);
-            }
+            get => this.showDetails;
+            set => this.Set(() => this.ShowDetails, ref this.showDetails, value);
         }
 
         /// <summary>

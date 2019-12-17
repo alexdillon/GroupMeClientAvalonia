@@ -52,8 +52,8 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
         /// </summary>
         public IBitmap ImageStream
         {
-            get { return this.imageAttachmentStream; }
-            internal set { this.Set(() => this.ImageStream, ref this.imageAttachmentStream, value); }
+            get => this.imageAttachmentStream;
+            private set => this.Set(() => this.ImageStream, ref this.imageAttachmentStream, value);
         }
 
         /// <summary>
@@ -61,8 +61,8 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
         /// </summary>
         public bool IsLoading
         {
-            get { return this.isLoading; }
-            private set { this.Set(() => this.IsLoading, ref this.isLoading, value); }
+            get => this.isLoading;
+            private set => this.Set(() => this.IsLoading, ref this.isLoading, value);
         }
 
         private ImageAttachment ImageAttachment { get; }

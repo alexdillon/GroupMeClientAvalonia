@@ -75,8 +75,8 @@ namespace GroupMeClientAvalonia.ViewModels.Controls.Attachments
         /// </summary>
         public bool IsLoading
         {
-            get { return this.isLoading; }
-            private set { this.Set(() => this.IsLoading, ref this.isLoading, value); }
+            get => this.isLoading;
+            private set => this.Set(() => this.IsLoading, ref this.isLoading, value);
         }
 
         private ImageAttachment ImageAttachment { get; }

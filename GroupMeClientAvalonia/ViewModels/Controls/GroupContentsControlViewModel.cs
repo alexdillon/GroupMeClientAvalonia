@@ -178,8 +178,8 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
         /// </summary>
         public IMessageContainer MessageContainer
         {
-            get { return this.messageContainer; }
-            set { this.Set(() => this.MessageContainer, ref this.messageContainer, value); }
+            get => this.messageContainer;
+        set => this.Set(() => this.MessageContainer, ref this.messageContainer, value);
         }
 
         /// <summary>
@@ -187,8 +187,8 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
         /// </summary>
         public AvatarControlViewModel TopBarAvatar
         {
-            get { return this.topBarAvatar; }
-            private set { this.Set(() => this.TopBarAvatar, ref this.topBarAvatar, value); }
+            get => this.topBarAvatar;
+            private set => this.Set(() => this.TopBarAvatar, ref this.topBarAvatar, value);
         }
 
         /// <summary>
@@ -196,8 +196,8 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
         /// </summary>
         public string TypedMessageContents
         {
-            get { return this.typedMessageContents; }
-            set { this.Set(() => this.TypedMessageContents, ref this.typedMessageContents, value); }
+            get => this.typedMessageContents;
+        set => this.Set(() => this.TypedMessageContents, ref this.typedMessageContents, value);
         }
 
         /// <summary>
@@ -206,8 +206,8 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
         /// </summary>
         public ViewModelBase SmallDialog
         {
-            get { return this.smallDialog; }
-            set { this.Set(() => this.SmallDialog, ref this.smallDialog, value); }
+            get => this.smallDialog;
+            set => this.Set(() => this.SmallDialog, ref this.smallDialog, value);
         }
 
         /// <summary>
@@ -215,8 +215,8 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
         /// </summary>
         public bool IsSelectionAllowed
         {
-            get { return this.isSelectionAllowed; }
-            set { this.Set(() => this.IsSelectionAllowed, ref this.isSelectionAllowed, value); }
+            get => this.isSelectionAllowed;
+            set => this.Set(() => this.IsSelectionAllowed, ref this.isSelectionAllowed, value);
         }
 
         private SourceList<MessageControlViewModelBase> Messages { get; }

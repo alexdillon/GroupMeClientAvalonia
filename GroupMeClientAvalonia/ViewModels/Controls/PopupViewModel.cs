@@ -20,10 +20,7 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
         /// </summary>
         public ViewModelBase PopupDialog
         {
-            get 
-            {
-                return this.popupDialog;
-            }
+            get => this.popupDialog;
 
             set
             {

@@ -55,10 +55,7 @@ namespace GroupMeClientAvalonia.ViewModels.Controls.Attachments
         /// </summary>
         public string Url
         {
-            get
-            {
-                return this.url;
-            }
+            get => this.url;
 
             set
             {
@@ -85,8 +82,8 @@ namespace GroupMeClientAvalonia.ViewModels.Controls.Attachments
         /// </summary>
         public IBitmap RenderedImage
         {
-            get { return this.renderedImage; }
-            private set { this.Set(() => this.RenderedImage, ref this.renderedImage, value); }
+            get => this.renderedImage;
+            private set => this.Set(() => this.RenderedImage, ref this.renderedImage, value);
         }
 
         /// <summary>

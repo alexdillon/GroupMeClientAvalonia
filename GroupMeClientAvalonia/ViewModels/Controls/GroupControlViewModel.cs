@@ -51,10 +51,7 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
         /// </summary>
         public IMessageContainer MessageContainer
         {
-            get
-            {
-                return this.messageContainer;
-            }
+            get => this.messageContainer;
 
             set
             {
@@ -68,8 +65,8 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
         /// </summary>
         public AvatarControlViewModel Avatar
         {
-            get { return this.avatar; }
-            private set { this.Set(() => this.Avatar, ref this.avatar, value); }
+            get => this.avatar;
+            private set => this.Set(() => this.Avatar, ref this.avatar, value);
         }
 
         /// <summary>
@@ -77,8 +74,8 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
         /// </summary>
         public int TotalUnreadCount
         {
-            get { return this.unreadMessagesCounter; }
-            set { this.Set(() => this.TotalUnreadCount, ref this.unreadMessagesCounter, value); }
+            get => this.unreadMessagesCounter;
+            set => this.Set(() => this.TotalUnreadCount, ref this.unreadMessagesCounter, value);
         }
 
         /// <summary>

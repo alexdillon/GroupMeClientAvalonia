@@ -34,8 +34,8 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
         /// </summary>
         public string TypedMessageContents
         {
-            get { return this.typedMessageContents; }
-            set { this.Set(() => this.TypedMessageContents, ref this.typedMessageContents, value); }
+            get => this.typedMessageContents;
+            set => this.Set(() => this.TypedMessageContents, ref this.typedMessageContents, value);
         }
 
         /// <summary>
@@ -43,8 +43,8 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
         /// </summary>
         public bool IsSending
         {
-            get { return this.isSending; }
-            set { this.Set(() => this.IsSending, ref this.isSending, value); }
+            get => this.isSending;
+            set => this.Set(() => this.IsSending, ref this.isSending, value);
         }
 
         /// <inheritdoc />

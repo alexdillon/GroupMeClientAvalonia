@@ -46,8 +46,8 @@ namespace GroupMeClientAvalonia.ViewModels.Controls.Attachments
         /// </summary>
         public IBitmap FaviconImage
         {
-            get { return this.faviconImage; }
-            private set { this.Set(() => this.FaviconImage, ref this.faviconImage, value); }
+            get => this.faviconImage;
+            private set => this.Set(() => this.FaviconImage, ref this.faviconImage, value);
         }
 
         /// <inheritdoc/>
