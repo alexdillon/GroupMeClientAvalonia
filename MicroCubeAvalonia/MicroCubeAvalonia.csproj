@@ -15,14 +15,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <AvaloniaResource Remove="IconPack\IconControl.xaml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Remove="IconPack\IconControl.xaml" />
-  </ItemGroup>
-
-  <ItemGroup>
     <EmbeddedResource Include="Controls\ProgressRing.xaml">
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
@@ -37,10 +29,6 @@
     <EmbeddedResource Include="IconPack\IconControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="IconPack\Icons\" />
   </ItemGroup>
 
 </Project>
