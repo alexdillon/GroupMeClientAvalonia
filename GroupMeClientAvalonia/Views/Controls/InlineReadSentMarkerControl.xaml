@@ -20,7 +20,6 @@
            FontWeight="Regular"
            FontSize="11"
            Foreground="#637182"
-               
            Margin="55,-15,0,0"/>
   </Grid>
 </UserControl>

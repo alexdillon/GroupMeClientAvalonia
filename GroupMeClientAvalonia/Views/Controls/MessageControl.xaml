@@ -5,6 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:i="clr-namespace:Avalonia.Xaml.Interactivity;assembly=Avalonia.Xaml.Interactivity"
              xmlns:ia="clr-namespace:Avalonia.Xaml.Interactions.Core;assembly=Avalonia.Xaml.Interactions"
+             xmlns:iconPack="clr-namespace:MicroCubeAvalonia.IconPack;assembly=MicroCubeAvalonia"
              xmlns:controls="clr-namespace:GroupMeClientAvalonia.Views.Controls"
              xmlns:converters="clr-namespace:GroupMeClientAvalonia.Converters"
              xmlns:extensions="clr-namespace:GroupMeClientAvalonia.Extensions"
@@ -89,16 +90,13 @@
         <ColumnDefinition Width="12"/>
       </Grid.ColumnDefinitions>
 
-      <DrawingPresenter Width="17" Height="17"
-                        Grid.Row="1" Grid.Column="1"
-                        HorizontalAlignment="Center"
-                        Drawing="{Binding LikeStatus}"/>
-      <!--<iconPacks:PackIconFontAwesome Width="17" Height="17"
-                                     Grid.Row="1"
-                                     Grid.Column="1"
-                                     HorizontalAlignment="Center"
-                                     Kind="{Binding LikeStatus}" Foreground="{Binding LikeColor}"
-                                     Background="Transparent" />-->
+      <!--Foreground=""-->
+      <iconPack:IconControl  Width="17" Height="17"
+                             Grid.Row="1" Grid.Column="1"
+                             HorizontalAlignment="Center"
+                             BindableKind="{Binding LikeStatus, Mode=OneWay}" 
+                             Foreground="{Binding LikeColor}"
+                             Background="Transparent" />
 
       <TextBlock Grid.Row="2" Grid.Column="1"
                  HorizontalAlignment="Center"

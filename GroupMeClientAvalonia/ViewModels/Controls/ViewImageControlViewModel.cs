@@ -30,7 +30,7 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
             this.ImageAttachment = attachment;
             this.ImageDownloader = downloader;
 
-            this.SaveImage = new RelayCommand(this.SaveImageAction);
+            this.SaveImage = new RelayCommand(async () => await this.SaveImageAction(), true);
             this.CopyImage = new RelayCommand(this.CopyImageAction);
 
             this.IsLoading = true;
@@ -50,10 +50,10 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
         /// <summary>
         /// Gets the attached image.
         /// </summary>
-        public IBitmap ImageStream
+        public IBitmap Image
         {
             get => this.imageAttachmentStream;
-            private set => this.Set(() => this.ImageStream, ref this.imageAttachmentStream, value);
+            private set => this.Set(() => this.Image, ref this.imageAttachmentStream, value);
         }
 
         /// <summary>
@@ -84,29 +84,28 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
                 return;
             }
 
-            this.ImageStream = Utilities.ImageUtils.BytesToImageSource(image);
+            this.Image = Utilities.ImageUtils.BytesToImageSource(image);
             this.IsLoading = false;
         }
 
-        private void SaveImageAction()
+        private async Task SaveImageAction()
         {
             var saveFileDialog = new SaveFileDialog();
 
             var imageUrlWithoutLongId = this.ImageAttachment.Url.Substring(0, this.ImageAttachment.Url.LastIndexOf('.'));
-            var extension = System.IO.Path.GetExtension(imageUrlWithoutLongId);
+            var extension = System.IO.Path.GetExtension(imageUrlWithoutLongId).Substring(1);
 
             saveFileDialog.DefaultExtension = extension;
-            saveFileDialog.Filters.Add(new FileDialogFilter() { Name = "Image", Extensions = { extension } });
+            saveFileDialog.Filters.Add(new FileDialogFilter() { Name = "PNG Image", Extensions = { "png" } });
 
-            //TODO: Add Window back in. Broken when upgrading to Avalonia 0.90
-            var fileName = saveFileDialog.ShowAsync(null).Result;
+            var fileName = await saveFileDialog.ShowAsync(Program.GroupMeMainWindow);
+            
             if (!string.IsNullOrEmpty(fileName))
             {
-                //using (var fs = File.OpenWrite(fileName))
-                //{
-                //    this.ImageStream.Seek(0, SeekOrigin.Begin);
-                //    this.ImageStream.CopyTo(fs);
-                //}
+                using (var fs = File.OpenWrite(fileName))
+                {
+                    this.Image.Save(fs);
+                }
             }
         }
 

@@ -5,6 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:i="clr-namespace:Avalonia.Xaml.Interactivity;assembly=Avalonia.Xaml.Interactivity"
              xmlns:ia="clr-namespace:Avalonia.Xaml.Interactions.Core;assembly=Avalonia.Xaml.Interactions"
+             xmlns:microcube="clr-namespace:MicroCubeAvalonia.Controls;assembly=MicroCubeAvalonia"
              mc:Ignorable="d"
              FontFamily="Segoe UI"
              d:DesignHeight="200" d:DesignWidth="200"
@@ -28,9 +29,11 @@
         </i:Interaction.Behaviors>
       </Image>
 
-      <!--<Controls:ProgressRing IsActive="{Binding IsLoading}"
-                             Width="60" Height="60"
-                             HorizontalAlignment="Center"/>-->
+      <microcube:ProgressRing IsVisible="{Binding IsLoading}"
+                              Width="60" Height="60"
+                              HorizontalAlignment="Center"
+                              Background="Transparent"
+                              Foreground="{DynamicResource LoadingSpinnerDarkBrush}"/>
     </Grid>
   </Border>
 </UserControl>

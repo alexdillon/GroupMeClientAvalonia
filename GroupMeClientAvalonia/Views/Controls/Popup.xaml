@@ -5,6 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:i="clr-namespace:Avalonia.Xaml.Interactivity;assembly=Avalonia.Xaml.Interactivity"
              xmlns:ia="clr-namespace:Avalonia.Xaml.Interactions.Core;assembly=Avalonia.Xaml.Interactions"
+             xmlns:iconPack="clr-namespace:MicroCubeAvalonia.IconPack;assembly=MicroCubeAvalonia"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              IsVisible="{Binding ShowPopup}">
 
@@ -29,10 +30,10 @@
         <Button Width="35" Height="35"
                 HorizontalAlignment="Right"
                 BorderThickness="0"
+                Background="Transparent"
                 Command="{Binding Path=ClosePopup}"
                 CommandParameter="{Binding Path=.}">
-          <!--<iconPacks:PackIconOcticons Width="15" Height="15" Foreground="DarkGray" Kind="X"/>-->
-          <DrawingPresenter Width="15" Height="15" Drawing="{DynamicResource Material.Close}" />
+          <iconPack:IconControl Width="15" Height="15" Foreground="DarkGray" Background="Transparent" Kind="PackIconMaterialKind.Close" />
         </Button>
       </Grid>
 

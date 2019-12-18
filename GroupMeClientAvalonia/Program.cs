@@ -22,16 +22,18 @@ namespace GroupMeClientAvalonia
                 .LogToDebug()
                 .UseReactiveUI();
 
+        public static MainWindow GroupMeMainWindow;
+
         // Your application's entry point. Here you can initialize your MVVM framework, DI
         // container, etc.
         private static void AppMain(Application app, string[] args)
         {
-            var window = new MainWindow
+            GroupMeMainWindow = new MainWindow
             {
                 DataContext = new MainWindowViewModel(),
             };
 
-            app.Run(window);
+            app.Run(GroupMeMainWindow);
         }
     }
 }

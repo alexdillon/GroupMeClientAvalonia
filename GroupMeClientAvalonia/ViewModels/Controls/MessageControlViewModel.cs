@@ -217,24 +217,21 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
         /// <summary>
         /// Gets the icon to display for the like status of this <see cref="Message"/>.
         /// </summary>
-        public object LikeStatus
+        public Enum LikeStatus
         {
             get
             {
                 if (!this.ShowLikers)
                 {
-                    return Application.Current.Resources["FontAwesome.HeartSolid"];
-                    //return MahApps.Metro.IconPacks.PackIconFontAwesomeKind.None;
+                    return MicroCubeAvalonia.IconPack.Icons.PackIconFontAwesomeKind.None;
                 }
                 else if (this.Message.FavoritedBy.Count > 0)
                 {
-                    return Application.Current.Resources["FontAwesome.HeartSolid"];
-                    //return MahApps.Metro.IconPacks.PackIconFontAwesomeKind.HeartSolid;
+                    return MicroCubeAvalonia.IconPack.Icons.PackIconFontAwesomeKind.HeartSolid;
                 }
                 else
                 {
-                    return Application.Current.Resources["FontAwesome.HeartRegular"];
-                    //return MahApps.Metro.IconPacks.PackIconFontAwesomeKind.HeartRegular;
+                    return MicroCubeAvalonia.IconPack.Icons.PackIconFontAwesomeKind.HeartRegular;
                 }
             }
         }
@@ -242,7 +239,7 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
         /// <summary>
         /// Gets the brush color to render the like icon with for this <see cref="Message"/>.
         /// </summary>
-        public Brush LikeColor
+        public IBrush LikeColor
         {
             get
             {
@@ -254,7 +251,7 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
                 }
                 else
                 {
-                    return (Brush)Brushes.Gray;
+                    return Brushes.Gray;
                 }
             }
         }

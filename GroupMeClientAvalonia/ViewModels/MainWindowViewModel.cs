@@ -24,7 +24,8 @@ namespace GroupMeClientAvalonia.ViewModels
             this.InitializeClient();
         }
 
-
+        public Enum CrapIcon =>
+            MicroCubeAvalonia.IconPack.Icons.PackIconFontAwesomeKind.NpmBrands;
 
         /// <summary>
         /// Gets or sets the popup manager to be used for popups 

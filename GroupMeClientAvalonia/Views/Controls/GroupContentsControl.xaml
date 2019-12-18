@@ -7,6 +7,7 @@
              xmlns:extensions="clr-namespace:GroupMeClientAvalonia.Extensions"
              xmlns:i="clr-namespace:Avalonia.Xaml.Interactivity;assembly=Avalonia.Xaml.Interactivity"
              xmlns:ia="clr-namespace:Avalonia.Xaml.Interactions.Core;assembly=Avalonia.Xaml.Interactions"
+             xmlns:iconPack="clr-namespace:MicroCubeAvalonia.IconPack;assembly=MicroCubeAvalonia"
              mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="700"
              Background="{DynamicResource MessageBackdropBrush}">
 
@@ -75,7 +76,7 @@
               Background="{DynamicResource ThemeBackgroundBrush}"
               Command="{Binding Path=CloseGroup}"
               CommandParameter="{Binding Path=.}">
-        <DrawingPresenter Width="15" Height="15" Drawing="{DynamicResource Material.Close}" />
+        <iconPack:IconControl Width="15" Height="15" Kind="PackIconMaterialKind.Close" />
       </Button>
 
       <!--Top Bar Underline-->
@@ -169,11 +170,12 @@
             Background="#637182"
             BorderBrush="#637182" >
       <Button.Content>
-        <DrawingPresenter Drawing="{DynamicResource FeatherIcons.ArrowDown}"
-                          Width="17" Height="17"
-                          VerticalAlignment="Center"
-                          HorizontalAlignment="Center"
-                          Margin="10" />
+        <iconPack:IconControl Kind="PackIconFeatherIconsKind.ArrowDown"
+                              Width="17" Height="17"
+                              VerticalAlignment="Center"
+                              HorizontalAlignment="Center"
+                              Margin="10"
+                              Foreground="White"/>
       </Button.Content>
     </Button>
 
@@ -252,20 +254,18 @@
               VerticalAlignment="Bottom"/>
 
       <!--Message Effects Button-->
-      <!--Background="White"
-      Foreground="#637182"-->
-      <DrawingPresenter Drawing="{DynamicResource FontAwesome.ReactBrands}"
-                        Grid.Row="1" Grid.Column="0"
-                        Width="15" Height="15"
-                        VerticalAlignment="Center"
-                        HorizontalAlignment="Center"
-                        Margin="0">
+      <iconPack:IconControl Kind="PackIconFontAwesomeKind.ReactBrands"
+                            Grid.Row="1" Grid.Column="0"
+                            Width="15" Height="15"
+                            Background="{DynamicResource ThemeBackgroundBrush}"
+                            Foreground="{DynamicResource DividerLineBrush}">
+                       
         <i:Interaction.Behaviors>
           <ia:EventTriggerBehavior EventName="PointerPressed">
             <ia:InvokeCommandAction Command="{Binding OpenMessageSuggestions}"/>
           </ia:EventTriggerBehavior>
         </i:Interaction.Behaviors>
-      </DrawingPresenter>
+      </iconPack:IconControl>
 
       <!--Message Text Box-->
       <!--extensions:MultiLineSendBox-->
@@ -292,35 +292,32 @@
       </TextBox>
 
       <!--Plus Button-->
-      <!--Background="White"
-      Foreground="#637182"-->
-      <DrawingPresenter Drawing="{DynamicResource Material.Plus}"
-                        Grid.Row="1" Grid.Column="2"
-                        Width="15" Height="15"
-                        VerticalAlignment="Center"
-                        HorizontalAlignment="Center"
-                        Margin="0,0,20,0">
+      <iconPack:IconControl Kind="PackIconMaterialKind.Plus"
+                            Grid.Row="1" Grid.Column="2"
+                            Width="15" Height="15"
+                            Background="{DynamicResource ThemeBackgroundBrush}"
+                            Foreground="{DynamicResource DividerLineBrush}"
+                            Margin="0,0,20,0">
         <i:Interaction.Behaviors>
           <ia:EventTriggerBehavior EventName="PointerPressed">
             <ia:InvokeCommandAction Command="{Binding SendAttachment}"/>
           </ia:EventTriggerBehavior>
         </i:Interaction.Behaviors>
-      </DrawingPresenter>
+      </iconPack:IconControl>
 
       <!--Send Message Button-->
-      <!--Foreground="#637182"-->
-      <DrawingPresenter Drawing="{DynamicResource MaterialDesign.Send}"
-                  Grid.Row="1" Grid.Column="3"
-                  Width="15" Height="15"
-                  VerticalAlignment="Center"
-                  HorizontalAlignment="Center"
-                  Margin="0,0,30,0">
+      <iconPack:IconControl Kind="PackIconMaterialKind.Send"
+                            Grid.Row="1" Grid.Column="3"
+                            Width="15" Height="15"
+                            Background="{DynamicResource ThemeBackgroundBrush}"
+                            Foreground="{DynamicResource DividerLineBrush}"
+                            Margin="0,0,30,0">
         <i:Interaction.Behaviors>
           <ia:EventTriggerBehavior EventName="PointerPressed">
             <ia:InvokeCommandAction Command="{Binding SendMessage}"/>
           </ia:EventTriggerBehavior>
         </i:Interaction.Behaviors>
-      </DrawingPresenter>
+      </iconPack:IconControl>
     </Grid>
 
     <!--Popup Dialog-->
