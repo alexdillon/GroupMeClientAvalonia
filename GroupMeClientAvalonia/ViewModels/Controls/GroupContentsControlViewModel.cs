@@ -552,16 +552,15 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
             }
             else
             {
-                var msg = new MessageBox.Avalonia.MessageBoxWindow(new MessageBox.Avalonia.DTO.MessageBoxParams
+                var msg = MessageBox.Avalonia.MessageBoxManager.GetMessageBoxStandardWindow(new MessageBox.Avalonia.DTO.MessageBoxStandardParams
                 {
-                    Button = MessageBox.Avalonia.Enums.ButtonEnum.Ok,
+                    ButtonDefinitions = MessageBox.Avalonia.Enums.ButtonEnum.Ok,
                     ContentTitle = "GroupMe Desktop Client",
                     ContentMessage = "Could Not Send Message",
-                    Icon = MessageBox.Avalonia.Enums.Icon.Error
+                    Icon = MessageBox.Avalonia.Enums.Icon.Error,
                 });
                 
-                // TODO: Add window back in (broken when upgrading to Avalonia 0.9.0)
-                msg.ShowDialog(null);
+                await msg.ShowDialog(Program.GroupMeMainWindow);
             }
 
             this.IsSending = false;

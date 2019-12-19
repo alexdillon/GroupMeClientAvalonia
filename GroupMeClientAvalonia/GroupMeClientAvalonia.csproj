@@ -67,7 +67,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="GroupMeClientPlugin" Version="1.0.4" />
-    <PackageReference Include="MessageBox.Avalonia" Version="0.8.3" />
+    <PackageReference Include="MessageBox.Avalonia" Version="0.9.0-preview5" />
     <PackageReference Include="MvvmLightLibsStd10" Version="5.4.1.1" />
     <PackageReference Include="NuGet.CommandLine" Version="5.3.1">
       <PrivateAssets>all</PrivateAssets>
