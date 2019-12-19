@@ -11,8 +11,8 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
     /// </summary>
     public class AvatarControlViewModel : ViewModelBase
     {
-        private IBitmap avatarRound;
-        private IBitmap avatarSquare;
+        private bool isRounded;
+        private IBitmap avatar;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AvatarControlViewModel"/> class.
@@ -38,23 +38,22 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
         public ImageDownloader ImageDownloader { get; }
 
         /// <summary>
-        /// Gets the image that should be used for rounded avatars.
-        /// If the avatar shouldn't be rounded, null is returned.
+        /// Gets a value indicating whether the avatar should be cropped to be circular.
         /// </summary>
-        public IBitmap AvatarRound
+        public bool IsRounded
         {
-            get => this.avatarRound;
-            private set => this.Set(() => this.AvatarRound, ref this.avatarRound, value);
+            get => this.isRounded;
+            private set => this.Set(() => this.IsRounded, ref this.isRounded, value);
         }
 
         /// <summary>
         /// Gets the image that should be used for square avatars.
         /// If the avatar shouldn't be rectangular, null is returned.
         /// </summary>
-        public IBitmap AvatarSquare
+        public IBitmap Avatar
         {
-            get => this.avatarSquare;
-            private set => this.Set(() => this.AvatarSquare, ref this.avatarSquare, value);
+            get => this.avatar;
+            private set => this.Set(() => this.Avatar, ref this.avatar, value);
         }
 
         /// <summary>
@@ -68,14 +67,8 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
 
             var bitmapImage = Utilities.ImageUtils.BytesToImageSource(image);
 
-            if (this.AvatarSource.IsRoundedAvatar)
-            {
-                this.AvatarRound = bitmapImage;
-            }
-            else
-            {
-                this.AvatarSquare = bitmapImage;
-            }
+            this.Avatar = bitmapImage;
+            this.IsRounded = this.AvatarSource.IsRoundedAvatar;
         }
     }
 }
