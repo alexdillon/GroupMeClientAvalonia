@@ -19,6 +19,7 @@ using System.Reactive.Linq;
 using DynamicData;
 using DynamicData.Binding;
 using ReactiveUI;
+using System.Reactive;
 
 namespace GroupMeClientAvalonia.ViewModels
 {
@@ -52,10 +53,16 @@ namespace GroupMeClientAvalonia.ViewModels
                 .Throttle(TimeSpan.FromMilliseconds(100))
                 .Select(this.BuildGroupFilter);
 
+            var updatedSort = this.AllGroupsChats
+                .Connect()
+                .WhenPropertyChanged(c => c.LastUpdated)
+                .Throttle(TimeSpan.FromMilliseconds(250))
+                .Select(_ => Unit.Default);
+
             this.AllGroupsChats.AsObservableList()
                 .Connect()
                 .Filter(filter)
-                .Sort(SortExpressionComparer<GroupControlViewModel>.Descending(g => g.LastUpdated))
+                .Sort(SortExpressionComparer<GroupControlViewModel>.Descending(g => g.LastUpdated), resort: updatedSort)
                 .ObserveOn(RxApp.MainThreadScheduler)
                 .Bind(this.SortedFilteredGroupChats)
                 .Subscribe();
