@@ -5,17 +5,26 @@ using System.IO;
 using System.Text;
 using System.Windows.Input;
 using Avalonia;
+using Avalonia.Collections;
+using Avalonia.Media;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using GroupMeClientAvalonia.Notifications;
 using GroupMeClientAvalonia.Notifications.Display;
 using GroupMeClientAvalonia.Notifications.Display.WpfToast;
+using MicroCubeAvalonia.Controls;
+using MicroCubeAvalonia.IconPack;
+using MicroCubeAvalonia.IconPack.Icons;
 
 namespace GroupMeClientAvalonia.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase
     {
+        private AvaloniaList<HamburgerMenuItem> menuItems = new AvaloniaList<HamburgerMenuItem>();
+        private AvaloniaList<HamburgerMenuItem> menuOptionItems = new AvaloniaList<HamburgerMenuItem>();
+        private HamburgerMenuItem selectedItem;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="MainViewModel"/> class.
         /// </summary>
@@ -24,8 +33,32 @@ namespace GroupMeClientAvalonia.ViewModels
             this.InitializeClient();
         }
 
-        public Enum CrapIcon =>
-            MicroCubeAvalonia.IconPack.Icons.PackIconFontAwesomeKind.NpmBrands;
+        /// <summary>
+        /// Gets or sets the list of main items shown in the hamburger menu.
+        /// </summary>
+        public AvaloniaList<HamburgerMenuItem> MenuItems
+        {
+            get { return this.menuItems; }
+            set { this.Set(() => this.MenuItems, ref this.menuItems, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets the list of options items shown in the hamburger menu (at the bottom).
+        /// </summary>
+        public AvaloniaList<HamburgerMenuItem> MenuOptionItems
+        {
+            get { return this.menuOptionItems; }
+            set { this.Set(() => this.MenuOptionItems, ref this.menuOptionItems, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets the currently selected Hamburger Menu Tab.
+        /// </summary>
+        public HamburgerMenuItem SelectedItem
+        {
+            get { return this.selectedItem; }
+            set { this.Set(() => this.SelectedItem, ref this.selectedItem, value); }
+        }
 
         /// <summary>
         /// Gets or sets the popup manager to be used for popups 
@@ -49,7 +82,7 @@ namespace GroupMeClientAvalonia.ViewModels
 
         private GroupMeClientApi.GroupMeClient GroupMeClient { get; set; }
 
-        //private Caching.CacheContext CacheContext { get; set; }
+        private Caching.CacheContext CacheContext { get; set; }
 
         private Settings.SettingsManager SettingsManager { get; set; }
 
@@ -57,24 +90,23 @@ namespace GroupMeClientAvalonia.ViewModels
 
         //private UpdateAssist UpdateAssist { get; set; }
 
-            // TODO not this
-        public ChatsViewModel ChatsViewModel { get; set; }
+        private ChatsViewModel ChatsViewModel { get; set; }
 
-        //private SearchViewModel SearchViewModel { get; set; }
+        private SearchViewModel SearchViewModel { get; set; }
 
-        //private SettingsViewModel SettingsViewModel { get; set; }
+        private SettingsViewModel SettingsViewModel { get; set; }
 
-        //private LoginViewModel LoginViewModel { get; set; }
+        private LoginViewModel LoginViewModel { get; set; }
 
-        //private ProgressRing ReconnectingSpinner { get; } = new ProgressRing() { IsActive = false, Width = 20, Foreground = System.Windows.Media.Brushes.White };
+        private ProgressRing ReconnectingSpinner { get; } = new ProgressRing() { IsActive = false, Width = 16, Foreground = Brushes.White };
 
-        //private ProgressRing UpdatingSpinner { get; } = new ProgressRing() { IsActive = true, Width = 20, Foreground = System.Windows.Media.Brushes.White };
+        private ProgressRing UpdatingSpinner { get; } = new ProgressRing() { IsActive = true, Width = 16, Foreground = Brushes.White };
 
-        //private System.Windows.Controls.Button RefreshButton { get; set; }
+        private Avalonia.Controls.Button RefreshButton { get; set; }
 
-        //private PackIconMaterial RefreshButtonIcon { get; set; }
+        private PackIconMaterialKind RefreshButtonIcon { get; set; }
 
-        //private int DisconnectedComponentCount { get; set; }
+        private int DisconnectedComponentCount { get; set; }
 
         private void InitializeClient()
         {
@@ -109,12 +141,12 @@ namespace GroupMeClientAvalonia.ViewModels
                 this.NotificationRouter = new NotificationRouter(this.GroupMeClient);
 
                 this.ChatsViewModel = new ChatsViewModel(this.GroupMeClient, this.SettingsManager);
-                //this.SearchViewModel = new SearchViewModel(this.GroupMeClient, this.CacheContext);
-                //this.SettingsViewModel = new SettingsViewModel(this.SettingsManager);
+                this.SearchViewModel = new SearchViewModel(this.GroupMeClient, this.CacheContext);
+                this.SettingsViewModel = new SettingsViewModel(this.SettingsManager);
 
                 this.RegisterNotifications();
 
-                //this.CreateMenuItemsRegular();
+                this.CreateMenuItemsRegular();
             }
 
             Messenger.Default.Register<Messaging.DialogRequestMessage>(this, this.OpenBigPopup);
@@ -136,6 +168,67 @@ namespace GroupMeClientAvalonia.ViewModels
             this.NotificationRouter.RegisterNewSubscriber(this.ChatsViewModel);
             //this.NotificationRouter.RegisterNewSubscriber(PopupNotificationProvider.CreatePlatformNotificationProvider());
             this.NotificationRouter.RegisterNewSubscriber(PopupNotificationProvider.CreateInternalNotificationProvider(this.ToastHolderManager));
+        }
+
+        private void CreateMenuItemsRegular()
+        {
+            var chatsTab = new HamburgerMenuItem()
+            {
+                Icon = new IconControl() { BindableKind = PackIconMaterialKind.MessageText },
+                Label = "Chats",
+                ToolTip = "View Groups and Chats.",
+                Tag = this.ChatsViewModel,
+            };
+
+            var secondTab = new HamburgerMenuItem()
+            {
+                Icon = new IconControl() { BindableKind = PackIconMaterialKind.EmailSearch },
+                Label = "Search",
+                ToolTip = "Search all Groups and Chats.",
+                Tag = this.SearchViewModel,
+            };
+
+            var settingsTab = new HamburgerMenuItem()
+            {
+                Icon = new IconControl() { BindableKind = PackIconMaterialKind.SettingsOutline },
+                Label = "Settings",
+                ToolTip = "GroupMe Settings",
+                Tag = this.SettingsViewModel,
+            };
+
+            //var loadingSpinner = new HamburgerMenuItem()
+            //{
+            //    Icon = this.ReconnectingSpinner,
+            //    Label = "Loading...",
+            //    ToolTip = "Loading...",
+            //    Tag = null,
+            //};
+
+            // Add new Tabs
+            this.MenuItems.Add(chatsTab);
+            this.MenuItems.Add(secondTab);
+
+            //this.MenuItems.Add(loadingSpinner);
+
+            // Add new Options
+            this.MenuOptionItems.Add(settingsTab);
+
+            // Set the section to the Chats tab
+            this.SelectedItem = chatsTab;
+
+            //// Remove the old Tabs and Options AFTER the new one has been bound
+            //// There should be a better way to do this...
+            //var newTopOptionIndex = this.MenuOptionItems.IndexOf(settingsTab);
+            //for (int i = 0; i < newTopOptionIndex; i++)
+            //{
+            //    this.MenuOptionItems.RemoveAt(0);
+            //}
+
+            //var newTopIndex = this.MenuItems.IndexOf(chatsTab);
+            //for (int i = 0; i < newTopIndex; i++)
+            //{
+            //    this.MenuItems.RemoveAt(0);
+            //}
         }
 
         private void MainWindow_Closing(object sender, CancelEventArgs e)

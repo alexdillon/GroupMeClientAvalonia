@@ -33,6 +33,9 @@
     <AvaloniaResource Remove="Views\Controls\MultiLikeControl.xaml" />
     <AvaloniaResource Remove="Views\Controls\Popup.xaml" />
     <AvaloniaResource Remove="Views\Controls\ViewImageControl.xaml" />
+    <AvaloniaResource Remove="Views\LoginView.xaml" />
+    <AvaloniaResource Remove="Views\SearchView.xaml" />
+    <AvaloniaResource Remove="Views\SettingsView.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -51,28 +54,34 @@
     <None Remove="Views\Controls\MultiLikeControl.xaml" />
     <None Remove="Views\Controls\Popup.xaml" />
     <None Remove="Views\Controls\ViewImageControl.xaml" />
+    <None Remove="Views\LoginView.xaml" />
+    <None Remove="Views\SearchView.xaml" />
+    <None Remove="Views\SettingsView.xaml" />
   </ItemGroup>
   
   <ItemGroup>
-    <PackageReference Include="Avalonia" Version="0.9.0" />
-    <PackageReference Include="Avalonia.Desktop" Version="0.9.0" />
+    <PackageReference Include="Avalonia" Version="0.9.1" />
+    <PackageReference Include="Avalonia.Desktop" Version="0.9.1" />
     <PackageReference Include="Avalonia.HtmlRenderer" Version="0.6.1" />
-    <PackageReference Include="Avalonia.ReactiveUI" Version="0.9.0" />
+    <PackageReference Include="Avalonia.ReactiveUI" Version="0.9.1" />
     <PackageReference Include="Avalonia.Xaml.Behaviors" Version="0.9.0" />
     <PackageReference Include="Avalonia.Xaml.Interactions" Version="0.9.0" />
     <PackageReference Include="Avalonia.Xaml.Interactivity" Version="0.9.0" />
     <PackageReference Include="DynamicData" Version="6.14.1" />
-    <PackageReference Include="GitInfo" Version="2.0.25">
+    <PackageReference Include="GitInfo" Version="2.0.26">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="GroupMeClientPlugin" Version="1.0.4" />
     <PackageReference Include="MessageBox.Avalonia" Version="0.9.0-preview5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.0" />
     <PackageReference Include="MvvmLightLibsStd10" Version="5.4.1.1" />
-    <PackageReference Include="NuGet.CommandLine" Version="5.3.1">
+    <PackageReference Include="NuGet.CommandLine" Version="5.4.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="SQLitePCLRaw.bundle_green" Version="2.0.2" />
   </ItemGroup>
   
   <ItemGroup>
@@ -166,6 +175,24 @@
   
   <ItemGroup>
     <EmbeddedResource Include="Views\Controls\ViewImageControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  
+  <ItemGroup>
+    <EmbeddedResource Include="Views\LoginView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  
+  <ItemGroup>
+    <EmbeddedResource Include="Views\SearchView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  
+  <ItemGroup>
+    <EmbeddedResource Include="Views\SettingsView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
   </ItemGroup>
