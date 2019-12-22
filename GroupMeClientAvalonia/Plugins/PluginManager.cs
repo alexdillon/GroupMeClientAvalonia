@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Reflection;
+using System.Runtime.Loader;
 using GroupMeClientPlugin;
 using GroupMeClientPlugin.GroupChat;
 using GroupMeClientPlugin.MessageCompose;
@@ -14,6 +16,7 @@ namespace GroupMeClientAvalonia.Plugins
     /// </summary>
     /// <remarks>
     /// Based on https://code.msdn.microsoft.com/windowsdesktop/Creating-a-simple-plugin-b6174b62.
+    /// Adapted for .Net Core based on https://docs.microsoft.com/en-us/dotnet/core/tutorials/creating-app-with-plugin-support
     /// </remarks>
     public sealed class PluginManager
     {
@@ -59,32 +62,38 @@ namespace GroupMeClientAvalonia.Plugins
             ICollection<Assembly> assemblies = new List<Assembly>(dllFileNames.Length);
             foreach (string dllFile in dllFileNames)
             {
-                AssemblyName an = AssemblyName.GetAssemblyName(dllFile);
-                Assembly assembly = Assembly.Load(an);
-                assemblies.Add(assembly);
+                Assembly pluginAssembly = LoadPlugin(dllFile);
+                assemblies.Add(pluginAssembly);
             }
 
             Type pluginType = typeof(PluginBase);
             ICollection<Type> pluginTypes = new List<Type>();
             foreach (Assembly assembly in assemblies)
             {
-                if (assembly != null)
+                try
                 {
-                    Type[] types = assembly.GetTypes();
-                    foreach (Type type in types)
+                    if (assembly != null)
                     {
-                        if (type.IsInterface || type.IsAbstract)
+                        Type[] types = assembly.GetTypes();
+                        foreach (Type type in types)
                         {
-                            continue;
-                        }
-                        else
-                        {
-                            if (type.IsSubclassOf(pluginType))
+                            if (type.IsInterface || type.IsAbstract)
                             {
-                                pluginTypes.Add(type);
+                                continue;
+                            }
+                            else
+                            {
+                                if (type.IsSubclassOf(pluginType))
+                                {
+                                    pluginTypes.Add(type);
+                                }
                             }
                         }
                     }
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine("Error loading plugin {0}. Error Code: {1}", assembly.FullName, ex.Message);
                 }
             }
 
@@ -107,6 +116,54 @@ namespace GroupMeClientAvalonia.Plugins
                 {
                     this.GroupChatCachePlugins.Add(groupChatCachePlugin);
                 }
+            }
+        }
+
+        private static Assembly LoadPlugin(string relativePath)
+        {
+            // Navigate up to the solution root
+            string root = Path.GetFullPath(Path.Combine(
+                Path.GetDirectoryName(
+                    Path.GetDirectoryName(
+                        Path.GetDirectoryName(
+                            Path.GetDirectoryName(
+                                Path.GetDirectoryName(typeof(Program).Assembly.Location)))))));
+
+            string pluginLocation = Path.GetFullPath(Path.Combine(root, relativePath.Replace('\\', Path.DirectorySeparatorChar)));
+            Console.WriteLine($"Loading commands from: {pluginLocation}");
+            PluginLoadContext loadContext = new PluginLoadContext(pluginLocation);
+            return loadContext.LoadFromAssemblyName(new AssemblyName(Path.GetFileNameWithoutExtension(pluginLocation)));
+        }
+
+        private class PluginLoadContext : AssemblyLoadContext
+        {
+            private readonly AssemblyDependencyResolver resolver;
+
+            public PluginLoadContext(string pluginPath)
+            {
+                this.resolver = new AssemblyDependencyResolver(pluginPath);
+            }
+
+            protected override Assembly Load(AssemblyName assemblyName)
+            {
+                string assemblyPath = this.resolver.ResolveAssemblyToPath(assemblyName);
+                if (assemblyPath != null)
+                {
+                    return this.LoadFromAssemblyPath(assemblyPath);
+                }
+
+                return null;
+            }
+
+            protected override IntPtr LoadUnmanagedDll(string unmanagedDllName)
+            {
+                string libraryPath = this.resolver.ResolveUnmanagedDllToPath(unmanagedDllName);
+                if (libraryPath != null)
+                {
+                    return this.LoadUnmanagedDllFromPath(libraryPath);
+                }
+
+                return IntPtr.Zero;
             }
         }
     }

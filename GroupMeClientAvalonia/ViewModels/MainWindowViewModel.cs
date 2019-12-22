@@ -13,6 +13,7 @@ using GalaSoft.MvvmLight.Messaging;
 using GroupMeClientAvalonia.Notifications;
 using GroupMeClientAvalonia.Notifications.Display;
 using GroupMeClientAvalonia.Notifications.Display.WpfToast;
+using GroupMeClientAvalonia.Plugins;
 using MicroCubeAvalonia.Controls;
 using MicroCubeAvalonia.IconPack;
 using MicroCubeAvalonia.IconPack.Icons;
@@ -115,7 +116,7 @@ namespace GroupMeClientAvalonia.ViewModels
             this.SettingsManager = new Settings.SettingsManager(this.SettingsPath);
             this.SettingsManager.LoadSettings();
 
-            //PluginManager.Instance.LoadPlugins(this.PluginsPath);
+            PluginManager.Instance.LoadPlugins(this.PluginsPath);
 
             //Messenger.Default.Register<Messaging.UnreadRequestMessage>(this, this.UpdateNotificationCount);
             //Messenger.Default.Register<Messaging.DisconnectedRequestMessage>(this, this.UpdateDisconnectedComponentsCount);
