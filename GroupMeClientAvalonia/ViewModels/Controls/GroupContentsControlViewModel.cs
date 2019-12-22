@@ -16,6 +16,7 @@ using Avalonia.Controls;
 using Avalonia;
 using DynamicData;
 using DynamicData.Binding;
+using System.Reactive.Linq;
 
 namespace GroupMeClientAvalonia.ViewModels.Controls
 {
@@ -322,8 +323,6 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
             }
         }
 
-
-        // HUGE TODO
         private async Task UpdateDisplay(ScrollViewer scrollViewer, ICollection<Message> messages)
         {
             if (messages.Count == 0)
@@ -331,14 +330,15 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
                 return;
             }
 
-            Avalonia.Threading.Dispatcher.UIThread.Post(() =>
+            await Avalonia.Threading.Dispatcher.UIThread.InvokeAsync(() =>
             {
                 // the code that's accessing UI properties
-                double originalHeight = scrollViewer?.Height ?? 0.0;
+                //double originalHeight = scrollViewer?.Height ?? 0.0;
+                double originalHeight = scrollViewer?.GetValue(ScrollViewer.VerticalScrollBarMaximumProperty) ?? 0.0;
                 if (originalHeight != 0)
                 {
                     // prevent the At Top event from firing while we are adding new messages  
-                    //  scrollViewer.ScrollToVerticalOffset(1);
+                    scrollViewer.SetValue(ScrollViewer.VerticalScrollBarValueProperty, 1);
                 }
 
                 var maxTimeDifference = TimeSpan.FromMinutes(15);
@@ -438,10 +438,12 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
                     // Calculate the offset where the last message the user was looking at is
                     // Scroll back to there so new messages appear on top, above screen
                     //scrollViewer.UpdateLayout();
-                    //double newHeight = scrollViewer?.ExtentHeight ?? 0.0;
-                    //double difference = newHeight - originalHeight;
+                    scrollViewer?.GetObservable(ScrollViewer.VerticalScrollBarMaximumProperty).Take(2).Skip(1).Subscribe((newMax =>
+                    {
+                        double difference = newMax - originalHeight;
 
-                    //scrollViewer.ScrollToVerticalOffset(difference);
+                        scrollViewer.SetValue(ScrollViewer.VerticalScrollBarValueProperty, difference);
+                    }));
                 }
 
                 if (messages.Count > 0)

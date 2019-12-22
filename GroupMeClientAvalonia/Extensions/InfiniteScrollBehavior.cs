@@ -1,7 +1,6 @@
 ﻿using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Xaml.Interactivity;
-using ReactiveUI;
 using System;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
@@ -16,7 +15,7 @@ namespace GroupMeClientAvalonia.Extensions
         private ICommand reachedTopCommand;
         private bool isNotAtBottom;
         private bool autoScrollToBottom;
-        private bool isLockedToBottom;
+        private bool isLockedToBottom = true;
 
         /// <summary>
         /// Gets an Avalonia Property for the command to execute when scrolled to the top of the list.
@@ -99,17 +98,17 @@ namespace GroupMeClientAvalonia.Extensions
                     var scrollViewer = this.AssociatedObject.Scroll as ScrollViewer;
 
                     scrollViewer.GetObservable(ScrollViewer.VerticalScrollBarMaximumProperty)
-                    .Subscribe(x => this.verticalHeightMax = x)
-                    .DisposeWith(this.disposables);
-
-                    scrollViewer.GetObservable(ScrollViewer.ExtentProperty)
-                    .ForEachAsync(size =>
+                    .Subscribe(vscroll => 
                     {
-                        if (size.Height == 0)
-                        {
+                        this.verticalHeightMax = vscroll;
 
+                        if (this.LockedToBottom)
+                        {
+                            // Scroll to bottom
+                            scrollViewer.SetValue(ScrollViewer.VerticalScrollBarValueProperty, this.verticalHeightMax);
                         }
-                    });
+                    })
+                    .DisposeWith(this.disposables);
 
                     scrollViewer.GetObservable(ScrollViewer.OffsetProperty)
                     .ForEachAsync(offset =>
@@ -123,9 +122,9 @@ namespace GroupMeClientAvalonia.Extensions
                         {
                             Console.WriteLine("At Top");
                             
-                            if (this.ReachedTopCommand.CanExecute(null))
+                            if (this.ReachedTopCommand.CanExecute(scrollViewer))
                             {
-                                this.ReachedTopCommand.Execute(null);
+                                this.ReachedTopCommand.Execute(scrollViewer);
                             }
                         }
 
@@ -135,10 +134,12 @@ namespace GroupMeClientAvalonia.Extensions
                         {
                             Console.WriteLine("At Bottom");
                             this.IsNotAtBottom = false;
+                            this.LockedToBottom = true;
                         }
                         else
                         {
                             this.IsNotAtBottom = true;
+                            this.LockedToBottom = false;
                         }
                     })
                     .DisposeWith(this.disposables);
