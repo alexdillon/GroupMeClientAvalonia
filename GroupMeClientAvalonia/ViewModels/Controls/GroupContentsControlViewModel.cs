@@ -273,7 +273,8 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
             {
                 if (supportedExtensions.Contains(Path.GetExtension(file).ToLower()))
                 {
-                    this.ShowImageSendDialog(File.OpenRead(file));
+                    var data = File.ReadAllBytes(file);
+                    this.ShowImageSendDialog(data);
                     break;
                 }
             }
@@ -282,8 +283,7 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
         /// <inheritdoc />
         void FileDragDropHelper.IDragDropTarget.OnImageDrop(byte[] image)
         {
-            var memoryStream = new MemoryStream(image);
-            this.ShowImageSendDialog(memoryStream);
+            this.ShowImageSendDialog(image);
         }
 
         private async Task LoadMoreAsync(ScrollViewer scrollViewer = null, bool updateNewest = false)
@@ -472,7 +472,8 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
             var fileName = await openFileDialog.ShowAsync(Program.GroupMeMainWindow);
             if (!string.IsNullOrEmpty(fileName.FirstOrDefault()))
             {
-                this.ShowImageSendDialog(File.OpenRead(fileName.FirstOrDefault()));
+                var data = File.ReadAllBytes(fileName.FirstOrDefault());
+                this.ShowImageSendDialog(data);
             }
         }
 
@@ -485,7 +486,7 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
 
             var imageSendDialog = this.PopupManager.PopupDialog as SendImageControlViewModel;
 
-            if (imageSendDialog.ImageStream == null)
+            if (imageSendDialog.Image == null)
             {
                 return;
             }
@@ -494,17 +495,9 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
             this.IsSending = true;
 
             var contents = imageSendDialog.TypedMessageContents;
-            byte[] image;
+            var image = imageSendDialog.ImageData;
 
-            using (var ms = new MemoryStream())
-            {
-                imageSendDialog.ImageStream.Seek(0, SeekOrigin.Begin);
-                await imageSendDialog.ImageStream.CopyToAsync(ms);
-                image = ms.ToArray();
-            }
-
-            GroupMeClientApi.Models.Attachments.ImageAttachment attachment;
-            attachment = await GroupMeClientApi.Models.Attachments.ImageAttachment.CreateImageAttachment(image, this.MessageContainer);
+            var attachment = await GroupMeClientApi.Models.Attachments.ImageAttachment.CreateImageAttachment(image, this.MessageContainer);
 
             var attachmentsList = new List<GroupMeClientApi.Models.Attachments.Attachment> { attachment };
 
@@ -554,11 +547,14 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
             return success;
         }
 
-        private void ShowImageSendDialog(Stream image)
+        private void ShowImageSendDialog(byte[] imageData)
         {
+            var ms = new MemoryStream(imageData);
+            var image = new Avalonia.Media.Imaging.Bitmap(ms);
             var dialog = new SendImageControlViewModel()
             {
-                ImageStream = image,
+                Image = image,
+                ImageData = imageData,
                 TypedMessageContents = this.TypedMessageContents,
                 SendMessage = new RelayCommand(async () => await this.SendImageMessageAsync(), () => !this.IsSending, true),
             };

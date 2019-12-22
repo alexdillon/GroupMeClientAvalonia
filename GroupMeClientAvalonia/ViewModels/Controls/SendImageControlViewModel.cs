@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Avalonia.Input;
+using Avalonia.Media.Imaging;
+using GalaSoft.MvvmLight.Command;
+using System;
 using System.IO;
 using System.Windows.Input;
 
@@ -25,9 +28,14 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
         public ICommand SendMessage { get; set; }
 
         /// <summary>
-        /// Gets or sets the image stream to preview the image.
+        /// Gets or sets the image to preview.
         /// </summary>
-        public Stream ImageStream { get; set; }
+        public IBitmap Image { get; set; }
+
+        /// <summary>
+        /// The raw encoded image data corresponding to <see cref="Image"/>.
+        /// </summary>
+        public byte[] ImageData { get; set; }
 
         /// <summary>
         /// Gets or sets the message the user has composed to send.
@@ -50,8 +58,7 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
         /// <inheritdoc />
         void IDisposable.Dispose()
         {
-            this.ImageStream.Close();
-            this.ImageStream.Dispose();
+            this.Image.Dispose();
         }
     }
 }
