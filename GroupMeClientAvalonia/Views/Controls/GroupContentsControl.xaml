@@ -114,7 +114,7 @@
         <Style Selector="ListBoxItem">
           <Setter Property="HorizontalContentAlignment" Value="Left"/>
           <Setter Property="VerticalContentAlignment" Value="Top"/>
-          <Setter Property="IsEnabled" Value="{Binding Path=DataContext.IsSelectionAllowed, RelativeSource={RelativeSource AncestorType=controls:GroupContentsControl}}"/>
+          <!--<Setter Property="IsEnabled" Value="{Binding Path=DataContext.IsSelectionAllowed, RelativeSource={RelativeSource AncestorType=controls:GroupContentsControl}}"/>-->
           <Setter Property="ClipToBounds" Value="False" />
           
           <Setter Property="Template">
@@ -162,21 +162,49 @@
 
     <!--Scroll-To-Bottom Button-->
     <!--Visibility="{Binding IsNotAtBottom, ElementName=messagesList, Converter={StaticResource boolToVisibilityConverter}}"
-     Command="{Binding ElementName=messagesList, Path=ScrollToEnd}"-->
+     Command="{Binding ElementName=messagesList, Path=ScrollToEnd}"
+       -->
     <Button Grid.Row="2"
             HorizontalAlignment="Right"
             VerticalAlignment="Bottom"
+            Classes="round"
             Margin="0,0,30,20"
             Background="#637182"
             BorderBrush="#637182" >
+      <Button.Styles>
+        <Style Selector="Button">
+          <Setter Property="Template">
+            <ControlTemplate>
+              <Border CornerRadius="360" BorderThickness="0" Background="{TemplateBinding Background}">
+                <ContentPresenter Name="PART_ContentPresenter"
+                                  ContentTemplate="{TemplateBinding ContentTemplate}"
+                                  Content="{TemplateBinding Content}"
+                                  Padding="{TemplateBinding Padding}"
+                                  TextBlock.Foreground="{TemplateBinding Foreground}"
+                                  HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                  VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
+              </Border>
+            </ControlTemplate>
+          </Setter>
+        </Style>
+        <Style Selector="Button:pressed /template/ ContentPresenter">
+          <Setter Property="Background" Value="Transparent" />
+        </Style>
+        <Style Selector="Button:pressed /template/ Border">
+          <Setter Property="Opacity" Value="0.8" />
+        </Style>
+      </Button.Styles>
+      
       <Button.Content>
-        <iconPack:IconControl Kind="PackIconFeatherIconsKind.ArrowDown"
+        <iconPack:IconControl Kind="PackIconMaterialKind.ArrowDown"
                               Width="17" Height="17"
                               VerticalAlignment="Center"
                               HorizontalAlignment="Center"
                               Margin="10"
                               Foreground="White"/>
       </Button.Content>
+
+
     </Button>
 
     <!--Plugins Dropdown List-->
@@ -292,41 +320,31 @@
       </TextBox>
 
       <!--Plus Button-->
-      <iconPack:IconControl Kind="PackIconMaterialKind.Plus"
-                            Grid.Row="1" Grid.Column="2"
-                            Width="15" Height="15"
-                            Background="{DynamicResource ThemeBackgroundBrush}"
-                            Foreground="{DynamicResource DividerLineBrush}"
-                            Margin="0,0,20,0">
-        <i:Interaction.Behaviors>
-          <ia:EventTriggerBehavior EventName="PointerPressed">
-            <ia:InvokeCommandAction Command="{Binding SendAttachment}"/>
-          </ia:EventTriggerBehavior>
-        </i:Interaction.Behaviors>
-      </iconPack:IconControl>
-
+      <Button Command="{Binding SendAttachment}"
+              Classes="styleless"
+              Grid.Row="1" Grid.Column="2"
+              Width="15" Height="15"
+              Background="{DynamicResource ThemeBackgroundBrush}"
+              Foreground="{DynamicResource DividerLineBrush}"
+              Margin="0,0,20,0">
+        <iconPack:IconControl Kind="PackIconMaterialKind.Plus"/>
+      </Button>
+      
       <!--Send Message Button-->
-      <iconPack:IconControl Kind="PackIconMaterialKind.Send"
-                            Grid.Row="1" Grid.Column="3"
-                            Width="15" Height="15"
-                            Background="{DynamicResource ThemeBackgroundBrush}"
-                            Foreground="{DynamicResource DividerLineBrush}"
-                            Margin="0,0,30,0">
-        <i:Interaction.Behaviors>
-          <ia:EventTriggerBehavior EventName="PointerPressed">
-            <ia:InvokeCommandAction Command="{Binding SendMessage}"/>
-          </ia:EventTriggerBehavior>
-        </i:Interaction.Behaviors>
-      </iconPack:IconControl>
+      <Button Command="{Binding SendMessage}"
+              Classes="styleless"
+              Grid.Row="1" Grid.Column="3"
+              Width="15" Height="15"
+              Background="{DynamicResource ThemeBackgroundBrush}"
+              Foreground="{DynamicResource DividerLineBrush}"
+              Margin="0,0,30,0">
+        <iconPack:IconControl Kind="PackIconMaterialKind.Send"/>
+      </Button>
     </Grid>
 
     <!--Popup Dialog-->
-    <!--
-    <controls:Popup Grid.RowSpan="4"
-                    Grid.ColumnSpan="1"
-                    DataContext="{Binding Path=.}"
-                    Visibility="{Binding SmallDialog, Converter={StaticResource nullToVisibilityConverter}}">
-      <UserControl Content="{Binding SmallDialog}" />
-    </controls:Popup>-->
+    <ContentControl Content="{Binding PopupManager}"
+                    Grid.RowSpan="4"
+                    Grid.ColumnSpan="1"/>
 </Grid>
 </UserControl>

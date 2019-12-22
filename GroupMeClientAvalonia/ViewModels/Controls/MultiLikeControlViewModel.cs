@@ -105,7 +105,7 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
             this.IsEnabled = true;
             this.GroupContentsControlViewModel.IsSelectionAllowed = true;
 
-            this.GroupContentsControlViewModel.SmallDialog = null;
+            this.GroupContentsControlViewModel.PopupManager.PopupDialog = null;
         }
 
         private void DisableMultiLike()
@@ -116,7 +116,7 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
             var itemList = this.GroupContentsControlViewModel.CurrentlySelectedMessages as ObservableCollection<object>;
             itemList?.Clear();
 
-            this.GroupContentsControlViewModel.SmallDialog = null;
+            this.GroupContentsControlViewModel.PopupManager.PopupDialog = null;
         }
 
         private async Task DoMultiLike()
@@ -133,7 +133,7 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
             var newestId = itemList.Max(m => long.Parse(m.Id));
 
             var loadingControl = new LoadingControlViewModel();
-            this.GroupContentsControlViewModel.SmallDialog = loadingControl;
+            this.GroupContentsControlViewModel.PopupManager.PopupDialog = loadingControl;
 
             foreach (var message in this.GroupContentsControlViewModel.SortedMessages)
             {
@@ -148,7 +148,7 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
 
             this.DisableMultiLike();
 
-            this.GroupContentsControlViewModel.SmallDialog = null;
+            this.GroupContentsControlViewModel.PopupManager.PopupDialog = null;
         }
 
         /// <summary>
@@ -183,7 +183,7 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
             /// <inheritdoc/>
             public Task Activated(IMessageContainer groupOrChat)
             {
-                this.GroupContentsControlViewModel.SmallDialog = this.MultiLikeControlViewModel;
+                this.GroupContentsControlViewModel.PopupManager.PopupDialog = this.MultiLikeControlViewModel;
                 return Task.CompletedTask;
             }
         }

@@ -24,6 +24,15 @@
       <Style Selector="TextBox.verticalCenter /template/ Panel">
         <Setter Property="VerticalAlignment" Value="Center"/>
       </Style>
-      
+
+      <Style Selector="Button.styleless">
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="Padding" Value="0" />
+      </Style>
+
+      <Style Selector="Button.styleless:pressed /template/ ContentPresenter">
+        <Setter Property="Background" Value="{TemplateBinding Background}"/>
+      </Style>
     </Application.Styles>
 </Application>

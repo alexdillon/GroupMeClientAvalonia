@@ -28,7 +28,6 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
         private IMessageContainer messageContainer;
         private AvatarControlViewModel topBarAvatar;
         private string typedMessageContents = string.Empty;
-        private ViewModelBase smallDialog;
         private bool isSelectionAllowed = false;
 
         /// <summary>
@@ -41,14 +40,18 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
             this.ReloadSem = new SemaphoreSlim(1, 1);
 
             this.SendMessage = new RelayCommand(async () => await this.SendMessageAsync(), () => !this.IsSending, true);
-            this.SendAttachment = new RelayCommand(this.SendFileImageAttachment);
+            this.SendAttachment = new RelayCommand(async () => await this.SendFileImageAttachment(), true);
             this.OpenMessageSuggestions = new RelayCommand(this.OpenMessageSuggestionsDialog);
             this.ReloadView = new RelayCommand<ScrollViewer>(async (s) => await this.LoadMoreAsync(s), true);
-            this.ClosePopup = new RelayCommand(this.ClosePopupHandler);
-            this.EasyClosePopup = null; // EasyClose makes it too easy to accidently close the send dialog.
             this.GroupChatPluginActivated = new RelayCommand<GroupMeClientPlugin.GroupChat.IGroupChatPlugin>(this.ActivateGroupPlugin);
             this.GroupChatCachePluginActivated = new RelayCommand<GroupMeClientPlugin.GroupChat.IGroupChatCachePlugin>(this.ActivateGroupCachePlugin);
             this.SelectionChangedCommand = new RelayCommand<object>(this.SelectionChangedHandler);
+
+            this.PopupManager = new Controls.PopupViewModel()
+            {
+                ClosePopup = new RelayCommand(this.ClosePopupHandler),
+                EasyClosePopup = null, // EasyClose makes it too easy to accidently close the send dialog. 
+            };
 
             this.ReliabilityStateMachine = new ReliabilityStateMachine();
 
@@ -115,17 +118,6 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
         public ICommand ReloadView { get; private set; }
 
         /// <summary>
-        /// Gets the action to be be performed when a little popup has been closed.
-        /// </summary>
-        public ICommand ClosePopup { get; }
-
-        /// <summary>
-        /// Gets the action to be be performed when the big popup has been closed indirectly.
-        /// This typically is from the user clicking in the gray area around the popup to dismiss it.
-        /// </summary>
-        public ICommand EasyClosePopup { get; }
-
-        /// <summary>
         /// Gets the action to be be performed when the selected messages have changed.
         /// This is used by the Multi-Like plugin.
         /// </summary>
@@ -157,6 +149,11 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
         /// Options Menu is activated.
         /// </summary>
         public ICommand GroupChatCachePluginActivated { get; }
+
+        /// <summary>
+        /// Gets or sets the popup manager to be used for popups 
+        /// </summary>
+        public Controls.PopupViewModel PopupManager { get; set; }
 
         /// <summary>
         /// Gets the title of the <see cref="Group"/> or <see cref="Chat"/>.
@@ -198,16 +195,6 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
         {
             get => this.typedMessageContents;
         set => this.Set(() => this.TypedMessageContents, ref this.typedMessageContents, value);
-        }
-
-        /// <summary>
-        /// Gets or sets the Small Dialog that should be displayed as a popup.
-        /// Gets null if no dialog should be displayed.
-        /// </summary>
-        public ViewModelBase SmallDialog
-        {
-            get => this.smallDialog;
-            set => this.Set(() => this.SmallDialog, ref this.smallDialog, value);
         }
 
         /// <summary>
@@ -477,13 +464,12 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
             }
         }
 
-        private void SendFileImageAttachment()
+        private async Task SendFileImageAttachment()
         {
             var openFileDialog = new OpenFileDialog();
             openFileDialog.Filters.Add(new FileDialogFilter() { Name = "Images", Extensions = { "bmp", "jpg", "jpeg", "png", "gif" } });
 
-            // TODO: Add window back in (broken when upgrading to Avalonia 0.9.0)
-            var fileName = openFileDialog.ShowAsync(null).Result;
+            var fileName = await openFileDialog.ShowAsync(Program.GroupMeMainWindow);
             if (!string.IsNullOrEmpty(fileName.FirstOrDefault()))
             {
                 this.ShowImageSendDialog(File.OpenRead(fileName.FirstOrDefault()));
@@ -492,12 +478,12 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
 
         private async Task SendImageMessageAsync()
         {
-            if (!(this.SmallDialog is SendImageControlViewModel))
+            if (!(this.PopupManager.PopupDialog is SendImageControlViewModel))
             {
                 return;
             }
 
-            var imageSendDialog = this.SmallDialog as SendImageControlViewModel;
+            var imageSendDialog = this.PopupManager.PopupDialog as SendImageControlViewModel;
 
             if (imageSendDialog.ImageStream == null)
             {
@@ -577,13 +563,13 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
                 SendMessage = new RelayCommand(async () => await this.SendImageMessageAsync(), () => !this.IsSending, true),
             };
 
-            this.SmallDialog = dialog;
+            this.PopupManager.PopupDialog = dialog;
         }
 
         private void ClosePopupHandler()
         {
-            (this.SmallDialog as IDisposable)?.Dispose();
-            this.SmallDialog = null;
+            (this.PopupManager.PopupDialog as IDisposable)?.Dispose();
+            this.PopupManager.PopupDialog = null;
         }
 
         private void ActivateGroupPlugin(GroupMeClientPlugin.GroupChat.IGroupChatPlugin plugin)
@@ -605,17 +591,17 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
                 UpdateMessage = new RelayCommand(this.UseMessageEffectSuggestion),
             };
 
-            this.SmallDialog = dialog;
+            this.PopupManager.PopupDialog = dialog;
         }
 
         private void UseMessageEffectSuggestion()
         {
-            if (!(this.SmallDialog is MessageEffectsControlViewModel))
+            if (!(this.PopupManager.PopupDialog is MessageEffectsControlViewModel))
             {
                 return;
             }
 
-            var messageEffectsDialog = this.SmallDialog as MessageEffectsControlViewModel;
+            var messageEffectsDialog = this.PopupManager.PopupDialog as MessageEffectsControlViewModel;
 
             this.TypedMessageContents = messageEffectsDialog.SelectedMessageContents;
 
