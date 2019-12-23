@@ -19,9 +19,9 @@
     <microcube:HamburgerMenu Items="{Binding MenuItems}" 
                              OptionItems="{Binding MenuOptionItems}"
                              SelectedItem="{Binding SelectedItem}"
-                             SidebarBrush="#1873BA" 
+                             SidebarBrush="{DynamicResource SidebarBrush}" 
                              SidebarForeground="White"
-                             HoverHighlightBrush="#1584C7"/>
+                             HoverHighlightBrush="{DynamicResource SidebarHoverBrush}"/>
     
     <ContentControl Content="{Binding PopupManager}" />
 
