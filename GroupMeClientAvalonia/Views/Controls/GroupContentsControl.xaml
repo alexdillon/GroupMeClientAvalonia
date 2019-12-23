@@ -83,18 +83,10 @@
       <Border Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0" BorderBrush="{DynamicResource DividerLineBrush}" BorderThickness="0,0,0,1"/>
     </Grid>
 
-    <!--ItemsSource="{Binding Source={StaticResource MessagesViewSource}}"-->
     <!--Messages List-->
-    <!--extensions:ListBoxWithPosition-->
-    <!--extensions:ListBoxExtensions.AutoScrollToEnd="True"
-    extensions:ListBoxExtensions.ScrollToTop="{Binding ReloadView}"-->
-    <!--extensions:FileDragDropHelper.IsFileDragDropEnabled="True"
-    extensions:FileDragDropHelper.FileDragDropTarget="{Binding}"-->
     <!--VirtualizingStackPanel.IsVirtualizing="True"
     VirtualizingStackPanel.VirtualizationMode="Standard"
     VirtualizingStackPanel.ScrollUnit="Pixel"-->
-    <!--AllowDrop="True"-->
-
     <ListBox Items="{Binding SortedMessages}"
              Grid.Row="2" Grid.Column="0"
              BorderThickness="0"
@@ -104,6 +96,10 @@
              SelectionMode="Multiple"
              ScrollViewer.VerticalScrollBarVisibility="Visible"
              ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+             DragDrop.AllowDrop="True"
+             extensions:InfiniteScrollBehaviorPositionHelper.IsNotAtBottom="{Binding IsNotAtBottom, Mode=OneWayToSource}"
+             extensions:FileDragDropHelper.IsFileDragDropEnabled="True"
+             extensions:FileDragDropHelper.FileDragDropTarget="{Binding Path=.}"
              x:Name="messagesList">
 
       <i:Interaction.Behaviors>
@@ -161,16 +157,16 @@
     </ListBox>
 
     <!--Scroll-To-Bottom Button-->
-    <!--Visibility="{Binding IsNotAtBottom, ElementName=messagesList, Converter={StaticResource boolToVisibilityConverter}}"
-     Command="{Binding ElementName=messagesList, Path=ScrollToEnd}"
-       -->
     <Button Grid.Row="2"
             HorizontalAlignment="Right"
             VerticalAlignment="Bottom"
             Classes="round"
             Margin="0,0,30,20"
-            Background="#637182"
-            BorderBrush="#637182" >
+            IsVisible="{Binding IsNotAtBottom}"
+            Command="{Binding ScrollToEnd}"
+            CommandParameter="{Binding #messagesList}"
+            Background="{DynamicResource ScrollToBottomButtonBrush}"
+            BorderBrush="{DynamicResource ScrollToBottomButtonBrush}" >
       <Button.Styles>
         <Style Selector="Button">
           <Setter Property="Template">
@@ -203,8 +199,6 @@
                               Margin="10"
                               Foreground="White"/>
       </Button.Content>
-
-
     </Button>
 
     <!--Plugins Dropdown List-->

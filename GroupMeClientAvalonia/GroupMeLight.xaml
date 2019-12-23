@@ -12,6 +12,7 @@
     <Color x:Key="DividerLineColor">#637182</Color>
     <Color x:Key="PluginButtonFontBrush">#414A59</Color>
     <Color x:Key="UnreadBubbleForegroundColor">#FFFFFF</Color>
+    <Color x:Key="ScrollToBottomButtonColor">#637182</Color>
 
     <SolidColorBrush x:Key="LoadingSpinnerDarkBrush" Color="{DynamicResource LoadingSpinnerDarkColor}"/>
     <SolidColorBrush x:Key="MenuButtonLightBrush" Color="{DynamicResource MenuButtonLightColor}"/>
@@ -22,6 +23,7 @@
     <SolidColorBrush x:Key="DividerLineBrush" Color="{DynamicResource DividerLineColor}"/>
     <SolidColorBrush x:Key="PluginButtonFontColor" Color="{DynamicResource PluginButtonFontBrush}"/>
     <SolidColorBrush x:Key="UnreadBubbleForegroundBrush" Color="{DynamicResource UnreadBubbleForegroundColor}"/>
+    <SolidColorBrush x:Key="ScrollToBottomButtonBrush" Color="{DynamicResource ScrollToBottomButtonColor}"/>
   </Style.Resources>
 </Style>
 

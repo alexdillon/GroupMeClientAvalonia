@@ -30,6 +30,7 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
         private AvatarControlViewModel topBarAvatar;
         private string typedMessageContents = string.Empty;
         private bool isSelectionAllowed = false;
+        private bool isNotAtBottom = false;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GroupContentsControlViewModel"/> class.
@@ -47,6 +48,7 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
             this.GroupChatPluginActivated = new RelayCommand<GroupMeClientPlugin.GroupChat.IGroupChatPlugin>(this.ActivateGroupPlugin);
             this.GroupChatCachePluginActivated = new RelayCommand<GroupMeClientPlugin.GroupChat.IGroupChatCachePlugin>(this.ActivateGroupCachePlugin);
             this.SelectionChangedCommand = new RelayCommand<object>(this.SelectionChangedHandler);
+            this.ScrollToEnd = new RelayCommand<ListBox>(this.ScrollToEndHandler);
 
             this.PopupManager = new Controls.PopupViewModel()
             {
@@ -125,6 +127,11 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
         public ICommand SelectionChangedCommand { get; }
 
         /// <summary>
+        /// Gets or sets the action to be performd to scroll the messages list to the end.
+        /// </summary>
+        public ICommand ScrollToEnd { get; set; }
+
+        /// <summary>
         /// Gets the collection of ViewModels for <see cref="Message"/>s to be displayed, in sorted order.
         /// </summary>
         public IObservableCollection<MessageControlViewModelBase> SortedMessages { get; private set; }
@@ -177,7 +184,7 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
         public IMessageContainer MessageContainer
         {
             get => this.messageContainer;
-        set => this.Set(() => this.MessageContainer, ref this.messageContainer, value);
+            set => this.Set(() => this.MessageContainer, ref this.messageContainer, value);
         }
 
         /// <summary>
@@ -195,7 +202,15 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
         public string TypedMessageContents
         {
             get => this.typedMessageContents;
-        set => this.Set(() => this.TypedMessageContents, ref this.typedMessageContents, value);
+            set => this.Set(() => this.TypedMessageContents, ref this.typedMessageContents, value);
+        }
+        /// <summary>
+        /// Gets or sets a value indicating whether the messages list is not currently scrolled to the bottom.
+        /// </summary>
+        public bool IsNotAtBottom
+        {
+            get => this.isNotAtBottom;
+            set => this.Set(() => this.IsNotAtBottom, ref this.isNotAtBottom, value);
         }
 
         /// <summary>
@@ -306,7 +321,7 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
                     results = await this.MessageContainer.GetMessagesAsync(GroupMeClientApi.MessageRetreiveMode.BeforeId, this.FirstDisplayedMessage.Id);
                 }
 
-                await this.UpdateDisplay(scrollViewer, results);
+                this.UpdateDisplay(scrollViewer, results);
 
                 // if everything was successful, reset the reliability monitor
                 this.ReliabilityStateMachine.Succeeded();
@@ -323,21 +338,20 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
             }
         }
 
-        private async Task UpdateDisplay(ScrollViewer scrollViewer, ICollection<Message> messages)
+        private void UpdateDisplay(ScrollViewer scrollViewer, ICollection<Message> messages)
         {
             if (messages.Count == 0)
             {
                 return;
             }
 
-            await Avalonia.Threading.Dispatcher.UIThread.InvokeAsync(() =>
+            Avalonia.Threading.Dispatcher.UIThread.Post(() =>
             {
-                // the code that's accessing UI properties
-                //double originalHeight = scrollViewer?.Height ?? 0.0;
+                // Run on UI thread since the ScrollViewer is being directly manipulated.
                 double originalHeight = scrollViewer?.GetValue(ScrollViewer.VerticalScrollBarMaximumProperty) ?? 0.0;
                 if (originalHeight != 0)
                 {
-                    // prevent the At Top event from firing while we are adding new messages  
+                    // Prevent the At Top event from firing while we are adding new messages  
                     scrollViewer.SetValue(ScrollViewer.VerticalScrollBarValueProperty, 1);
                 }
 
@@ -437,11 +451,9 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
                 {
                     // Calculate the offset where the last message the user was looking at is
                     // Scroll back to there so new messages appear on top, above screen
-                    //scrollViewer.UpdateLayout();
                     scrollViewer?.GetObservable(ScrollViewer.VerticalScrollBarMaximumProperty).Take(2).Skip(1).Subscribe((newMax =>
                     {
                         double difference = newMax - originalHeight;
-
                         scrollViewer.SetValue(ScrollViewer.VerticalScrollBarValueProperty, difference);
                     }));
                 }
@@ -450,8 +462,7 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
                 {
                     this.FirstDisplayedMessage = messages.Last();
                 }
-            }
-            );
+            });
         }
 
         private async Task SendMessageAsync()
@@ -609,6 +620,13 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
         private void SelectionChangedHandler(object data)
         {
             this.CurrentlySelectedMessages = data;
+        }
+
+        private void ScrollToEndHandler(ListBox messagesList)
+        {
+            var scroll = messagesList.Scroll as ScrollViewer;
+            var maxPosition = scroll.GetValue(ScrollViewer.VerticalScrollBarMaximumProperty);
+            scroll.SetValue(ScrollViewer.VerticalScrollBarValueProperty, maxPosition);
         }
     }
 }
