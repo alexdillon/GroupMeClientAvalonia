@@ -1,5 +1,12 @@
 ﻿using System.Reflection;
 
+[assembly: System.Reflection.AssemblyCompanyAttribute("MicroCube")]
+[assembly: System.Reflection.AssemblyCopyrightAttribute("Copyright Alex Dillon, 2019")]
+[assembly: System.Reflection.AssemblyDescriptionAttribute("GroupMe Desktop Client Avalonia is an open-source, cross platform, modular client" +
+    " for GroupMe messenging. Support is provided for Linux, macOS, and Windows.")]
+[assembly: System.Reflection.AssemblyProductAttribute("GroupMe Desktop Client Avalonia")]
+[assembly: System.Reflection.AssemblyTitleAttribute("GroupMeClientAvalonia")]
+
 // AssemblyVersion = full version info, major.minor.patch
 [assembly: AssemblyVersion(ThisAssembly.SimpleVersion)]
 

@@ -3,8 +3,13 @@
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <ApplicationIcon />
-    <StartupObject />
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <PackageLicenseFile>README.md</PackageLicenseFile>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <Authors>Alex Dillon</Authors>
   </PropertyGroup>
 
   <ItemGroup>
@@ -59,6 +64,14 @@
     <None Remove="Views\LoginView.xaml" />
     <None Remove="Views\SearchView.xaml" />
     <None Remove="Views\SettingsView.xaml" />
+    <None Include="..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+    <None Include="..\README.md">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
   
   <ItemGroup>
