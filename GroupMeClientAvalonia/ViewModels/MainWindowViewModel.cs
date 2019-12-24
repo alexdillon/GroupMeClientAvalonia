@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
-using System.Text;
-using System.Windows.Input;
 using Avalonia;
 using Avalonia.Collections;
 using Avalonia.Media;
@@ -25,6 +22,7 @@ namespace GroupMeClientAvalonia.ViewModels
         private AvaloniaList<HamburgerMenuItem> menuItems = new AvaloniaList<HamburgerMenuItem>();
         private AvaloniaList<HamburgerMenuItem> menuOptionItems = new AvaloniaList<HamburgerMenuItem>();
         private HamburgerMenuItem selectedItem;
+        private int unreadCount;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MainViewModel"/> class.
@@ -39,8 +37,8 @@ namespace GroupMeClientAvalonia.ViewModels
         /// </summary>
         public AvaloniaList<HamburgerMenuItem> MenuItems
         {
-            get { return this.menuItems; }
-            set { this.Set(() => this.MenuItems, ref this.menuItems, value); }
+            get => this.menuItems;
+            set => this.Set(() => this.MenuItems, ref this.menuItems, value);
         }
 
         /// <summary>
@@ -48,8 +46,8 @@ namespace GroupMeClientAvalonia.ViewModels
         /// </summary>
         public AvaloniaList<HamburgerMenuItem> MenuOptionItems
         {
-            get { return this.menuOptionItems; }
-            set { this.Set(() => this.MenuOptionItems, ref this.menuOptionItems, value); }
+            get => this.menuOptionItems;
+            set => this.Set(() => this.MenuOptionItems, ref this.menuOptionItems, value);
         }
 
         /// <summary>
@@ -57,8 +55,17 @@ namespace GroupMeClientAvalonia.ViewModels
         /// </summary>
         public HamburgerMenuItem SelectedItem
         {
-            get { return this.selectedItem; }
-            set { this.Set(() => this.SelectedItem, ref this.selectedItem, value); }
+            get => this.selectedItem;
+            set => this.Set(() => this.SelectedItem, ref this.selectedItem, value);
+        }
+
+        /// Gets or sets the number of unread notifications that should be displayed in the
+        /// taskbar badge.
+        /// </summary>
+        public int UnreadCount
+        {
+            get => this.unreadCount;
+            set => this.Set(() => this.UnreadCount, ref this.unreadCount, value);
         }
 
         /// <summary>
@@ -118,25 +125,25 @@ namespace GroupMeClientAvalonia.ViewModels
 
             PluginManager.Instance.LoadPlugins(this.PluginsPath);
 
-            //Messenger.Default.Register<Messaging.UnreadRequestMessage>(this, this.UpdateNotificationCount);
-            //Messenger.Default.Register<Messaging.DisconnectedRequestMessage>(this, this.UpdateDisconnectedComponentsCount);
-            //Messenger.Default.Register<Messaging.IndexAndRunPluginRequestMessage>(this, this.IndexAndRunCommand);
+            Messenger.Default.Register<Messaging.UnreadRequestMessage>(this, this.UpdateNotificationCount);
+            Messenger.Default.Register<Messaging.DisconnectedRequestMessage>(this, this.UpdateDisconnectedComponentsCount);
+            Messenger.Default.Register<Messaging.IndexAndRunPluginRequestMessage>(this, this.IndexAndRunCommand);
 
             if (string.IsNullOrEmpty(this.SettingsManager.CoreSettings.AuthToken))
             {
                 // Startup in Login Mode
-                //this.LoginViewModel = new LoginViewModel(this.SettingsManager)
-                //{
-                //    LoginCompleted = new RelayCommand(this.InitializeClient),
-                //};
+                this.LoginViewModel = new LoginViewModel(this.SettingsManager)
+                {
+                    LoginCompleted = new RelayCommand(this.InitializeClient),
+                };
 
-                //this.CreateMenuItemsLoginOnly();
+                this.CreateMenuItemsLoginOnly();
             }
             else
             {
                 // Startup Regularly
                 this.GroupMeClient = new GroupMeClientApi.GroupMeClient(this.SettingsManager.CoreSettings.AuthToken);
-                //this.CacheContext = new Caching.CacheContext(this.CachePath);
+                this.CacheContext = new Caching.CacheContext(this.CachePath);
                 this.GroupMeClient.ImageDownloader = new GroupMeClientApi.CachedImageDownloader(this.ImageCachePath);
 
                 this.NotificationRouter = new NotificationRouter(this.GroupMeClient);
@@ -173,6 +180,9 @@ namespace GroupMeClientAvalonia.ViewModels
 
         private void CreateMenuItemsRegular()
         {
+            this.MenuItems.Clear();
+            this.MenuOptionItems.Clear();
+
             var chatsTab = new HamburgerMenuItem()
             {
                 Icon = new IconControl() { BindableKind = PackIconMaterialKind.MessageText },
@@ -216,20 +226,23 @@ namespace GroupMeClientAvalonia.ViewModels
 
             // Set the section to the Chats tab
             this.SelectedItem = chatsTab;
+        }
 
-            //// Remove the old Tabs and Options AFTER the new one has been bound
-            //// There should be a better way to do this...
-            //var newTopOptionIndex = this.MenuOptionItems.IndexOf(settingsTab);
-            //for (int i = 0; i < newTopOptionIndex; i++)
-            //{
-            //    this.MenuOptionItems.RemoveAt(0);
-            //}
+        private void CreateMenuItemsLoginOnly()
+        {
+            this.MenuItems.Clear();
+            this.MenuOptionItems.Clear();
 
-            //var newTopIndex = this.MenuItems.IndexOf(chatsTab);
-            //for (int i = 0; i < newTopIndex; i++)
-            //{
-            //    this.MenuItems.RemoveAt(0);
-            //}
+            var loginTab = new HamburgerMenuItem()
+            {
+                Icon = new IconControl() { BindableKind = PackIconMaterialKind.Login },
+                Label = "Login",
+                ToolTip = "Login To GroupMe",
+                Tag = this.LoginViewModel,
+            };
+
+            this.MenuItems.Add(loginTab);
+            this.SelectedItem = loginTab;
         }
 
         private void MainWindow_Closing(object sender, CancelEventArgs e)
@@ -265,6 +278,37 @@ namespace GroupMeClientAvalonia.ViewModels
             }
 
             this.PopupManager.PopupDialog = null;
+        }
+
+        private void UpdateNotificationCount(Messaging.UnreadRequestMessage update)
+        {
+            this.UnreadCount = update.Count;
+        }
+
+        private void UpdateDisconnectedComponentsCount(Messaging.DisconnectedRequestMessage update)
+        {
+            this.DisconnectedComponentCount += update.Disconnected ? 1 : -1;
+            this.DisconnectedComponentCount = Math.Max(this.DisconnectedComponentCount, 0); // make sure it never goes negative
+            Avalonia.Threading.Dispatcher.UIThread.Post(() =>
+            {
+                this.ReconnectingSpinner.IsActive = this.DisconnectedComponentCount > 0;
+            });
+        }
+
+        private void IndexAndRunCommand(Messaging.IndexAndRunPluginRequestMessage cmd)
+        {
+            this.SearchViewModel.ActivatePluginOnLoad = cmd.Plugin;
+            this.SearchViewModel.ActivatePluginForGroupOnLoad = cmd.MessageContainer;
+
+            // Find Search Tab entry and set as active
+            foreach (var menuItem in this.MenuItems)
+            {
+                if (menuItem.Tag == this.SearchViewModel)
+                {
+                    this.SelectedItem = menuItem;
+                    break;
+                }
+            }
         }
     }
 }
