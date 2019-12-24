@@ -5,7 +5,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="clr-namespace:GroupMeClientAvalonuia.Views.Controls"
+        xmlns:converters="clr-namespace:GroupMeClientAvalonia.Converters"
         xmlns:microcube="clr-namespace:MicroCubeAvalonia.Controls;assembly=MicroCubeAvalonia"
+        xmlns:iconPack="clr-namespace:MicroCubeAvalonia.IconPack;assembly=MicroCubeAvalonia"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="GroupMeClientAvalonia.Views.MainWindow"
         FontFamily="Segoe UI"
@@ -16,12 +18,52 @@
     </Design.DataContext>
 
   <Grid>
+    <Grid.Resources>
+      <ResourceDictionary>
+        <converters:InverseBoolConverter x:Key="inverseBoolConverter" />
+      </ResourceDictionary>
+    </Grid.Resources>
+    
     <microcube:HamburgerMenu Items="{Binding MenuItems}" 
                              OptionItems="{Binding MenuOptionItems}"
                              SelectedItem="{Binding SelectedItem}"
                              SidebarBrush="{DynamicResource SidebarBrush}" 
                              SidebarForeground="White"
                              HoverHighlightBrush="{DynamicResource SidebarHoverBrush}"/>
+
+    <microcube:ProgressRing IsVisible="{Binding IsReconnecting}"
+                            Width="20" Height="20"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Top"
+                            Margin="15,175,0,0"
+                            Foreground="White" />
+    <Button Width="48" Height="48"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Bottom"
+            Padding="0"
+            Classes="styleless"
+            Background="Transparent"
+            Margin="00,0,0,50"
+            Command="{Binding RefreshEverythingCommand}">
+
+      <Button.Styles>
+        <Style Selector="Button:pointerover /template/ ContentPresenter">
+          <Setter Property="Background" Value="{DynamicResource SidebarHoverBrush}"/>
+        </Style>
+      </Button.Styles>
+
+      <Button.Content>
+        <Grid>
+          <iconPack:IconControl Kind="PackIconMaterialKind.Refresh"
+                                Foreground="White"
+                                Width="16" Height="16"
+                                IsVisible="{Binding IsRefreshing, Converter={StaticResource inverseBoolConverter}}"/>
+          <microcube:ProgressRing IsVisible="{Binding IsRefreshing}"
+                                  Width="16" Height="16"
+                                  Foreground="White"/>
+        </Grid>
+      </Button.Content>
+    </Button>
     
     <ContentControl Content="{Binding PopupManager}" />
 

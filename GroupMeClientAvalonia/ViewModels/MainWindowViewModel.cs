@@ -1,6 +1,8 @@
 ﻿using System;
 using System.ComponentModel;
 using System.IO;
+using System.Threading.Tasks;
+using System.Windows.Input;
 using Avalonia;
 using Avalonia.Collections;
 using Avalonia.Media;
@@ -23,6 +25,8 @@ namespace GroupMeClientAvalonia.ViewModels
         private AvaloniaList<HamburgerMenuItem> menuOptionItems = new AvaloniaList<HamburgerMenuItem>();
         private HamburgerMenuItem selectedItem;
         private int unreadCount;
+        private bool isReconnecting;
+        private bool isRefreshing;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MainViewModel"/> class.
@@ -59,6 +63,7 @@ namespace GroupMeClientAvalonia.ViewModels
             set => this.Set(() => this.SelectedItem, ref this.selectedItem, value);
         }
 
+        /// <summary>
         /// Gets or sets the number of unread notifications that should be displayed in the
         /// taskbar badge.
         /// </summary>
@@ -69,9 +74,32 @@ namespace GroupMeClientAvalonia.ViewModels
         }
 
         /// <summary>
+        /// Gets or sets a value indicating whether the application is currently reconnecting to GroupMe.
+        /// </summary>
+        public bool IsReconnecting
+        {
+            get => this.isReconnecting;
+            set => this.Set(() => this.IsReconnecting, ref this.isReconnecting, value);
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the application is currently refreshing.
+        /// </summary>
+        public bool IsRefreshing
+        {
+            get => this.isRefreshing;
+            set => this.Set(() => this.IsRefreshing, ref this.isRefreshing, value);
+        }
+
+        /// <summary>
         /// Gets or sets the popup manager to be used for popups 
         /// </summary>
         public Controls.PopupViewModel PopupManager { get; set; }
+
+        /// <summary>
+        /// Gets or sets the command to be performed to refresh all displayed messages and groups.
+        /// </summary>
+        public ICommand RefreshEverythingCommand { get; set; }
 
         /// <summary>
         /// Gets the Toast Holder Manager for this application.
@@ -105,8 +133,6 @@ namespace GroupMeClientAvalonia.ViewModels
         private SettingsViewModel SettingsViewModel { get; set; }
 
         private LoginViewModel LoginViewModel { get; set; }
-
-        private ProgressRing ReconnectingSpinner { get; } = new ProgressRing() { IsActive = false, Width = 16, Foreground = Brushes.White };
 
         private ProgressRing UpdatingSpinner { get; } = new ProgressRing() { IsActive = true, Width = 16, Foreground = Brushes.White };
 
@@ -165,6 +191,8 @@ namespace GroupMeClientAvalonia.ViewModels
                 EasyClosePopup = new RelayCommand(this.CloseBigPopup)
             };
 
+            this.RefreshEverythingCommand = new RelayCommand(async() => await this.RefreshEverything(), true);
+
             //this.UpdateAssist = new UpdateAssist();
             //Application.Current.MainWindow.Closing += new CancelEventHandler(this.MainWindow_Closing);
         }
@@ -207,19 +235,9 @@ namespace GroupMeClientAvalonia.ViewModels
                 Tag = this.SettingsViewModel,
             };
 
-            //var loadingSpinner = new HamburgerMenuItem()
-            //{
-            //    Icon = this.ReconnectingSpinner,
-            //    Label = "Loading...",
-            //    ToolTip = "Loading...",
-            //    Tag = null,
-            //};
-
             // Add new Tabs
             this.MenuItems.Add(chatsTab);
             this.MenuItems.Add(secondTab);
-
-            //this.MenuItems.Add(loadingSpinner);
 
             // Add new Options
             this.MenuOptionItems.Add(settingsTab);
@@ -291,7 +309,7 @@ namespace GroupMeClientAvalonia.ViewModels
             this.DisconnectedComponentCount = Math.Max(this.DisconnectedComponentCount, 0); // make sure it never goes negative
             Avalonia.Threading.Dispatcher.UIThread.Post(() =>
             {
-                this.ReconnectingSpinner.IsActive = this.DisconnectedComponentCount > 0;
+                this.IsReconnecting = this.DisconnectedComponentCount > 0;
             });
         }
 
@@ -309,6 +327,13 @@ namespace GroupMeClientAvalonia.ViewModels
                     break;
                 }
             }
+        }
+
+        private async Task RefreshEverything()
+        {
+            this.IsRefreshing = true;
+            await this.ChatsViewModel.RefreshEverything();
+            this.IsRefreshing = false;
         }
     }
 }
