@@ -11,7 +11,8 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="GroupMeClientAvalonia.Views.MainWindow"
         FontFamily="{DynamicResource GroupMeFont}"
-        Title="GroupMe Desktop Client">
+        Title="GroupMe Desktop Client"
+        Icon="/groupme.ico">
 
   <Design.DataContext>
         <vm:MainWindowViewModel/>
