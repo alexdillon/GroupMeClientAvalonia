@@ -7,7 +7,7 @@
              xmlns:converters="clr-namespace:GroupMeClientAvalonia.Converters"
              xmlns:i="clr-namespace:Avalonia.Xaml.Interactivity;assembly=Avalonia.Xaml.Interactivity"
              xmlns:ia="clr-namespace:Avalonia.Xaml.Interactions.Core;assembly=Avalonia.Xaml.Interactions"
-             FontFamily="Segoe UI"
+             FontFamily="{DynamicResource GroupMeFont}"
              mc:Ignorable="d" d:DesignWidth="350" d:DesignHeight="150">
 
   <i:Interaction.Behaviors>

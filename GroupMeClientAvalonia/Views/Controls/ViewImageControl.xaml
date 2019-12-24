@@ -8,7 +8,7 @@
              xmlns:iconPack="clr-namespace:MicroCubeAvalonia.IconPack;assembly=MicroCubeAvalonia"
              mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="300"
              ClipToBounds="False"
-             FontFamily="Segoe UI"
+             FontFamily="{DynamicResource GroupMeFont}"
              Background="Transparent">
 
   <Grid ClipToBounds="False">

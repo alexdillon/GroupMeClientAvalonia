@@ -10,8 +10,8 @@
         xmlns:iconPack="clr-namespace:MicroCubeAvalonia.IconPack;assembly=MicroCubeAvalonia"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="GroupMeClientAvalonia.Views.MainWindow"
-        FontFamily="Segoe UI"
-        Title="GroupMeClientAvalonia">
+        FontFamily="{DynamicResource GroupMeFont}"
+        Title="GroupMe Desktop Client">
 
   <Design.DataContext>
         <vm:MainWindowViewModel/>

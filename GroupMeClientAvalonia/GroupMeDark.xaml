@@ -3,6 +3,8 @@
        xmlns:sys="clr-namespace:System;assembly=netstandard">
 
   <Style.Resources>
+    <FontFamily x:Key="GroupMeFont">Segoe UI</FontFamily>
+    
     <Color x:Key="LoadingSpinnerDarkColor">#CC119EDA</Color>
     <Color x:Key="GroupsSidebarFontColor">#637182</Color>
     <Color x:Key="MessageFontColor">#637182</Color>
