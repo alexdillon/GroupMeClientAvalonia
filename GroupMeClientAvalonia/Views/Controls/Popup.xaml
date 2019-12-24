@@ -31,8 +31,7 @@
                 HorizontalAlignment="Right"
                 BorderThickness="0"
                 Background="Transparent"
-                Command="{Binding Path=ClosePopup}"
-                CommandParameter="{Binding Path=.}">
+                Command="{Binding Path=ClosePopup}">
           <iconPack:IconControl Width="15" Height="15" Foreground="DarkGray" Background="Transparent" Kind="PackIconMaterialKind.Close" />
         </Button>
       </Grid>
@@ -45,7 +44,7 @@
 
     <i:Interaction.Behaviors>
       <ia:EventTriggerBehavior EventName="PointerPressed">
-        <ia:InvokeCommandAction Command="{Binding EasyClosePopup}"/>
+        <ia:InvokeCommandAction Command="{Binding CheckEasyClose}"/>
       </ia:EventTriggerBehavior>
     </i:Interaction.Behaviors>
   </Grid>

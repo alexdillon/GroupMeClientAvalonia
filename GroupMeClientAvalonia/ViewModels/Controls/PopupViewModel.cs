@@ -1,5 +1,7 @@
 ﻿using System.Windows.Input;
+using Avalonia.Input;
 using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
 
 namespace GroupMeClientAvalonia.ViewModels.Controls
 {
@@ -12,6 +14,7 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
 
         public PopupViewModel()
         {
+            this.CheckEasyClose = new RelayCommand<object>(this.CheckEasyCloseHandler);
         }
 
         /// <summary>
@@ -28,6 +31,12 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
                 this.ShowPopup = (this.PopupDialog != null);
             }
         }
+
+        /// <summary>
+        /// Gets a command checking whether the input conditions for easy closing have been satisfied. If so,
+        /// the <see cref="EasyClosePopup"/> command is executed.
+        /// </summary>
+        public ICommand CheckEasyClose { get; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the popup should be shown.
@@ -55,6 +64,17 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
         {
             get => this.easyClosePopup;
             set => this.Set(() => this.EasyClosePopup, ref this.easyClosePopup, value);
+        }
+
+        private void CheckEasyCloseHandler(object e)
+        {
+            if (e is PointerPressedEventArgs pointerPressedEvent)
+            {
+                if (pointerPressedEvent.GetCurrentPoint(null).Properties.PointerUpdateKind == PointerUpdateKind.LeftButtonPressed)
+                {
+                    this.EasyClosePopup?.Execute(null);
+                }
+            }
         }
     }
 }
