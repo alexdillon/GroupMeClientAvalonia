@@ -35,8 +35,10 @@
     <AvaloniaResource Remove="Views\Controls\GroupControl.xaml" />
     <AvaloniaResource Remove="Views\Controls\InlineReadSentMarkerControl.xaml" />
     <AvaloniaResource Remove="Views\Controls\InlineTimestampControl.xaml" />
+    <AvaloniaResource Remove="Views\Controls\LoadingControl.xaml" />
     <AvaloniaResource Remove="Views\Controls\MessageControl.xaml" />
     <AvaloniaResource Remove="Views\Controls\MultiLikeControl.xaml" />
+    <AvaloniaResource Remove="Views\Controls\PaginatedMessagesControl.xaml" />
     <AvaloniaResource Remove="Views\Controls\Popup.xaml" />
     <AvaloniaResource Remove="Views\Controls\SendImageControl.xaml" />
     <AvaloniaResource Remove="Views\Controls\ViewImageControl.xaml" />
@@ -58,8 +60,10 @@
     <None Remove="Views\Controls\GroupControl.xaml" />
     <None Remove="Views\Controls\InlineReadSentMarkerControl.xaml" />
     <None Remove="Views\Controls\InlineTimestampControl.xaml" />
+    <None Remove="Views\Controls\LoadingControl.xaml" />
     <None Remove="Views\Controls\MessageControl.xaml" />
     <None Remove="Views\Controls\MultiLikeControl.xaml" />
+    <None Remove="Views\Controls\PaginatedMessagesControl.xaml" />
     <None Remove="Views\Controls\Popup.xaml" />
     <None Remove="Views\Controls\SendImageControl.xaml" />
     <None Remove="Views\Controls\ViewImageControl.xaml" />
@@ -91,7 +95,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="GroupMeClientPlugin" Version="1.0.4" />
-    <PackageReference Include="MessageBox.Avalonia" Version="0.9.0-preview5" />
+    <PackageReference Include="MessageBox.Avalonia" Version="0.9.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.0" />
     <PackageReference Include="MvvmLightLibsStd10" Version="5.4.1.1" />
@@ -223,6 +227,18 @@
   
   <ItemGroup>
     <EmbeddedResource Include="groupme.ico" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Controls\PaginatedMessagesControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Controls\LoadingControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
   </ItemGroup>
   
   <ItemGroup>

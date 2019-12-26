@@ -8,6 +8,7 @@
              xmlns:i="clr-namespace:Avalonia.Xaml.Interactivity;assembly=Avalonia.Xaml.Interactivity"
              xmlns:ia="clr-namespace:Avalonia.Xaml.Interactions.Core;assembly=Avalonia.Xaml.Interactions"
              FontFamily="{DynamicResource GroupMeFont}"
+             Background="{DynamicResource ThemeBackgroundBrush}"
              mc:Ignorable="d" d:DesignWidth="350" d:DesignHeight="150">
 
   <i:Interaction.Behaviors>
@@ -18,8 +19,7 @@
   
   <Grid ColumnDefinitions="80,185,60"
         RowDefinitions="Auto, *"
-        Margin="0,15,15,0"
-        Background="{DynamicResource ThemeBackgroundBrush}">
+        Margin="0,15,15,0">
 
     <controls:AvatarControl
             Grid.Column="0" Grid.Row="0" Grid.RowSpan="2"
@@ -37,9 +37,6 @@
         <ia:DataTriggerBehavior Binding="{Binding TotalUnreadCount}" ComparisonCondition="GreaterThan" Value="0">
           <ia:ChangePropertyAction TargetObject="{Binding #TitleTextBlock}" PropertyName="FontWeight" Value="SemiBold"/>
         </ia:DataTriggerBehavior>
-      </i:Interaction.Behaviors>
-
-      <i:Interaction.Behaviors>
         <ia:DataTriggerBehavior Binding="{Binding TotalUnreadCount}" ComparisonCondition="Equal" Value="0">
           <ia:ChangePropertyAction TargetObject="{Binding #TitleTextBlock}" PropertyName="FontWeight" Value="Regular"/>
         </ia:DataTriggerBehavior>
