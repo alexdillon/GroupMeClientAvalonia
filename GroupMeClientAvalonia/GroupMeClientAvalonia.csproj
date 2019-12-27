@@ -141,7 +141,6 @@
   </ItemGroup>
   
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\Desktop\GroupMeClient\GroupMeClientApi\GroupMeClientApi.csproj" />
     <ProjectReference Include="..\MicroCubeAvalonia\MicroCubeAvalonia.csproj" />
   </ItemGroup>
   
