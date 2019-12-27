@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using GroupMeClientApi.Models;
 using GroupMeClientApi.Models.Attachments;
@@ -27,8 +28,15 @@ namespace GroupMeClientAvalonia.Notifications.Display
         /// <returns>A PopupNotificationProvider.</returns>
         public static PopupNotificationProvider CreatePlatformNotificationProvider()
         {
-            // TODO: actually test to see if platform is Windows 10
-            //return new PopupNotificationProvider(new Win10.Win10ToastNotificationsProvider());
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                return new PopupNotificationProvider(new Win10.Win10ToastNotificationsProvider());
+            }
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            {
+                // TODO 
+                return null;
+            }
             return null;
         }
 

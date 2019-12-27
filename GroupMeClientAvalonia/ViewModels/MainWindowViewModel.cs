@@ -202,7 +202,7 @@ namespace GroupMeClientAvalonia.ViewModels
             this.ToastHolderManager = new ToastHolderViewModel();
 
             this.NotificationRouter.RegisterNewSubscriber(this.ChatsViewModel);
-            //this.NotificationRouter.RegisterNewSubscriber(PopupNotificationProvider.CreatePlatformNotificationProvider());
+            this.NotificationRouter.RegisterNewSubscriber(PopupNotificationProvider.CreatePlatformNotificationProvider());
             this.NotificationRouter.RegisterNewSubscriber(PopupNotificationProvider.CreateInternalNotificationProvider(this.ToastHolderManager));
         }
 
