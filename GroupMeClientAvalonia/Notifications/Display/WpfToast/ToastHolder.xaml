@@ -16,30 +16,28 @@
         <DataTemplate>
           <UserControl Content="{Binding Path=.}"
                        Padding="0,2,0,0"
-                       RenderTransformOrigin="0.5,0.5">
-            <!--<UserControl.RenderTransform>
-              <ScaleTransform ScaleX="0" ScaleY="0" />
-            </UserControl.RenderTransform>-->
+                       RenderTransformOrigin="50%, 50%">
+            
+            <UserControl.RenderTransform>
+              <ScaleTransform />
+            </UserControl.RenderTransform>
 
-            <!--<UserControl.Triggers>
-              <EventTrigger RoutedEvent="FrameworkElement.Loaded">
-                <BeginStoryboard>
-                  <Storyboard>
-                    <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)" From="0" To="1" Duration="0:0:0.3"/>
-                    <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)" From="0" To="1" Duration="0:0:0.3"/>
-                  </Storyboard>
-                </BeginStoryboard>
-              </EventTrigger>
-
-              <EventTrigger RoutedEvent="FrameworkElement.Unloaded">
-                <BeginStoryboard>
-                  <Storyboard>
-                    <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)" To="0" Duration="0:0:1.3"/>
-                    <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)" To="0" Duration="0:0:1.3"/>
-                  </Storyboard>
-                </BeginStoryboard>
-              </EventTrigger>
-            </UserControl.Triggers>-->
+            <UserControl.Styles>
+              <Style Selector="UserControl">
+                <Style.Animations>
+                  <Animation Duration="0:0:0.3">
+                    <KeyFrame Cue="0">
+                      <Setter Property="ScaleTransform.ScaleX" Value="0" />
+                      <Setter Property="ScaleTransform.ScaleY" Value="0" />
+                    </KeyFrame>
+                    <KeyFrame Cue="100%">
+                      <Setter Property="ScaleTransform.ScaleX" Value="1" />
+                      <Setter Property="ScaleTransform.ScaleY" Value="1" />
+                    </KeyFrame>
+                  </Animation>
+                </Style.Animations>
+              </Style>
+            </UserControl.Styles>
           </UserControl>
         </DataTemplate>
       </ItemsControl.ItemTemplate>

@@ -3,15 +3,15 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:iconPack="clr-namespace:MicroCubeAvalonia.IconPack;assembly=MicroCubeAvalonia"
              xmlns:controls="clr-namespace:GroupMeClientAvalonia.Views.Controls"
              mc:Ignorable="d" d:DesignWidth="250" d:DesignHeight="100">
   
   <Grid ColumnDefinitions="Auto,*,Auto">
-    <Border Grid.ColumnSpan="3" Height="65" Background="White">
-      <!--<Border.Effect>
-        <DropShadowEffect Opacity="0.5" ShadowDepth="1" BlurRadius="2" />
-      </Border.Effect>-->
-    </Border>
+    <Border Grid.ColumnSpan="3" Height="65" Background="White"
+            BorderBrush="#F7F7F7" BorderThickness="2,2,2,0" />
+    <Border Grid.ColumnSpan="3" Height="65" Background="Transparent"
+            BorderBrush="#AFAFAF" BorderThickness="0,0,0,2" />
 
     <controls:AvatarControl Width="25" Height="25"
                             Margin="5,0,0,0"
@@ -33,9 +33,11 @@
             Width="20"
             Height="20"
             BorderThickness="0"
+            Background="{DynamicResource ThemeBackgroundBrush}"
+            Classes="styleless"
             Command="{Binding Path=CloseAction}"
             CommandParameter="{Binding Path=.}">
-      <DrawingPresenter Width="8" Height="8" Drawing="{DynamicResource Material.Close}" />
+      <iconPack:IconControl Kind="PackIconMaterialKind.Close" Width="8" Height="8" />
     </Button>
   </Grid>
 </UserControl>
