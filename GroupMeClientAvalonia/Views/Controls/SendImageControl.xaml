@@ -10,7 +10,7 @@
              xmlns:iconPack="clr-namespace:MicroCubeAvalonia.IconPack;assembly=MicroCubeAvalonia"
              xmlns:controls="clr-namespace:GroupMeClientAvalonia.Views.Controls"
              mc:Ignorable="d" d:DesignHeight="200" d:DesignWidth="200"
-             Background="Black"
+             Background="Black">
   <Grid>
     <Grid.ColumnDefinitions>
       <ColumnDefinition Width="*"/>
@@ -72,7 +72,7 @@
           <extensions:TextBoxSendBehavior SendCommand="{Binding SendMessage}" />
         </i:Interaction.Behaviors>
       </TextBox>
-      
+
       <Button Grid.Row="1" Grid.Column="2"
               Classes="styleless"
               Width="35" Height="35"
@@ -81,10 +81,10 @@
               HorizontalAlignment="Right"
               BorderThickness="0"
               Command="{Binding Path=SendMessage}">
-          <iconPack:IconControl Width="15" Height="15" 
-                                Foreground="{DynamicResource DividerLineBrush}"
-                                Background="{DynamicResource ThemeBackgroundBrush}"
-                                Kind="PackIconMaterialKind.Send"/>
+        <iconPack:IconControl Width="15" Height="15"
+                              Foreground="{DynamicResource DividerLineBrush}"
+                              Background="{DynamicResource ThemeBackgroundBrush}"
+                              Kind="PackIconMaterialKind.Send"/>
       </Button>
     </Grid>
   </Grid>

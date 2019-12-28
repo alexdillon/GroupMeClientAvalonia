@@ -17,7 +17,6 @@ namespace GroupMeClientAvalonia
             if (type != null)
             {
                 var control = (Control)Activator.CreateInstance(type);
-                control.DataContext = data;
                 return control;
             }
             
@@ -25,7 +24,6 @@ namespace GroupMeClientAvalonia
             if (type != null)
             {
                 var control = (Control)Activator.CreateInstance(type);
-                control.DataContext = data;
                 return control;
             }
 
