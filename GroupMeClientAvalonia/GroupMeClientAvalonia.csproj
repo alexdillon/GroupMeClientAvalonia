@@ -20,7 +20,6 @@
       <SubType>Designer</SubType>
     </AvaloniaResource>
     <AvaloniaResource Include="Assets\*" />
-    <AvaloniaResource Include="groupme.ico" />
   </ItemGroup>
 
   <ItemGroup>
@@ -231,7 +230,7 @@
   </ItemGroup>
   
   <ItemGroup>
-    <EmbeddedResource Include="groupme.ico" />
+    <EmbeddedResource Include="Assets\groupme.ico" />
   </ItemGroup>
   
   <ItemGroup>

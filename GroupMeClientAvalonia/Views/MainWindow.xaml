@@ -12,7 +12,7 @@
         x:Class="GroupMeClientAvalonia.Views.MainWindow"
         FontFamily="{DynamicResource GroupMeFont}"
         Title="GroupMe Desktop Client"
-        Icon="/groupme.ico">
+        Icon="avares://GroupMeClientAvalonia/Assets/groupme.ico">
 
   <Design.DataContext>
         <vm:MainWindowViewModel/>
