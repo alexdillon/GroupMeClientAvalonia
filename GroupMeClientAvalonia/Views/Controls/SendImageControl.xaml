@@ -11,7 +11,6 @@
              xmlns:controls="clr-namespace:GroupMeClientAvalonia.Views.Controls"
              mc:Ignorable="d" d:DesignHeight="200" d:DesignWidth="200"
              Background="Black"
-             FontFamily="{DynamicResource GroupMeFont}">
   <Grid>
     <Grid.ColumnDefinitions>
       <ColumnDefinition Width="*"/>

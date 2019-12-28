@@ -6,7 +6,6 @@
              xmlns:i="clr-namespace:Avalonia.Xaml.Interactivity;assembly=Avalonia.Xaml.Interactivity"
              xmlns:ia="clr-namespace:Avalonia.Xaml.Interactions.Core;assembly=Avalonia.Xaml.Interactions"
              mc:Ignorable="d" d:DesignWidth="200" d:DesignHeight="100"
-             FontFamily="{DynamicResource GroupMeFont}"
              Background="White">
 
   <i:Interaction.Behaviors>

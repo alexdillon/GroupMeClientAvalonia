@@ -7,8 +7,7 @@
              xmlns:ia="clr-namespace:Avalonia.Xaml.Interactions.Core;assembly=Avalonia.Xaml.Interactions"
              xmlns:iconPack="clr-namespace:MicroCubeAvalonia.IconPack;assembly=MicroCubeAvalonia"
              mc:Ignorable="d" d:DesignHeight="200" d:DesignWidth="200"
-             Background="White"
-             FontFamily="{DynamicResource GroupMeFont}">
+             Background="White">
 
   <Grid Cursor="Hand">
     <i:Interaction.Behaviors>
@@ -16,7 +15,7 @@
         <ia:InvokeCommandAction Command="{Binding Clicked}"/>
       </ia:EventTriggerBehavior>
     </i:Interaction.Behaviors>
-    
+
     <Image Grid.Row="0"
            Grid.RowSpan="2"
            MaxWidth="600"

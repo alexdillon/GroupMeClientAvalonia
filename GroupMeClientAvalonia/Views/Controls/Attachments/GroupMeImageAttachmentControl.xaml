@@ -7,7 +7,6 @@
              xmlns:ia="clr-namespace:Avalonia.Xaml.Interactions.Core;assembly=Avalonia.Xaml.Interactions"
              xmlns:microcube="clr-namespace:MicroCubeAvalonia.Controls;assembly=MicroCubeAvalonia"
              mc:Ignorable="d"
-             FontFamily="{DynamicResource GroupMeFont}"
              d:DesignHeight="200" d:DesignWidth="200"
              Background="White">
 

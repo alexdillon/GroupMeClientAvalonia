@@ -9,7 +9,6 @@
              xmlns:controls="clr-namespace:GroupMeClientAvalonia.Views.Controls"
              xmlns:converters="clr-namespace:GroupMeClientAvalonia.Converters"
              xmlns:extensions="clr-namespace:GroupMeClientAvalonia.Extensions"
-             FontFamily="{DynamicResource GroupMeFont}"
              ClipToBounds="False"
              mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="200">
 
