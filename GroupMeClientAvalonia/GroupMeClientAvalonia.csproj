@@ -37,6 +37,7 @@
     <AvaloniaResource Remove="Views\Controls\InlineTimestampControl.xaml" />
     <AvaloniaResource Remove="Views\Controls\LoadingControl.xaml" />
     <AvaloniaResource Remove="Views\Controls\MessageControl.xaml" />
+    <AvaloniaResource Remove="Views\Controls\MessageEffectsControl.xaml" />
     <AvaloniaResource Remove="Views\Controls\MultiLikeControl.xaml" />
     <AvaloniaResource Remove="Views\Controls\PaginatedMessagesControl.xaml" />
     <AvaloniaResource Remove="Views\Controls\Popup.xaml" />
@@ -62,6 +63,7 @@
     <None Remove="Views\Controls\InlineTimestampControl.xaml" />
     <None Remove="Views\Controls\LoadingControl.xaml" />
     <None Remove="Views\Controls\MessageControl.xaml" />
+    <None Remove="Views\Controls\MessageEffectsControl.xaml" />
     <None Remove="Views\Controls\MultiLikeControl.xaml" />
     <None Remove="Views\Controls\PaginatedMessagesControl.xaml" />
     <None Remove="Views\Controls\Popup.xaml" />
@@ -240,6 +242,12 @@
   
   <ItemGroup>
     <EmbeddedResource Include="Views\Controls\LoadingControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Controls\MessageEffectsControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
   </ItemGroup>

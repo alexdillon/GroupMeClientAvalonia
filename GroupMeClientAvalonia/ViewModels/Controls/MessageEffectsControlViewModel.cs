@@ -1,5 +1,6 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using Avalonia.Collections;
+using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -13,6 +14,7 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
     {
         private string typedMessageContents;
         private string selectedMessageContents;
+        private DataGridCollectionView generatedMessages;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MessageEffectsControlViewModel"/> class.
@@ -22,9 +24,13 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
         }
 
         /// <summary>
-        /// Gets a collection of generated messages produced by plugins.
+        /// Gets a collection of generated messages produced by plugins, sorted by source.
         /// </summary>
-        public ObservableCollection<SuggestedMessage> GeneratedMessages { get; } = new ObservableCollection<SuggestedMessage>();
+        public DataGridCollectionView GeneratedMessages
+        {
+            get => this.generatedMessages;
+            set => this.Set(() => this.GeneratedMessages, ref this.generatedMessages, value);
+        }
 
         /// <summary>
         /// Gets or sets the command to be performed when the message is updated.
@@ -47,8 +53,6 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
                     this.GeneratorCancel.Cancel();
                 }
 
-                this.GeneratedMessages.Clear();
-
                 this.GeneratorCancel = new CancellationTokenSource();
                 Task.Run(() => this.GenerateResults(this.GeneratorCancel.Token), this.GeneratorCancel.Token);
             }
@@ -67,10 +71,7 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
 
         private void GenerateResults(CancellationToken cancellationToken)
         {
-            Avalonia.Threading.Dispatcher.UIThread.Post(() =>
-            {
-                this.GeneratedMessages.Clear();
-            });
+            var generatedResults = new List<SuggestedMessage>();
 
             var parallelOptions = new ParallelOptions()
             {
@@ -78,35 +79,40 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
             };
 
             // Run all generators in parallel in case one plugin hangs or runs very slowly
-            Parallel.ForEach(Plugins.PluginManager.Instance.MessageComposePlugins, parallelOptions, async (plugin) =>
+            try
             {
-                if (parallelOptions.CancellationToken.IsCancellationRequested)
+                Parallel.ForEach(Plugins.PluginManager.Instance.MessageComposePlugins, parallelOptions, async (plugin) =>
                 {
-                    return;
-                }
-
-                try
-                {
-                    var results = await plugin.ProvideOptions(this.TypedMessageContents);
-                    foreach (var text in results.TextOptions)
+                    if (parallelOptions.CancellationToken.IsCancellationRequested)
                     {
-                        if (parallelOptions.CancellationToken.IsCancellationRequested)
-                        {
-                            return;
-                        }
-
-                        var textResults = new SuggestedMessage { Message = text, Plugin = plugin.EffectPluginName };
-
-                        Avalonia.Threading.Dispatcher.UIThread.Post(() =>
-                        {
-                            this.GeneratedMessages.Add(textResults);
-                        });
+                        return;
                     }
-                }
-                catch (Exception)
-                {
-                }
-            });
+
+                    try
+                    {
+                        var results = await plugin.ProvideOptions(this.TypedMessageContents);
+                        foreach (var text in results.TextOptions)
+                        {
+                            if (parallelOptions.CancellationToken.IsCancellationRequested)
+                            {
+                                return;
+                            }
+
+                            var textResults = new SuggestedMessage { Message = text, Plugin = plugin.EffectPluginName };
+                            generatedResults.Add(textResults);
+                        }
+                    }
+                    catch (Exception)
+                    {
+                    }
+                });
+            }
+            catch (Exception)
+            {
+            }
+
+            this.GeneratedMessages = new DataGridCollectionView(generatedResults);
+            this.GeneratedMessages.GroupDescriptions.Add(new DataGridPathGroupDescription(nameof(SuggestedMessage.Plugin)));
         }
 
         /// <summary>
