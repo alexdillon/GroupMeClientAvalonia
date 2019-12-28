@@ -36,7 +36,7 @@ namespace GroupMeClientAvalonia.Notifications
         /// <param name="subscriber">The observer that should receive updates.</param>
         public void RegisterNewSubscriber(INotificationSink subscriber)
         {
-            if (!this.Subscribers.Contains(subscriber))
+            if (subscriber != null && !this.Subscribers.Contains(subscriber))
             {
                 this.Subscribers.Add(subscriber);
                 subscriber.RegisterPushSubscriptions(this.PushClient, this.GroupMeClient);
