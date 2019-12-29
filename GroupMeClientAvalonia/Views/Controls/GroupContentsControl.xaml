@@ -303,8 +303,6 @@
                BorderBrush="Transparent"
                BorderThickness="0"
                FontSize="15"
-               AcceptsReturn="False"
-               TextWrapping="Wrap"
                Watermark="Send a Message..."
                Text="{Binding Path=TypedMessageContents, Mode=TwoWay}">
 

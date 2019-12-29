@@ -39,8 +39,14 @@ namespace GroupMeClientAvalonia.Extensions
             base.OnAttached();
             this.AssociatedObject.KeyDown += this.AssociatedObject_KeyDown;
 
+            this.AssociatedObject.AddHandler(
+             InputElement.KeyDownEvent,
+             this.AssociatedObject_KeyDown,
+             handledEventsToo: true);
+
             // If AcceptsReturn is true, the TextBox will automatically consume KeyDown events and mark them as handled.
-            this.AssociatedObject.AcceptsReturn = false;
+            this.AssociatedObject.AcceptsReturn = true;
+            this.AssociatedObject.TextWrapping = Avalonia.Media.TextWrapping.Wrap;
         }
 
         /// <inheritdoc />
@@ -50,7 +56,9 @@ namespace GroupMeClientAvalonia.Extensions
 
             try
             {
-                this.AssociatedObject.KeyDown -= this.AssociatedObject_KeyDown;
+                this.AssociatedObject.RemoveHandler(
+                    InputElement.KeyDownEvent,
+                    this.AssociatedObject_KeyDown);
             }
             catch (Exception)
             {
@@ -65,17 +73,21 @@ namespace GroupMeClientAvalonia.Extensions
             if ((e.Key == Key.Enter || e.Key == Key.Return) &&
                 (!controlPressed && !shiftPressed))
             {
-                e.Handled = true;
+                // Enter or Return has been pressed without any modifiers
+                // Remove the newline character that Avalonia's textbox will automatically insert
+                // Then, invoke send behavior
+                var beforeCaret = this.AssociatedObject.Text.Substring(0, this.AssociatedObject.CaretIndex);
+                var afterCaret = this.AssociatedObject.Text.Substring(this.AssociatedObject.CaretIndex);
+                beforeCaret = beforeCaret.Substring(0, beforeCaret.LastIndexOf(this.AssociatedObject.NewLine));
+                var newString = $"{beforeCaret}{afterCaret}";
+                this.AssociatedObject.Text = newString;
+
                 this.SendCommand?.Execute(null);
             }
             else if (e.Key == Key.Enter || e.Key == Key.Return)
             {
-                var beforeCaret = this.AssociatedObject.Text.Substring(0, this.AssociatedObject.CaretIndex);
-                var afterCaret = this.AssociatedObject.Text.Substring(this.AssociatedObject.CaretIndex);
-                var newString = $"{beforeCaret}{this.AssociatedObject.NewLine}{afterCaret}";
-
-                this.AssociatedObject.Text = newString;
-                this.AssociatedObject.CaretIndex++;
+                // No special behavior is required. Enter has been pressed with a modifier key.
+                // Allow Avalonia's TextBox to automatically handle newline insertion.
             }
         }
     }

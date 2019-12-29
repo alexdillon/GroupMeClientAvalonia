@@ -68,7 +68,6 @@
                MinHeight="49"
                HorizontalAlignment="Stretch"
                VerticalAlignment="Center"
-               TextWrapping="Wrap"
                Watermark="Send a Message..."
                Text="{Binding Path=TypedMessageContents, Mode=TwoWay}">
 
