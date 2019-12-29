@@ -11,6 +11,8 @@ namespace GroupMeClientAvalonia.Settings
     /// </summary>
     public class UISettings
     {
+        private ThemeOptions theme;
+
         /// <summary>
         /// Gets or sets a value indicating whether messages containing mutliple images are shown as previews.
         /// GroupMe UWP and Web display small-resolution preview versions when multiple images are contained in a single message.
@@ -29,5 +31,27 @@ namespace GroupMeClientAvalonia.Settings
         /// when the left sidebar is collapsed (minibar mode).
         /// </summary>
         public int MaximumNumberOfMultiChatsMinibar { get; set; } = 4;
+
+        /// <summary>
+        /// Gets or sets the user selected theme that should be applied to the entire application UI.
+        /// </summary>
+        public ThemeOptions Theme
+        {
+            get => this.theme;
+
+            set
+            {
+                this.theme = value;
+                switch (this.Theme)
+                {
+                    case ThemeOptions.Light:
+                        Themes.ThemeManager.SetLightTheme();
+                        break;
+                    case ThemeOptions.Dark:
+                        Themes.ThemeManager.SetDarkTheme();
+                        break;
+                }
+            }
+        }
     }
 }

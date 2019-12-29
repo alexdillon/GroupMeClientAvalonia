@@ -95,6 +95,25 @@ namespace GroupMeClientAvalonia.ViewModels
             }
         }
 
+        /// <summary>
+        /// Gets or sets a value indicating which UI theme should be applied.
+        /// </summary>
+        public Settings.ThemeOptions Theme
+        {
+            get
+            {
+                return this.SettingsManager.UISettings.Theme;
+            }
+
+            set
+            {
+                this.SettingsManager.UISettings.Theme = value;
+                this.RaisePropertyChanged(nameof(this.Theme));
+                this.SettingsManager.SaveSettings();
+            }
+        }
+
+
         private Settings.SettingsManager SettingsManager { get; }
 
         private void LoadPluginInfo()

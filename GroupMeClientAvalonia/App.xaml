@@ -2,36 +2,35 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:GroupMeClientAvalonia"
              x:Class="GroupMeClientAvalonia.App">
-    <Application.DataTemplates>
-        <local:ViewLocator/>
-    </Application.DataTemplates>
+  <Application.DataTemplates>
+    <local:ViewLocator/>
+  </Application.DataTemplates>
 
   <Application.Resources>
     <GeometryDrawing x:Key="Ionicons.ArrowDropdownMD" Brush="#FF000000" Geometry="M128 192l128 128 128-128z"   />
     <GeometryDrawing x:Key="Ionicons.ArrowDropupMD" Brush="#FF000000" Geometry="M128 320l128-128 128 128z"   />
   </Application.Resources>
 
-    <Application.Styles>
-      <StyleInclude Source="avares://Avalonia.Themes.Default/DefaultTheme.xaml"/>
-      <StyleInclude Source="avares://Avalonia.Themes.Default/Accents/BaseLight.xaml"/>
-      <StyleInclude Source="avares://Avalonia.Controls.DataGrid/Themes/Default.xaml"/>
+  <Application.Styles>
+    <StyleInclude Source="avares://Avalonia.Themes.Default/Accents/BaseLight.xaml"/>
+    <StyleInclude Source="avares://GroupMeClientAvalonia/GroupMeLight.xaml"/>
+    
+    <StyleInclude Source="avares://Avalonia.Themes.Default/DefaultTheme.xaml"/>
+    <StyleInclude Source="avares://Avalonia.Controls.DataGrid/Themes/Default.xaml"/>
+    <StyleInclude Source="avares://MicroCubeAvalonia/DefaultTheme.xaml"/>
 
-      <StyleInclude Source="avares://MicroCubeAvalonia/DefaultTheme.xaml"/>
+    <Style Selector="TextBox.verticalCenter /template/ Panel">
+      <Setter Property="VerticalAlignment" Value="Center"/>
+    </Style>
 
-      <StyleInclude Source="avares://GroupMeClientAvalonia/GroupMeLight.xaml"/>
+    <Style Selector="Button.styleless">
+      <Setter Property="BorderThickness" Value="0"/>
+      <Setter Property="Margin" Value="0" />
+      <Setter Property="Padding" Value="0" />
+    </Style>
 
-      <Style Selector="TextBox.verticalCenter /template/ Panel">
-        <Setter Property="VerticalAlignment" Value="Center"/>
-      </Style>
-
-      <Style Selector="Button.styleless">
-        <Setter Property="BorderThickness" Value="0"/>
-        <Setter Property="Margin" Value="0" />
-        <Setter Property="Padding" Value="0" />
-      </Style>
-
-      <Style Selector="Button.styleless:pressed /template/ ContentPresenter">
-        <Setter Property="Background" Value="{TemplateBinding Background}"/>
-      </Style>
-    </Application.Styles>
+    <Style Selector="Button.styleless:pressed /template/ ContentPresenter">
+      <Setter Property="Background" Value="{TemplateBinding Background}"/>
+    </Style>
+  </Application.Styles>
 </Application>

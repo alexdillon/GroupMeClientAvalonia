@@ -3,6 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:extensions="clr-namespace:GroupMeClientAvalonia.Extensions"
+             xmlns:settings="clr-namespace:GroupMeClientAvalonia.Settings"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450">
   <UserControl.Styles>
     <Style Selector="HeaderedContentControl">
@@ -67,6 +69,13 @@
             <TextBlock Text="Maximum Number of Multi-Chats in MiniBar Mode: " VerticalAlignment="Center"/>
             <NumericUpDown Minimum="1" Maximum="6" Width="45"
                            Value="{Binding MaximumNumberOfMultiChatsMiniBar}"/>
+          </StackPanel>
+
+          <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+            <TextBlock Text="Theme: " VerticalAlignment="Center" />
+            <ComboBox MinWidth="150"
+                      Items="{Binding Source={extensions:EnumBindingSource {x:Type settings:ThemeOptions}}}"
+                      SelectedItem="{Binding Theme}"/>
           </StackPanel>
 
         </StackPanel>

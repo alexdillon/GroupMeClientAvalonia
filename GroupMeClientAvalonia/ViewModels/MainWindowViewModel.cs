@@ -83,7 +83,7 @@ namespace GroupMeClientAvalonia.ViewModels
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the application is currently refreshing.
+        /// Gets or sets a value indicating whether the application is currently refreshing the displayed content
         /// </summary>
         public bool IsRefreshing
         {

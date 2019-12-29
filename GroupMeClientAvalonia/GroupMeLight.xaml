@@ -7,29 +7,37 @@
     
     <Color x:Key="LoadingSpinnerDarkColor">#CC119EDA</Color>
     <Color x:Key="MenuButtonLightColor">#F7F7F7</Color>
-    <Color x:Key="MessageBackdropColor">#F7F7F7</Color>
     <Color x:Key="GroupsSidebarFontColor">#637182</Color>
     <Color x:Key="MessageFontColor">#637182</Color>
     <Color x:Key="MessageDetailsColor">#FFD3D3D3</Color>
     <Color x:Key="DividerLineColor">#637182</Color>
-    <Color x:Key="PluginButtonFontBrush">#414A59</Color>
+    <Color x:Key="PluginButtonFontColor">#414A59</Color>
     <Color x:Key="UnreadBubbleForegroundColor">#FFFFFF</Color>
     <Color x:Key="ScrollToBottomButtonColor">#637182</Color>
     <Color x:Key="SidebarColor">#1873BA</Color>
     <Color x:Key="SidebarHoverColor">#1584C7</Color>
+    <Color x:Key="MessageISentBackdropColor">#DBF4FD</Color>
+    <Color x:Key="MessageTheySentBackdropColor">#F7F7F7</Color>
+    <Color x:Key="MessageILikedColor">#F77070</Color>
+    <Color x:Key="MessageTheyLikedColor">#FF808080</Color>
+    <Color x:Key="LikerAreaBackgroundColor">#F7F7F7</Color>
 
     <SolidColorBrush x:Key="LoadingSpinnerDarkBrush" Color="{DynamicResource LoadingSpinnerDarkColor}"/>
     <SolidColorBrush x:Key="MenuButtonLightBrush" Color="{DynamicResource MenuButtonLightColor}"/>
-    <SolidColorBrush x:Key="MessageBackdropBrush" Color="{DynamicResource MessageBackdropColor}"/>
     <SolidColorBrush x:Key="GroupsSidebarFontBrush" Color="{DynamicResource GroupsSidebarFontColor}"/>
     <SolidColorBrush x:Key="MessageFontBrush" Color="{DynamicResource MessageFontColor}"/>
     <SolidColorBrush x:Key="MessageDetailsBrush" Color="{DynamicResource MessageDetailsColor}"/>
     <SolidColorBrush x:Key="DividerLineBrush" Color="{DynamicResource DividerLineColor}"/>
-    <SolidColorBrush x:Key="PluginButtonFontColor" Color="{DynamicResource PluginButtonFontBrush}"/>
+    <SolidColorBrush x:Key="PluginButtonFontBrush" Color="{DynamicResource PluginButtonFontColor}"/>
     <SolidColorBrush x:Key="UnreadBubbleForegroundBrush" Color="{DynamicResource UnreadBubbleForegroundColor}"/>
     <SolidColorBrush x:Key="ScrollToBottomButtonBrush" Color="{DynamicResource ScrollToBottomButtonColor}"/>
     <SolidColorBrush x:Key="SidebarBrush" Color="{DynamicResource SidebarColor}"/>
     <SolidColorBrush x:Key="SidebarHoverBrush" Color="{DynamicResource SidebarHoverColor}"/>
+    <SolidColorBrush x:Key="MessageISentBackdropBrush" Color="{DynamicResource MessageISentBackdropColor}"/>
+    <SolidColorBrush x:Key="MessageTheySentBackdropBrush" Color="{DynamicResource MessageTheySentBackdropColor}"/>
+    <SolidColorBrush x:Key="MessageILikedBrush" Color="{DynamicResource MessageILikedColor}"/>
+    <SolidColorBrush x:Key="MessageTheyLikedBrush" Color="{DynamicResource MessageTheyLikedColor}"/>
+    <SolidColorBrush x:Key="LikerAreaBackgroundBrush" Color="{DynamicResource LikerAreaBackgroundColor}"/>
   </Style.Resources>
 </Style>
 

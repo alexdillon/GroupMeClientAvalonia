@@ -44,7 +44,7 @@
             Padding="0"
             Classes="styleless"
             Background="Transparent"
-            Margin="00,0,0,50"
+            Margin="0,0,0,50"
             Command="{Binding RefreshEverythingCommand}">
 
       <Button.Styles>

@@ -33,6 +33,8 @@ namespace GroupMeClientAvalonia
                 DataContext = new MainWindowViewModel(),
             };
 
+            Themes.ThemeManager.Initialize();
+
             app.Run(GroupMeMainWindow);
         }
     }
