@@ -147,7 +147,7 @@
       <Grid Width="{Binding $parent[Canvas].Bounds.Width}">
         <Border BorderThickness="1" CornerRadius="5"
                 BorderBrush="{DynamicResource MessageFontBrush}" 
-                Background="{DynamicResource MessageBackdropBrush}"
+                Background="{DynamicResource LikerAreaBackgroundBrush}"
                 Height="65" HorizontalAlignment="Right"
                 IsVisible="False"
                 x:Name="likesBubble">
