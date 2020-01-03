@@ -8,24 +8,23 @@
              mc:Ignorable="d" d:DesignWidth="250" d:DesignHeight="100">
   
   <Grid ColumnDefinitions="Auto,*,Auto">
-    <Border Grid.ColumnSpan="3" Height="65" Background="White"
-            BorderBrush="#F7F7F7" BorderThickness="2,2,2,0" />
+    <Border Grid.ColumnSpan="3" Height="65" Background="{DynamicResource NotificationBackgroundBrush}"
+            BorderBrush="{DynamicResource NotificationBorder1Brush}" BorderThickness="2,2,2,0" />
     <Border Grid.ColumnSpan="3" Height="65" Background="Transparent"
-            BorderBrush="#AFAFAF" BorderThickness="0,0,0,2" />
+            BorderBrush="{DynamicResource NotificationBorder2Brush}" BorderThickness="0,0,0,2" />
 
     <controls:AvatarControl Width="25" Height="25"
                             Margin="5,0,0,0"
                             Content="{Binding Avatar}"/>
     <!--TextTrimming="CharacterEllipsis"-->
     <TextBlock Grid.Column="1"
-                Foreground="Black"
-                FontSize="11"
-                FontWeight="Regular"
-                Text="{Binding Message}"
-                TextWrapping="Wrap"
-                MaxHeight="50"
-                VerticalAlignment="Center"
-                Margin="5"/>
+               FontSize="11"
+               FontWeight="Regular"
+               Text="{Binding Message}"
+               TextWrapping="Wrap"
+               MaxHeight="50"
+               VerticalAlignment="Center"
+               Margin="5"/>
 
     <Button Grid.Column="2"
             Margin="1"
@@ -33,7 +32,7 @@
             Width="20"
             Height="20"
             BorderThickness="0"
-            Background="{DynamicResource ThemeBackgroundBrush}"
+            Background="{DynamicResource NotificationBackgroundBrush}"
             Classes="styleless"
             Command="{Binding Path=CloseAction}"
             CommandParameter="{Binding Path=.}">

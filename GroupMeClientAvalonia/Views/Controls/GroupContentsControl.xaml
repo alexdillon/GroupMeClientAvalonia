@@ -55,16 +55,16 @@
           </TextBlock>
 
           <!--Plugin Dropdown Arrow-->
-          <DrawingPresenter Grid.Column="1" Width="15" Height="15" Margin="0,10,0,0" Name="PluginMenuDropdownLabel" Drawing="{DynamicResource Ionicons.ArrowDropdownMD}">
+          <iconPack:IconControl Grid.Column="1" Width="15" Height="15" Margin="5,0,0,0" Kind="PackIconOcticonsKind.TriangleDown">
             <i:Interaction.Behaviors>
               <ia:DataTriggerBehavior Binding="{Binding IsChecked, ElementName=toggleGroupOptionsButton}" ComparisonCondition="Equal" Value="True">
-                <ia:ChangePropertyAction TargetObject="{Binding #PluginMenuDropdownLabel}" PropertyName="Drawing" Value="{DynamicResource Ionicons.ArrowDropupMD}"/>
+                <ia:ChangePropertyAction PropertyName="Kind" Value="PackIconOcticonsKind.TriangleUp"/>
               </ia:DataTriggerBehavior>
               <ia:DataTriggerBehavior Binding="{Binding IsChecked, ElementName=toggleGroupOptionsButton}" ComparisonCondition="NotEqual" Value="True">
-                <ia:ChangePropertyAction TargetObject="{Binding #PluginMenuDropdownLabel}" PropertyName="Drawing" Value="{DynamicResource Ionicons.ArrowDropdownMD}"/>
+                <ia:ChangePropertyAction PropertyName="Kind" Value="PackIconOcticonsKind.TriangleDown"/>
               </ia:DataTriggerBehavior>
             </i:Interaction.Behaviors>
-          </DrawingPresenter>
+          </iconPack:IconControl>
         </Grid>
       </ToggleButton>
 
@@ -205,11 +205,11 @@
     <Border Grid.Row="2"
             VerticalAlignment="Top"
             BorderThickness="20,10,20,30"
-            BorderBrush="{DynamicResource ThemeBackgroundBrush}"
+            BorderBrush="{DynamicResource PluginMenuBrush}"
             IsVisible="{Binding IsChecked, ElementName=toggleGroupOptionsButton}">
       <StackPanel Orientation="Vertical">
         <!--Regular Plugins-->
-        <ItemsControl Items="{Binding GroupChatPlugins}" Background="{DynamicResource ThemeBackgroundBrush}">
+        <ItemsControl Items="{Binding GroupChatPlugins}" Background="{DynamicResource PluginMenuBrush}">
           <ItemsControl.ItemTemplate>
             <DataTemplate>
               <Button
@@ -218,11 +218,11 @@
                                          AncestorType={x:Type controls:GroupContentsControl}}, Path=DataContext.GroupChatPluginActivated}"
                   CommandParameter="{Binding Path=.}"
                   HorizontalContentAlignment="Left"
+                  Background="{DynamicResource PluginButtonBackgroundBrush}"
                   Foreground="{DynamicResource PluginButtonFontBrush}"
                   BorderThickness="0"
                   FontSize="14"
-                  FontWeight="SemiBold">
-              </Button>
+                  FontWeight="SemiBold"/>
             </DataTemplate>
           </ItemsControl.ItemTemplate>
 
@@ -234,7 +234,7 @@
         </ItemsControl>
 
         <!--Cache Plugins-->
-        <ItemsControl Items="{Binding GroupChatCachePlugins}" Background="{DynamicResource ThemeBackgroundBrush}">
+        <ItemsControl Items="{Binding GroupChatCachePlugins}" Background="{DynamicResource PluginMenuBrush}">
           <ItemsControl.ItemTemplate>
             <DataTemplate>
               <Button
@@ -243,12 +243,11 @@
                                          AncestorType={x:Type controls:GroupContentsControl}}, Path=DataContext.GroupChatCachePluginActivated}"
                   CommandParameter="{Binding Path=.}"
                   HorizontalContentAlignment="Left"
+                  Background="{DynamicResource PluginButtonBackgroundBrush}"
                   Foreground="{DynamicResource PluginButtonFontBrush}"
                   BorderThickness="0"
                   FontSize="14"
-                  FontWeight="SemiBold">
-
-              </Button>
+                  FontWeight="SemiBold" />
             </DataTemplate>
           </ItemsControl.ItemTemplate>
 

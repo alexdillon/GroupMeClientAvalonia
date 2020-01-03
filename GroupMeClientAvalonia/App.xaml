@@ -14,11 +14,6 @@
         </NativeMenu>
     </NativeMenu.Menu>
 
-    <Application.Resources>
-        <GeometryDrawing x:Key="Ionicons.ArrowDropdownMD" Brush="#FF000000" Geometry="M128 192l128 128 128-128z"   />
-        <GeometryDrawing x:Key="Ionicons.ArrowDropupMD" Brush="#FF000000" Geometry="M128 320l128-128 128 128z"   />
-    </Application.Resources>
-
     <Application.Styles>
         <StyleInclude Source="avares://Avalonia.Themes.Default/Accents/BaseLight.xaml"/>
         <StyleInclude Source="avares://GroupMeClientAvalonia/GroupMeLight.xaml"/>

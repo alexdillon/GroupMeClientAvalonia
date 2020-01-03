@@ -191,16 +191,16 @@
           </TextBlock>
 
           <!--Plugin Dropdown Arrow-->
-          <DrawingPresenter Grid.Column="1" Width="15" Height="15" Margin="0,10,0,0" Name="PluginMenuDropdownLabel" Drawing="{DynamicResource Ionicons.ArrowDropdownMD}">
+          <iconPack:IconControl Grid.Column="1" Width="15" Height="15" Margin="5,0,0,0" Kind="PackIconOcticonsKind.TriangleDown">
             <i:Interaction.Behaviors>
               <ia:DataTriggerBehavior Binding="{Binding IsChecked, ElementName=toggleGroupOptionsButton}" ComparisonCondition="Equal" Value="True">
-                <ia:ChangePropertyAction TargetObject="{Binding #PluginMenuDropdownLabel}" PropertyName="Drawing" Value="{DynamicResource Ionicons.ArrowDropupMD}"/>
+                <ia:ChangePropertyAction PropertyName="Kind" Value="PackIconOcticonsKind.TriangleUp"/>
               </ia:DataTriggerBehavior>
               <ia:DataTriggerBehavior Binding="{Binding IsChecked, ElementName=toggleGroupOptionsButton}" ComparisonCondition="NotEqual" Value="True">
-                <ia:ChangePropertyAction TargetObject="{Binding #PluginMenuDropdownLabel}" PropertyName="Drawing" Value="{DynamicResource Ionicons.ArrowDropdownMD}"/>
+                <ia:ChangePropertyAction PropertyName="Kind" Value="PackIconOcticonsKind.TriangleDown"/>
               </ia:DataTriggerBehavior>
             </i:Interaction.Behaviors>
-          </DrawingPresenter>
+          </iconPack:IconControl>
         </Grid>
       </ToggleButton>
           
@@ -215,8 +215,8 @@
             IsVisible="{Binding #toggleGroupOptionsButton.IsChecked}"
             VerticalAlignment="Top"
             BorderThickness="20,10,20,30"
-            BorderBrush="{DynamicResource ThemeBackgroundBrush}">
-      <ItemsControl Items="{Binding GroupChatCachePlugins}" Background="{DynamicResource ThemeBackgroundBrush}">
+            BorderBrush="{DynamicResource PluginMenuBrush}">
+      <ItemsControl Items="{Binding GroupChatCachePlugins}" Background="{DynamicResource PluginMenuBrush}">
         <ItemsControl.ItemTemplate>
           <DataTemplate>
             <Button
@@ -225,7 +225,8 @@
                                      AncestorType={x:Type views:SearchView}}, Path=DataContext.GroupChatCachePluginActivated}"
                 CommandParameter="{Binding Path=.}"
                 HorizontalContentAlignment="Left"
-                Foreground="#414A59"
+                Background="{DynamicResource PluginButtonBackgroundBrush}"
+                Foreground="{DynamicResource PluginButtonFontBrush}"
                 BorderThickness="0"
                 FontSize="14"
                 FontWeight="SemiBold"

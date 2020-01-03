@@ -20,6 +20,13 @@
     <Color x:Key="MessageILikedColor">#F77070</Color>
     <Color x:Key="MessageTheyLikedColor">#999999</Color>
     <Color x:Key="LikerAreaBackgroundColor">#000000</Color>
+    <Color x:Key="TweetBackgroundColor">#000000</Color>
+    <Color x:Key="NotificationBackgroundColor">#000000</Color>
+    <Color x:Key="NotificationBorder1Color">#191919</Color>
+    <Color x:Key="NotificationBorder2Color">#222222</Color>
+    <Color x:Key="PluginButtonBackgroundColor">#D5D5D5</Color>
+    <Color x:Key="PluginButtonFontColor">#414A59</Color>
+    <Color x:Key="PluginMenuColor">#000000</Color>
 
     <SolidColorBrush x:Key="LoadingSpinnerDarkBrush" Color="{DynamicResource LoadingSpinnerDarkColor}" />
     <SolidColorBrush x:Key="MenuButtonLightBrush" Color="{DynamicResource MenuButtonLightColor}"/>
@@ -27,7 +34,6 @@
     <SolidColorBrush x:Key="MessageFontBrush" Color="{DynamicResource MessageFontColor}" />
     <SolidColorBrush x:Key="MessageDetailsBrush" Color="{DynamicResource MessageDetailsColor}" />
     <SolidColorBrush x:Key="DividerLineBrush" Color="{DynamicResource DividerLineColor}" />
-    <SolidColorBrush x:Key="PluginButtonFontBrush" Color="{DynamicResource ThemeForegroundBrush}" />
     <SolidColorBrush x:Key="UnreadBubbleForegroundBrush" Color="{DynamicResource UnreadBubbleForegroundColor}"/>
     <SolidColorBrush x:Key="ScrollToBottomButtonBrush" Color="{DynamicResource ScrollToBottomButtonColor}"/>
     <SolidColorBrush x:Key="SidebarBrush" Color="{DynamicResource SidebarColor}"/>
@@ -37,5 +43,12 @@
     <SolidColorBrush x:Key="MessageILikedBrush" Color="{DynamicResource MessageILikedColor}"/>
     <SolidColorBrush x:Key="MessageTheyLikedBrush" Color="{DynamicResource MessageTheyLikedColor}"/>
     <SolidColorBrush x:Key="LikerAreaBackgroundBrush" Color="{DynamicResource LikerAreaBackgroundColor}"/>
+    <SolidColorBrush x:Key="TweetBackgroundBrush" Color="{DynamicResource TweetBackgroundColor}"/>
+    <SolidColorBrush x:Key="NotificationBackgroundBrush" Color="{DynamicResource NotificationBackgroundColor}"/>
+    <SolidColorBrush x:Key="NotificationBorder1Brush" Color="{DynamicResource NotificationBorder1Color}"/>
+    <SolidColorBrush x:Key="NotificationBorder2Brush" Color="{DynamicResource NotificationBorder2Color}"/>
+    <SolidColorBrush x:Key="PluginButtonBackgroundBrush" Color="{DynamicResource PluginButtonBackgroundColor}" />
+    <SolidColorBrush x:Key="PluginButtonFontBrush" Color="{DynamicResource PluginButtonFontColor}" />
+    <SolidColorBrush x:Key="PluginMenuBrush" Color="{DynamicResource PluginMenuColor}" />
   </Style.Resources>
 </Style>
