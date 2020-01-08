@@ -63,7 +63,7 @@ namespace GroupMeClientAvalonia.Notifications.Display
                 {
                     await this.PopupNotificationSink.ShowLikableImageMessage(
                         container.Name,
-                        notification.Alert,
+                        this.RemoveUnprintableCharacters(notification.Alert),
                         notification.Message.AvatarUrl,
                         (notification.Message as IAvatarSource).IsRoundedAvatar,
                         (image as ImageAttachment).Url);
@@ -72,7 +72,7 @@ namespace GroupMeClientAvalonia.Notifications.Display
                 {
                     await this.PopupNotificationSink.ShowLikableMessage(
                        container.Name,
-                       notification.Alert,
+                       this.RemoveUnprintableCharacters(notification.Alert),
                        notification.Message.AvatarUrl,
                        (notification.Message as IAvatarSource).IsRoundedAvatar);
                 }
@@ -92,7 +92,7 @@ namespace GroupMeClientAvalonia.Notifications.Display
                 {
                     await this.PopupNotificationSink.ShowLikableImageMessage(
                         container.Name,
-                        notification.Alert,
+                        this.RemoveUnprintableCharacters(notification.Alert),
                         container.ImageOrAvatarUrl,
                         container.IsRoundedAvatar,
                         (image as ImageAttachment).Url);
@@ -101,7 +101,7 @@ namespace GroupMeClientAvalonia.Notifications.Display
                 {
                     await this.PopupNotificationSink.ShowLikableMessage(
                         container.Name,
-                        notification.Alert,
+                        this.RemoveUnprintableCharacters(notification.Alert),
                         container.ImageOrAvatarUrl,
                         container.IsRoundedAvatar);
                 }
@@ -116,7 +116,7 @@ namespace GroupMeClientAvalonia.Notifications.Display
             {
                 await this.PopupNotificationSink.ShowNotification(
                     container.Name,
-                    alert,
+                    this.RemoveUnprintableCharacters(alert),
                     container.ImageOrAvatarUrl,
                     container.IsRoundedAvatar);
             }
@@ -138,6 +138,11 @@ namespace GroupMeClientAvalonia.Notifications.Display
         {
             var me = this.GroupMeClient.WhoAmI();
             return message.UserId == me.Id;
+        }
+
+        private string RemoveUnprintableCharacters(string message)
+        {
+            return message.Replace("\uE008 ", string.Empty);
         }
 
         private bool IsGroupMuted(IMessageContainer messageContainer)
