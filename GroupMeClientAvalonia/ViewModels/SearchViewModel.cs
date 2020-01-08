@@ -9,7 +9,6 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GroupMeClientAvalonia.ViewModels.Controls;
 using GroupMeClientApi.Models;
-using GroupMeClientApi.Models.Attachments;
 using GroupMeClientPlugin.GroupChat;
 using Microsoft.EntityFrameworkCore;
 using System.Reactive;
@@ -17,13 +16,14 @@ using ReactiveUI;
 using DynamicData.Binding;
 using DynamicData;
 using System.Reactive.Linq;
+using GroupMeClientApi.Models.Attachments;
 
 namespace GroupMeClientAvalonia.ViewModels
 {
     /// <summary>
     /// <see cref="SearchViewModel"/> provides a ViewModel for the <see cref="Controls.SearchView"/> view.
     /// </summary>
-    public class SearchViewModel : ViewModelBase, GroupMeClientPlugin.GroupChat.ICachePluginUIIntegration
+    public class SearchViewModel : ViewModelBase, ICachePluginUIIntegration
     {
         private string searchTerm = string.Empty;
         private string selectedGroupName = string.Empty;
@@ -359,6 +359,9 @@ namespace GroupMeClientAvalonia.ViewModels
 
         private void OpenNewGroupChat(IMessageContainer group)
         {
+            this.FilterStartDate = group.CreatedAtTime.AddDays(-1);
+            this.FilterEndDate = DateTime.Now.AddDays(1);
+
             this.SelectedGroupChat = group;
             this.SearchTerm = string.Empty;
             this.SelectedGroupName = group.Name;
@@ -405,51 +408,54 @@ namespace GroupMeClientAvalonia.ViewModels
             var messagesForGroupChat = this.GetMessagesForGroup(this.SelectedGroupChat);
 
             var startDate = this.FilterStartDate;
-            var endDate = (this.FilterEndDate == DateTime.MinValue) ? DateTime.MaxValue : this.FilterEndDate.AddDays(1);
+            var endDate = (this.FilterEndDate == DateTime.MinValue) ? DateTime.Now : this.FilterEndDate.AddDays(1);
+
+            var startDateUnix = ((DateTimeOffset)startDate).ToUnixTimeSeconds();
+            var endDateUnix = ((DateTimeOffset)endDate).ToUnixTimeSeconds();
 
             var results = messagesForGroupChat
-                .Where(m => m.Text.ToLower().Contains(this.SearchTerm.ToLower()));
-                //.Where(m => m.CreatedAtTime >= startDate)
-                //.Where(m => m.CreatedAtTime <= endDate);
+                .Where(m => m.Text.ToLower().Contains(this.SearchTerm.ToLower()))
+                .Where(m => m.CreatedAtUnixTime >= startDateUnix)
+                .Where(m => m.CreatedAtUnixTime <= endDateUnix);
 
             var filteredMessages = Enumerable.Empty<Message>().AsQueryable();
             var filtersApplied = false;
 
-            //if (this.FilterHasAttachedImage)
-            //{
-            //    var messagesWithImages = results
-            //        .Where(m => m.Attachments.OfType<ImageAttachment>().Count() >= 1);
+            if (this.FilterHasAttachedImage)
+            {
+                var messagesWithImages = results
+                    .Where(m => m.Attachments.OfType<ImageAttachment>().Count() >= 1);
 
-            //    filteredMessages = filteredMessages.Union(messagesWithImages);
-            //    filtersApplied = true;
-            //}
+                filteredMessages = filteredMessages.Union(messagesWithImages);
+                filtersApplied = true;
+            }
 
-            //if (this.FilterHasAttachedLinkedImage)
-            //{
-            //    var messagesWithLinkedImages = results
-            //        .Where(m => m.Attachments.OfType<LinkedImageAttachment>().Count() >= 1);
+            if (this.FilterHasAttachedLinkedImage)
+            {
+                var messagesWithLinkedImages = results
+                    .Where(m => m.Attachments.OfType<LinkedImageAttachment>().Count() >= 1);
 
-            //    filteredMessages = filteredMessages.Union(messagesWithLinkedImages);
-            //    filtersApplied = true;
-            //}
+                filteredMessages = filteredMessages.Union(messagesWithLinkedImages);
+                filtersApplied = true;
+            }
 
-            //if (this.FilterHasAttachedVideo)
-            //{
-            //    var messagesWithVideos = results
-            //        .Where(m => m.Attachments.OfType<VideoAttachment>().Count() >= 1);
+            if (this.FilterHasAttachedVideo)
+            {
+                var messagesWithVideos = results
+                    .Where(m => m.Attachments.OfType<VideoAttachment>().Count() >= 1);
 
-            //    filteredMessages = filteredMessages.Union(messagesWithVideos);
-            //    filtersApplied = true;
-            //}
+                filteredMessages = filteredMessages.Union(messagesWithVideos);
+                filtersApplied = true;
+            }
 
-            //if (this.FilterHasAttachedMentions)
-            //{
-            //    var messagesWithMentions = results
-            //        .Where(m => m.Attachments.OfType<MentionsAttachment>().Count() >= 1);
+            if (this.FilterHasAttachedMentions)
+            {
+                var messagesWithMentions = results
+                    .Where(m => m.Attachments.OfType<MentionsAttachment>().Count() >= 1);
 
-            //    filteredMessages = filteredMessages.Union(messagesWithMentions);
-            //    filtersApplied = true;
-            //}
+                filteredMessages = filteredMessages.Union(messagesWithMentions);
+                filtersApplied = true;
+            }
 
             if (!filtersApplied)
             {
