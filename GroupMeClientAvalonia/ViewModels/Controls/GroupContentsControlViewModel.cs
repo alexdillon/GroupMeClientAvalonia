@@ -380,7 +380,7 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
                             var messageId = long.Parse(msg.Id);
                             var timeStampId = (messageId - 1).ToString();
 
-                            this.Messages.Add(new InlineTimestampControlViewModel(msg.CreatedAtTime, timeStampId, msgVm.MessageColor));
+                            this.Messages.Add(new InlineTimestampControlViewModel(msg.CreatedAtTime, timeStampId, msgVm.DidISendIt));
                             this.LastMarkerTime = msg.CreatedAtTime;
                         }
                     }
@@ -411,7 +411,7 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
                             this.MessageContainer.ReadReceipt.ReadAtTime,
                             true,
                             (msgId + 1).ToString(),
-                            (matchedMessage as MessageControlViewModel).MessageColor);
+                            (matchedMessage as MessageControlViewModel).DidISendIt);
 
                         this.Messages.Add(readMarker);
                     }
@@ -431,7 +431,7 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
                             lastSentMessage.Message.CreatedAtTime,
                             false,
                             (msgId + 1).ToString(),
-                            (lastSentMessage as MessageControlViewModel).MessageColor);
+                            (lastSentMessage as MessageControlViewModel).DidISendIt);
 
                         this.Messages.Add(sentMarker);
                     }

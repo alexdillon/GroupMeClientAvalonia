@@ -182,24 +182,14 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
         }
 
         /// <summary>
-        /// Gets the background color to use when rendering this <see cref="Message"/>.
+        /// Gets a value indicating whether the current user sent this <see cref="Message"/>.
         /// </summary>
-        public Brush MessageColor
+        public bool DidISendIt
         {
             get
             {
                 var me = this.Message.Group?.WhoAmI() ?? this.Message.Chat?.WhoAmI();
-
-                if (this.Message.UserId == me.UserId)
-                {
-                    Themes.ThemeManager.CurrentGroupMeTheme.TryGetResource("MessageISentBackdropBrush", out var brush);
-                    return brush as Brush;
-                }
-                else
-                {
-                    Themes.ThemeManager.CurrentGroupMeTheme.TryGetResource("MessageTheySentBackdropBrush", out var brush);
-                    return brush as Brush;
-                }
+                return this.Message.UserId == me.UserId;
             }
         }
 
