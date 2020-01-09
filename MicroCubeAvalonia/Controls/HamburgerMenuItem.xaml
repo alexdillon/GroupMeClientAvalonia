@@ -1,7 +1,5 @@
 ﻿<Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:i="clr-namespace:Avalonia.Xaml.Interactivity;assembly=Avalonia.Xaml.Interactivity"
-        xmlns:ia="clr-namespace:Avalonia.Xaml.Interactions.Core;assembly=Avalonia.Xaml.Interactions"
         xmlns:controls="clr-namespace:MicroCubeAvalonia.Controls">
   <Design.PreviewWith>
     <Border Padding="20">
@@ -30,8 +28,6 @@
                      VerticalAlignment="Center"
                      FontSize="16"
                      Text="{TemplateBinding Label}" />
-        
-      
         </Grid>
       </ControlTemplate>
     </Setter>
