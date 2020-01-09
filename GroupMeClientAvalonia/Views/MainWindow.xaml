@@ -49,7 +49,8 @@
             Classes="styleless"
             Background="Transparent"
             Margin="0,0,0,50"
-            Command="{Binding RefreshEverythingCommand}">
+            Command="{Binding RefreshEverythingCommand}"
+            IsVisible="{Binding Path=IsEffectivelyEnabled, RelativeSource={RelativeSource Self}, Mode=OneWay}">
 
       <i:Interaction.Behaviors>
         <ia:DataTriggerBehavior Binding="{Binding #hamburgerMenu.IsPaneOpen}" ComparisonCondition="Equal" Value="True">
@@ -73,7 +74,7 @@
                                 Foreground="White"
                                 Width="16" Height="16"
                                 IsVisible="{Binding IsRefreshing, Converter={StaticResource inverseBoolConverter}}"/>
-          
+
           <microcube:ProgressRing IsVisible="{Binding IsRefreshing}"
                                   Grid.Column="0"
                                   Width="16" Height="16"

@@ -191,8 +191,6 @@ namespace GroupMeClientAvalonia.ViewModels
                 EasyClosePopup = new RelayCommand(this.CloseBigPopup)
             };
 
-            this.RefreshEverythingCommand = new RelayCommand(async() => await this.RefreshEverything(), true);
-
             //this.UpdateAssist = new UpdateAssist();
             //Application.Current.MainWindow.Closing += new CancelEventHandler(this.MainWindow_Closing);
         }
@@ -244,6 +242,9 @@ namespace GroupMeClientAvalonia.ViewModels
 
             // Set the section to the Chats tab
             this.SelectedItem = chatsTab;
+
+            // Enable the refresh button
+            this.RefreshEverythingCommand = new RelayCommand(async () => await this.RefreshEverything(), true);
         }
 
         private void CreateMenuItemsLoginOnly()
@@ -261,6 +262,9 @@ namespace GroupMeClientAvalonia.ViewModels
 
             this.MenuItems.Add(loginTab);
             this.SelectedItem = loginTab;
+
+            // Disable Refresh button by marking CanExecute as false
+            this.RefreshEverythingCommand = new RelayCommand(() => { }, canExecute: () => false);
         }
 
         private void MainWindow_Closing(object sender, CancelEventArgs e)
