@@ -423,7 +423,7 @@ namespace GroupMeClientAvalonia.ViewModels
 
             if (this.FilterHasAttachedImage)
             {
-                var messagesWithImages = results
+                var messagesWithImages = results.AsEnumerable()
                     .Where(m => m.Attachments.OfType<ImageAttachment>().Count() >= 1);
 
                 filteredMessages = filteredMessages.Union(messagesWithImages);
@@ -432,7 +432,7 @@ namespace GroupMeClientAvalonia.ViewModels
 
             if (this.FilterHasAttachedLinkedImage)
             {
-                var messagesWithLinkedImages = results
+                var messagesWithLinkedImages = results.AsEnumerable()
                     .Where(m => m.Attachments.OfType<LinkedImageAttachment>().Count() >= 1);
 
                 filteredMessages = filteredMessages.Union(messagesWithLinkedImages);
@@ -441,7 +441,7 @@ namespace GroupMeClientAvalonia.ViewModels
 
             if (this.FilterHasAttachedVideo)
             {
-                var messagesWithVideos = results
+                var messagesWithVideos = results.AsEnumerable()
                     .Where(m => m.Attachments.OfType<VideoAttachment>().Count() >= 1);
 
                 filteredMessages = filteredMessages.Union(messagesWithVideos);
@@ -450,10 +450,10 @@ namespace GroupMeClientAvalonia.ViewModels
 
             if (this.FilterHasAttachedMentions)
             {
-                var messagesWithMentions = results
+                var messagesWithMentions = results.AsEnumerable()
                     .Where(m => m.Attachments.OfType<MentionsAttachment>().Count() >= 1);
 
-                filteredMessages = filteredMessages.Union(messagesWithMentions);
+                filteredMessages = filteredMessages.Union(messagesWithMentions.AsEnumerable());
                 filtersApplied = true;
             }
 
@@ -467,6 +467,9 @@ namespace GroupMeClientAvalonia.ViewModels
                 .OrderByDescending(m => m.Id);
 
             this.ResultsView.AssociateWith = this.SelectedGroupChat;
+
+            // TODO: Can we disable Client Side evaluation? Breaking change in Entity Framework Core 3
+            // Enabling filters will be a lot faster if we can.
             this.ResultsView.Messages = orderedMessages;
             this.ResultsView.ChangePage(0);
         }

@@ -49,7 +49,6 @@
              VirtualizationMode="None"
              UseLayoutRounding="True"
              SelectionMode="Single">
-      
 
       <ListBox.Styles>
         <Style Selector="ListBoxItem">
@@ -122,19 +121,26 @@
                FontSize="16"
                Text="{Binding SearchTerm, Mode=TwoWay}" />
 
-      <!--<Expander Header="Seach Options"
+      <Expander Header="Seach Options"
                 DockPanel.Dock="Top"
                 Margin="15,5,25,0"
-                Background="White"
+                Background="{DynamicResource ThemeBackgroundBrush}"
                 BorderBrush="Transparent"
                 HorizontalAlignment="Stretch">
+
+        <Expander.Styles>
+            <Style Selector="Expander /template/ ToggleButton#PART_toggle:pointerover /template/ Border">
+                <Setter Property="BorderBrush" Value="{DynamicResource ThemeBackgroundBrush}" />
+            </Style>
+        </Expander.Styles>
+          
         <StackPanel>
           <Grid ColumnDefinitions="Auto, *"
                 RowDefinitions="Auto, Auto">
 
-            <TextBlock Text="Starting Date" Grid.Row="0" Grid.Column="0"/>
+            <TextBlock Text="Starting Date" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center"/>
             <DatePicker SelectedDate="{Binding FilterStartDate, Mode=TwoWay}" Grid.Row="0" Grid.Column="1" />
-            <TextBlock Text="Ending Date" Grid.Row="1" Grid.Column="0" />
+            <TextBlock Text="Ending Date" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center"/>
             <DatePicker SelectedDate="{Binding FilterEndDate, Mode=TwoWay}" Grid.Row="1" Grid.Column="1" />
           </Grid>
 
@@ -143,7 +149,7 @@
           <CheckBox Content="Has Video Attachment" IsChecked="{Binding FilterHasAttachedVideo, Mode=TwoWay}" />
           <CheckBox Content="Mentions Other Group Members" IsChecked="{Binding FilterHasAttachedMentions, Mode=TwoWay}" />
         </StackPanel>
-      </Expander>-->
+      </Expander>
 
       <controls:PaginatedMessagesControl Content="{Binding ResultsView}"/>
     </DockPanel>
