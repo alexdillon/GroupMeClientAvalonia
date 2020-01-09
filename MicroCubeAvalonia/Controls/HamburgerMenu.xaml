@@ -25,6 +25,7 @@
                        DockPanel.Dock="Left">
               <ToggleButton Name="PART_HamburgerButton"
                             Width="48" Height="48"
+                            IsChecked="{TemplateBinding IsPaneOpen, Mode=TwoWay}"
                             Foreground="{TemplateBinding SidebarForeground}"
                             Background="{Binding #PART_Sidebar.Background}"
                             BorderThickness="0"
@@ -134,16 +135,6 @@
                   </Style>
                 </ListBox.Styles>
               </ListBox>
-
-              <!--<ItemsPresenter Name="PART_OptionItemsPresenter"
-                              Items="{TemplateBinding OptionItems}">
-                <ItemsPresenter.ItemsPanel>
-                  <ItemsPanelTemplate>
-                    <StackPanel Orientation="Vertical" />
-                  </ItemsPanelTemplate>
-                </ItemsPresenter.ItemsPanel>
-              </ItemsPresenter>-->
-
             </DockPanel>
 
             <ContentPresenter

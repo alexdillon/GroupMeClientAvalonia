@@ -1,15 +1,22 @@
 ﻿using Avalonia;
 using Avalonia.Collections;
 using Avalonia.Controls;
+using Avalonia.Data;
 using Avalonia.Media;
 
 namespace MicroCubeAvalonia.Controls
 {
     public class HamburgerMenu : ContentControl
     {
-        public static AvaloniaProperty IsPaneOpenProperty =
-            AvaloniaProperty.Register<HamburgerMenu, bool>(
-                nameof(IsPaneOpen));
+        private bool? isPaneOpen = false;
+
+        public static AvaloniaProperty<bool?> IsPaneOpenProperty =
+            AvaloniaProperty.RegisterDirect<HamburgerMenu, bool?>(
+                nameof(IsPaneOpen),
+                o => o.IsPaneOpen,
+                (o, v) => o.IsPaneOpen = v,
+                unsetValue: false,
+                defaultBindingMode: BindingMode.TwoWay);
 
         public static AvaloniaProperty ItemsProperty =
             AvaloniaProperty.Register<HamburgerMenu, AvaloniaList<HamburgerMenuItem>>(
@@ -44,10 +51,10 @@ namespace MicroCubeAvalonia.Controls
                 nameof(SelectedContent),
                 (hm) => hm.SelectedContent);
 
-        public bool IsPaneOpen
+        public bool? IsPaneOpen
         {
-            get => (bool)this.GetValue(IsPaneOpenProperty);
-            set => this.SetValue(IsPaneOpenProperty, value);
+            get => this.isPaneOpen;
+            set => this.SetAndRaise(IsPaneOpenProperty, ref this.isPaneOpen, value);
         }
 
         public AvaloniaList<HamburgerMenuItem> Items
