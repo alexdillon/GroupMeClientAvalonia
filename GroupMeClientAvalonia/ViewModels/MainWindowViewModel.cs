@@ -134,12 +134,6 @@ namespace GroupMeClientAvalonia.ViewModels
 
         private LoginViewModel LoginViewModel { get; set; }
 
-        private ProgressRing UpdatingSpinner { get; } = new ProgressRing() { IsActive = true, Width = 16, Foreground = Brushes.White };
-
-        private Avalonia.Controls.Button RefreshButton { get; set; }
-
-        private PackIconMaterialKind RefreshButtonIcon { get; set; }
-
         private int DisconnectedComponentCount { get; set; }
 
         private void InitializeClient()
