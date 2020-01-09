@@ -275,19 +275,15 @@
               VerticalAlignment="Bottom"/>
 
       <!--Message Effects Button-->
-      <iconPack:IconControl Kind="PackIconFontAwesomeKind.ReactBrands"
-                            Grid.Row="1" Grid.Column="0"
-                            Width="15" Height="15"
-                            Background="{DynamicResource ThemeBackgroundBrush}"
-                            Foreground="{DynamicResource DividerLineBrush}">
-                       
-        <i:Interaction.Behaviors>
-          <ia:EventTriggerBehavior EventName="PointerPressed">
-            <ia:InvokeCommandAction Command="{Binding OpenMessageSuggestions}"/>
-          </ia:EventTriggerBehavior>
-        </i:Interaction.Behaviors>
-      </iconPack:IconControl>
-
+      <Button Command="{Binding OpenMessageSuggestions}"
+              Classes="styleless"
+              Grid.Row="1" Grid.Column="0"
+              Width="15" Height="15"
+              Background="{DynamicResource ThemeBackgroundBrush}"
+              Foreground="{DynamicResource DividerLineBrush}">
+        <iconPack:IconControl Kind="PackIconFontAwesomeKind.ReactBrands"/>
+      </Button>
+      
       <!--Message Text Box-->
       <!--extensions:MultiLineSendBox-->
       <!--extensions:FileDragDropHelper.IsFileDragDropEnabled="True"
