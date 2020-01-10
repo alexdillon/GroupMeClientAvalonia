@@ -121,7 +121,8 @@
       <!--All Groups and Chats List-->
       <ScrollViewer Grid.Row="1"
                     VerticalScrollBarVisibility="Visible"
-                    VerticalAlignment="Stretch">
+                    VerticalAlignment="Stretch"
+                    HorizontalScrollBarVisibility="Disabled">
         <ItemsControl Items="{Binding SortedFilteredGroupChats}">
           <ItemsControl.ItemsPanel>
             <ItemsPanelTemplate>
