@@ -8,6 +8,12 @@ namespace GroupMeClientAvalonia.Settings
     public enum ThemeOptions
     {
         /// <summary>
+        /// Use the system color theme.
+        /// </summary>
+        [Description("Default Theme")]
+        Default,
+
+        /// <summary>
         /// Use the light color theme (white background).
         /// </summary>
         [Description("Light Theme")]

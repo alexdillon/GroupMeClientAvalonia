@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Newtonsoft.Json.Converters;
+using System.Text.Json.Serialization;
 
 namespace GroupMeClientAvalonia.Settings
 {
@@ -11,7 +8,7 @@ namespace GroupMeClientAvalonia.Settings
     /// </summary>
     public class UISettings
     {
-        private ThemeOptions theme;
+        private ThemeOptions theme = ThemeOptions.Default;
 
         /// <summary>
         /// Gets or sets a value indicating whether messages containing mutliple images are shown as previews.
@@ -35,6 +32,7 @@ namespace GroupMeClientAvalonia.Settings
         /// <summary>
         /// Gets or sets the user selected theme that should be applied to the entire application UI.
         /// </summary>
+        [JsonConverter(typeof(StringEnumConverter))]
         public ThemeOptions Theme
         {
             get => this.theme;
@@ -49,6 +47,9 @@ namespace GroupMeClientAvalonia.Settings
                         break;
                     case ThemeOptions.Dark:
                         Themes.ThemeManager.SetDarkTheme();
+                        break;
+                    case ThemeOptions.Default:
+                        Themes.ThemeManager.SetSystemTheme();
                         break;
                 }
             }
