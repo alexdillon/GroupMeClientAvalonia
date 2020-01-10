@@ -1,9 +1,9 @@
-﻿using Avalonia.Collections;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Avalonia.Collections;
 
 namespace GroupMeClientAvalonia.ViewModels.Controls
 {

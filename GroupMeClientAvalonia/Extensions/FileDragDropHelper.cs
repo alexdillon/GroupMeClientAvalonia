@@ -1,8 +1,8 @@
-﻿using Avalonia;
+﻿using System;
+using System.Linq;
+using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
-using System;
-using System.Linq;
 
 namespace GroupMeClientAvalonia.Extensions
 {
@@ -28,7 +28,7 @@ namespace GroupMeClientAvalonia.Extensions
             AvaloniaProperty.RegisterAttached<Control, FileDragDropHelper>(
                 "FileDragDropTarget",
                 typeof(FileDragDropHelper));
-                
+
         //DependencyProperty.RegisterAttached("FileDragDropTarget", typeof(object), typeof(FileDragDropHelper), null);
 
         /// <summary>

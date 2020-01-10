@@ -3,20 +3,20 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Avalonia;
+using Avalonia.Controls;
+using DynamicData;
+using DynamicData.Binding;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
-using GroupMeClientAvalonia.Utilities;
 using GroupMeClientApi.Models;
 using GroupMeClientAvalonia.Extensions;
-using Avalonia.Controls;
-using Avalonia;
-using DynamicData;
-using DynamicData.Binding;
-using System.Reactive.Linq;
+using GroupMeClientAvalonia.Utilities;
 
 namespace GroupMeClientAvalonia.ViewModels.Controls
 {
@@ -53,7 +53,7 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
             this.PopupManager = new Controls.PopupViewModel()
             {
                 ClosePopup = new RelayCommand(this.ClosePopupHandler),
-                EasyClosePopup = null, // EasyClose makes it too easy to accidently close the send dialog. 
+                EasyClosePopup = null, // EasyClose makes it too easy to accidently close the send dialog.
             };
 
             this.ReliabilityStateMachine = new ReliabilityStateMachine();
@@ -159,7 +159,7 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
         public ICommand GroupChatCachePluginActivated { get; }
 
         /// <summary>
-        /// Gets or sets the popup manager to be used for popups 
+        /// Gets or sets the popup manager to be used for popups.
         /// </summary>
         public Controls.PopupViewModel PopupManager { get; set; }
 
@@ -204,6 +204,7 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
             get => this.typedMessageContents;
             set => this.Set(() => this.TypedMessageContents, ref this.typedMessageContents, value);
         }
+
         /// <summary>
         /// Gets or sets a value indicating whether the messages list is not currently scrolled to the bottom.
         /// </summary>
@@ -351,7 +352,7 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
                 double originalHeight = scrollViewer?.GetValue(ScrollViewer.VerticalScrollBarMaximumProperty) ?? 0.0;
                 if (originalHeight != 0)
                 {
-                    // Prevent the At Top event from firing while we are adding new messages  
+                    // Prevent the At Top event from firing while we are adding new messages
                     scrollViewer.SetValue(ScrollViewer.VerticalScrollBarValueProperty, 1);
                 }
 
@@ -451,11 +452,11 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
                 {
                     // Calculate the offset where the last message the user was looking at is
                     // Scroll back to there so new messages appear on top, above screen
-                    scrollViewer?.GetObservable(ScrollViewer.VerticalScrollBarMaximumProperty).Take(2).Skip(1).Subscribe((newMax =>
+                    scrollViewer?.GetObservable(ScrollViewer.VerticalScrollBarMaximumProperty).Take(2).Skip(1).Subscribe(newMax =>
                     {
                         double difference = newMax - originalHeight;
                         scrollViewer.SetValue(ScrollViewer.VerticalScrollBarValueProperty, difference);
-                    }));
+                    });
                 }
 
                 if (messages.Count > 0)
@@ -551,7 +552,7 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
                     ContentMessage = "Could Not Send Message",
                     Icon = MessageBox.Avalonia.Enums.Icon.Error,
                 });
-                
+
                 await msg.ShowDialog(Program.GroupMeMainWindow);
             }
 

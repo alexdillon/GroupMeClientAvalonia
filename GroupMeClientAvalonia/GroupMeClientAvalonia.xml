@@ -1,0 +1,2513 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>GroupMeClientAvalonia</name>
+    </assembly>
+    <members>
+        <member name="T:GroupMeClientAvalonia.Caching.CacheContext">
+            <summary>
+            <see cref="T:GroupMeClientAvalonia.Caching.CacheContext"/> provides an interface to the SQLite Database.
+            </summary>
+        </member>
+        <member name="M:GroupMeClientAvalonia.Caching.CacheContext.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:GroupMeClientAvalonia.Caching.CacheContext"/> class.
+            </summary>
+            <param name="databaseName">The name of the database file to open.</param>
+        </member>
+        <member name="P:GroupMeClientAvalonia.Caching.CacheContext.Messages">
+            <summary>
+            Gets or sets the <see cref="T:GroupMeClientApi.Models.Message"/>s stored in the database.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.Caching.CacheContext.IndexStatus">
+            <summary>
+            Gets or sets index status for each <see cref="T:GroupMeClientApi.Models.Group"/> or <see cref="T:GroupMeClientApi.Models.Chat"/> stored in this cache.
+            </summary>
+        </member>
+        <member name="M:GroupMeClientAvalonia.Caching.CacheContext.AddMessages(System.Collections.Generic.IEnumerable{GroupMeClientApi.Models.Message})">
+            <summary>
+            Adds a collection of <see cref="T:GroupMeClientApi.Models.Message"/>s to the cache.
+            </summary>
+            <param name="messages">The messages to store to the cache.</param>
+        </member>
+        <member name="M:GroupMeClientAvalonia.Caching.CacheContext.OnConfiguring(Microsoft.EntityFrameworkCore.DbContextOptionsBuilder)">
+            <inheritdoc/>
+        </member>
+        <member name="M:GroupMeClientAvalonia.Caching.CacheContext.OnModelCreating(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc/>
+        </member>
+        <member name="M:GroupMeClientAvalonia.Caching.CacheContext.WorkaroundsForMessageConversion(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <summary>
+            Provides workarounds to serialize the <see cref="T:GroupMeClientApi.Models.Message"/> object with EntityFramework.
+            Convert unserializable parts to JSON and store as BLOBs instead.
+            </summary>
+            <param name="modelBuilder">The EF ModelBuilder Object.</param>
+        </member>
+        <member name="T:GroupMeClientAvalonia.Caching.CacheContext.GroupIndexStatus">
+            <summary>
+            Represents the current index status for a specific <see cref="T:GroupMeClientApi.Models.Group"/> or <see cref="T:GroupMeClientApi.Models.Chat"/>.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.Caching.CacheContext.GroupIndexStatus.Id">
+            <summary>
+            Gets or sets the <see cref="T:GroupMeClientApi.Models.Group"/> or <see cref="T:GroupMeClientApi.Models.Chat"/> identifier.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.Caching.CacheContext.GroupIndexStatus.LastIndexedId">
+            <summary>
+            Gets or sets the identifer for the last message that has been continuously indexed.
+            All messages prior to this ID are guaranteed to be stored in the cache database.
+            </summary>
+        </member>
+        <member name="T:GroupMeClientAvalonia.Converters.InverseBoolConverter">
+            <summary>
+            <see cref="T:GroupMeClientAvalonia.Converters.InverseBoolConverter"/> provides a converter for boolean logical NOT.
+            </summary>
+        </member>
+        <member name="M:GroupMeClientAvalonia.Converters.InverseBoolConverter.Convert(System.Object,System.Type,System.Object,System.Globalization.CultureInfo)">
+            <inheritdoc/>
+        </member>
+        <member name="M:GroupMeClientAvalonia.Converters.InverseBoolConverter.ConvertBack(System.Object,System.Type,System.Object,System.Globalization.CultureInfo)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GroupMeClientAvalonia.Converters.IsZeroConverter">
+            <summary>
+            <see cref="T:GroupMeClientAvalonia.Converters.IsZeroConverter"/> provides a converter between Zero, Null, and Empty Strings (true), and any other value (false).
+            </summary>
+        </member>
+        <member name="M:GroupMeClientAvalonia.Converters.IsZeroConverter.Convert(System.Object,System.Type,System.Object,System.Globalization.CultureInfo)">
+            <inheritdoc/>
+        </member>
+        <member name="M:GroupMeClientAvalonia.Converters.IsZeroConverter.ConvertBack(System.Object,System.Type,System.Object,System.Globalization.CultureInfo)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GroupMeClientAvalonia.Extensions.EnumBindingSourceExtension">
+            <summary>
+            <see cref="T:GroupMeClientAvalonia.Extensions.EnumBindingSourceExtension"/> provides support for binding a dropdown list to an enum.
+            </summary>
+            <remarks>
+            Adapted from https://brianlagunas.com/a-better-way-to-data-bind-enums-in-wpf/.
+            </remarks>
+        </member>
+        <member name="M:GroupMeClientAvalonia.Extensions.EnumBindingSourceExtension.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:GroupMeClientAvalonia.Extensions.EnumBindingSourceExtension"/> class.
+            </summary>
+        </member>
+        <member name="M:GroupMeClientAvalonia.Extensions.EnumBindingSourceExtension.#ctor(System.Type)">
+            <summary>
+            Initializes a new instance of the <see cref="T:GroupMeClientAvalonia.Extensions.EnumBindingSourceExtension"/> class.
+            </summary>
+            <param name="enumType">The enum type to bind to.</param>
+        </member>
+        <member name="P:GroupMeClientAvalonia.Extensions.EnumBindingSourceExtension.EnumType">
+            <summary>
+            Gets or sets the type of enum that is being bound.
+            </summary>
+        </member>
+        <member name="M:GroupMeClientAvalonia.Extensions.EnumBindingSourceExtension.ProvideValue(System.IServiceProvider)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GroupMeClientAvalonia.Extensions.FileDragDropHelper">
+            <summary>
+            FileDragDropHelper.
+            </summary>
+        </member>
+        <member name="F:GroupMeClientAvalonia.Extensions.FileDragDropHelper.IsFileDragDropEnabledProperty">
+            <summary>
+            Gets a property indicating if FileDragDrop is supported.
+            </summary>
+        </member>
+        <member name="F:GroupMeClientAvalonia.Extensions.FileDragDropHelper.FileDragDropTargetProperty">
+            <summary>
+            Gets a property containing the File Drag Drop handler target.
+            </summary>
+        </member>
+        <member name="T:GroupMeClientAvalonia.Extensions.FileDragDropHelper.IDragDropTarget">
+            <summary>
+            <see cref="T:GroupMeClientAvalonia.Extensions.FileDragDropHelper.IDragDropTarget"/> enables receiving updates when data is dropped onto a control.
+            </summary>
+            <remarks>
+            Adapted from https://stackoverflow.com/a/37608994.
+            </remarks>
+        </member>
+        <member name="M:GroupMeClientAvalonia.Extensions.FileDragDropHelper.IDragDropTarget.OnFileDrop(System.String[])">
+            <summary>
+            Executed when a file has been dragged onto the target.
+            </summary>
+            <param name="filepaths">The file name(s) dropped.</param>
+        </member>
+        <member name="M:GroupMeClientAvalonia.Extensions.FileDragDropHelper.IDragDropTarget.OnImageDrop(System.Byte[])">
+            <summary>
+            Executed when an image has been dragged onto the target.
+            </summary>
+            <param name="image">The raw image data that was dropped.</param>
+        </member>
+        <member name="M:GroupMeClientAvalonia.Extensions.FileDragDropHelper.GetIsFileDragDropEnabled(Avalonia.AvaloniaObject)">
+            <summary>
+            Gets a value indicating whether File Drag Drop is supported.
+            </summary>
+            <param name="obj">The dependency object to retreive the property from.</param>
+            <returns>A boolean indicating whether enabled.</returns>
+        </member>
+        <member name="M:GroupMeClientAvalonia.Extensions.FileDragDropHelper.SetIsFileDragDropEnabled(Avalonia.AvaloniaObject,System.Boolean)">
+            <summary>
+            Sets a value indicating whether File Drag Drop is supported.
+            </summary>
+            <param name="obj">The dependency object to retreive the property from.</param>
+            <param name="value">Whether drag drop is supported.</param>
+        </member>
+        <member name="M:GroupMeClientAvalonia.Extensions.FileDragDropHelper.GetFileDragDropTarget(Avalonia.AvaloniaObject)">
+            <summary>
+            Gets a value containing the Drag Drop target.
+            </summary>
+            <param name="obj">The dependency object to retreive the property from.</param>
+            <returns>The drag drop target.</returns>
+        </member>
+        <member name="M:GroupMeClientAvalonia.Extensions.FileDragDropHelper.SetFileDragDropTarget(Avalonia.AvaloniaObject,System.Boolean)">
+            <summary>
+            Sets the drag drop target.
+            </summary>
+            <param name="obj">The dependency object to retreive the property from.</param>
+            <param name="value">The target to assign.</param>
+        </member>
+        <member name="T:GroupMeClientAvalonia.Extensions.FocusOnLoadBehavior">
+            <summary>
+            <see cref="T:GroupMeClientAvalonia.Extensions.FocusOnLoadBehavior"/> provides support for assigning focus when a control loads.
+            </summary>
+        </member>
+        <member name="F:GroupMeClientAvalonia.Extensions.FocusOnLoadBehavior.FocusControlProperty">
+            <summary>
+            Gets an Avalonia Property for the control to focus on load.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.Extensions.FocusOnLoadBehavior.FocusControl">
+            <summary>
+            Gets or sets the command to execute when send behavior is invoked.
+            </summary>
+        </member>
+        <member name="M:GroupMeClientAvalonia.Extensions.FocusOnLoadBehavior.OnAttached">
+            <inheritdoc />
+        </member>
+        <member name="M:GroupMeClientAvalonia.Extensions.FocusOnLoadBehavior.OnDetaching">
+            <inheritdoc />
+        </member>
+        <member name="T:GroupMeClientAvalonia.Extensions.InfiniteScrollBehavior">
+            <summary>
+            <see cref="T:GroupMeClientAvalonia.Extensions.InfiniteScrollBehavior"/> provides an Avalonia Behavior to allow for infinite upward scroll behavior in a
+            <see cref="T:Avalonia.Controls.ListBox"/>.
+            </summary>
+        </member>
+        <member name="F:GroupMeClientAvalonia.Extensions.InfiniteScrollBehavior.ReachedTopCommandProperty">
+            <summary>
+            Gets an Avalonia Property for the command to execute when scrolled to the top of the list.
+            </summary>
+        </member>
+        <member name="F:GroupMeClientAvalonia.Extensions.InfiniteScrollBehavior.AutoScrollToBottomProperty">
+            <summary>
+            Gets an Avalonia Property indicating whether the list should automatically scroll to the bottom.
+            </summary>
+        </member>
+        <member name="F:GroupMeClientAvalonia.Extensions.InfiniteScrollBehavior.LockedToBottomProperty">
+            <summary>
+            Gets an Avalonia Property indicating whether automatic scrolling to the bottom is currently engaged.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.Extensions.InfiniteScrollBehavior.ReachedTopCommand">
+            <summary>
+            Gets or sets the command to execute when the list is scrolled to the top.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.Extensions.InfiniteScrollBehavior.AutoScrollToBottom">
+            <summary>
+            Gets a value indicating whether the list should automatically scroll to the bottom.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.Extensions.InfiniteScrollBehavior.LockedToBottom">
+            <summary>
+            Gets a value indicating whether the list is currently locked to the bottom.
+            </summary>
+        </member>
+        <member name="M:GroupMeClientAvalonia.Extensions.InfiniteScrollBehavior.OnAttached">
+            <inheritdoc />
+        </member>
+        <member name="M:GroupMeClientAvalonia.Extensions.InfiniteScrollBehavior.OnDetaching">
+            <inheritdoc />
+        </member>
+        <member name="T:GroupMeClientAvalonia.Extensions.InfiniteScrollBehaviorPositionHelper">
+            <summary>
+            <see cref="T:GroupMeClientAvalonia.Extensions.InfiniteScrollBehaviorPositionHelper"/> provides support for easily binding to the scroll position
+            of a <see cref="T:Avalonia.Controls.ListBox"/> when used in conjunction with the <see cref="T:GroupMeClientAvalonia.Extensions.InfiniteScrollBehavior"/> behavior.
+            </summary>
+        </member>
+        <member name="F:GroupMeClientAvalonia.Extensions.InfiniteScrollBehaviorPositionHelper.IsNotAtBottomProperty">
+            <summary>
+            Gets an Avalonia Property indicating whether the list is not scrolled to the bottom.
+            </summary>
+        </member>
+        <member name="M:GroupMeClientAvalonia.Extensions.InfiniteScrollBehaviorPositionHelper.GetIsNotAtBottom(Avalonia.AvaloniaObject)">
+            <summary>
+            Gets a value indiciating whether the list is currently not scrolled to the bottom.
+            </summary>
+            <param name="obj">The dependency object to retreive the property from.</param>
+            <returns>A boolean indicating whether the list is not at the bottom.</returns>
+        </member>
+        <member name="M:GroupMeClientAvalonia.Extensions.InfiniteScrollBehaviorPositionHelper.SetIsNotAtBottom(Avalonia.AvaloniaObject,System.Boolean)">
+            <summary>
+            Sets a value indicating whether the list is currently not scrolled to the bottom.
+            </summary>
+            <param name="obj">The dependency object to retreive the property from.</param>
+            <param name="value">Whether the list is not at the bottom.</param>
+        </member>
+        <member name="T:GroupMeClientAvalonia.Extensions.ScrollIntoViewBehavior">
+            <summary>
+            <see cref="!:ScrollIntoViewForListBox"/> provides a behavior to ensure a selected item in a <see cref="T:Avalonia.Controls.ListBox"/>
+            is visible.
+            </summary>
+            <remarks>
+            Adapted from https://stackoverflow.com/a/8830961.
+            </remarks>
+        </member>
+        <member name="M:GroupMeClientAvalonia.Extensions.ScrollIntoViewBehavior.OnAttached">
+            <inheritdoc/>
+        </member>
+        <member name="M:GroupMeClientAvalonia.Extensions.ScrollIntoViewBehavior.OnDetaching">
+            <inheritdoc/>
+        </member>
+        <member name="T:GroupMeClientAvalonia.Extensions.TextBoxSendBehavior">
+            <summary>
+            <see cref="T:GroupMeClientAvalonia.Extensions.TextBoxSendBehavior"/> provides support for typing MultiLine messages.
+            Keyboard send triggers are supported.
+            </summary>
+        </member>
+        <member name="F:GroupMeClientAvalonia.Extensions.TextBoxSendBehavior.SendCommandProperty">
+            <summary>
+            Gets an Avalonia Property for the command to execute when sending is invoked.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.Extensions.TextBoxSendBehavior.SendCommand">
+            <summary>
+            Gets or sets the command to execute when send behavior is invoked.
+            </summary>
+        </member>
+        <member name="M:GroupMeClientAvalonia.Extensions.TextBoxSendBehavior.OnAttached">
+            <inheritdoc />
+        </member>
+        <member name="M:GroupMeClientAvalonia.Extensions.TextBoxSendBehavior.OnDetaching">
+            <inheritdoc />
+        </member>
+        <member name="T:GroupMeClientAvalonia.Extensions.WebBrowserHelper">
+            <summary>
+            <see cref="T:GroupMeClientAvalonia.Extensions.WebBrowserHelper"/> provides helper method for interacting with the system browser.
+            </summary>
+        </member>
+        <member name="M:GroupMeClientAvalonia.Extensions.WebBrowserHelper.OpenUrl(System.String)">
+            <summary>
+            Opens a Url in the user's default browser.
+            </summary>
+            <param name="url">The url to open.</param>
+        </member>
+        <member name="T:GroupMeClientAvalonia.Extensions.ZoomBorder">
+            <summary>
+            <see cref="T:GroupMeClientAvalonia.Extensions.ZoomBorder"/> provides support for panning and zooming WPF controls.
+            </summary>
+            <remarks>
+            Adapted from https://stackoverflow.com/a/6782715.
+            </remarks>
+        </member>
+        <member name="M:GroupMeClientAvalonia.Extensions.ZoomBorder.Initialize">
+            <summary>
+            Initializes the <see cref="T:GroupMeClientAvalonia.Extensions.ZoomBorder"/> control.
+            </summary>
+        </member>
+        <member name="M:GroupMeClientAvalonia.Extensions.ZoomBorder.Reset">
+            <summary>
+            Resets the zoom and scale factors to default.
+            </summary>
+        </member>
+        <member name="T:GroupMeClientAvalonia.Messaging.DialogRequestMessage">
+            <summary>
+            <see cref="T:GroupMeClientAvalonia.Messaging.DialogRequestMessage"/> specifies a message to open a new Window-level dialog.
+            This request can be sent through <see cref="T:GalaSoft.MvvmLight.Messaging.Messenger"/>.
+            </summary>
+        </member>
+        <member name="M:GroupMeClientAvalonia.Messaging.DialogRequestMessage.#ctor(GalaSoft.MvvmLight.ViewModelBase)">
+            <summary>
+            Initializes a new instance of the <see cref="T:GroupMeClientAvalonia.Messaging.DialogRequestMessage"/> class.
+            </summary>
+            <param name="dialog">The dialog to be displayed.</param>
+        </member>
+        <member name="P:GroupMeClientAvalonia.Messaging.DialogRequestMessage.Dialog">
+            <summary>
+            Gets the dialog to be displayed.
+            </summary>
+        </member>
+        <member name="T:GroupMeClientAvalonia.Messaging.DisconnectedRequestMessage">
+            <summary>
+            <see cref="T:GroupMeClientAvalonia.Messaging.DisconnectedRequestMessage"/> specifies a message indicating that a component
+            of the GroupMe Client has either disconnected or resumed connectivity.
+            This request can be sent through <see cref="T:GalaSoft.MvvmLight.Messaging.Messenger"/>.
+            </summary>
+        </member>
+        <member name="M:GroupMeClientAvalonia.Messaging.DisconnectedRequestMessage.#ctor(System.Boolean)">
+            <summary>
+            Initializes a new instance of the <see cref="T:GroupMeClientAvalonia.Messaging.DisconnectedRequestMessage"/> class.
+            </summary>
+            <param name="disconnected">
+            A boolean indicating if a component has disconnected.
+            See <see cref="P:GroupMeClientAvalonia.Messaging.DisconnectedRequestMessage.Disconnected"/>.
+            </param>
+        </member>
+        <member name="P:GroupMeClientAvalonia.Messaging.DisconnectedRequestMessage.Disconnected">
+            <summary>
+            Gets a value indicating whether a component has disconnected.
+            True indicates a disconnected component. False indicates that a component has successfully reconnected.
+            </summary>
+        </member>
+        <member name="T:GroupMeClientAvalonia.Messaging.IndexAndRunPluginRequestMessage">
+            <summary>
+            <see cref="T:GroupMeClientAvalonia.Messaging.IndexAndRunPluginRequestMessage"/> specifies a message commanding the application to switch to the Search Tab,
+            begin indexing, and then execute a plugin.
+            This request can be sent through <see cref="T:GalaSoft.MvvmLight.Messaging.Messenger"/>.
+            </summary>
+        </member>
+        <member name="M:GroupMeClientAvalonia.Messaging.IndexAndRunPluginRequestMessage.#ctor(GroupMeClientApi.Models.IMessageContainer,GroupMeClientPlugin.GroupChat.IGroupChatCachePlugin)">
+            <summary>
+            Initializes a new instance of the <see cref="T:GroupMeClientAvalonia.Messaging.IndexAndRunPluginRequestMessage"/> class.
+            </summary>
+            <param name="messageContainer">The Group or Chat to execute the plugin with.</param>
+            <param name="plugin">The plugin to execute upon index completion.</param>
+        </member>
+        <member name="P:GroupMeClientAvalonia.Messaging.IndexAndRunPluginRequestMessage.MessageContainer">
+            <summary>
+            Gets the Group Or Chat that should be passed as a parameter to the executed plugin.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.Messaging.IndexAndRunPluginRequestMessage.Plugin">
+            <summary>
+            Gets the plugin that should be executed upon index completion.
+            </summary>
+        </member>
+        <member name="T:GroupMeClientAvalonia.Messaging.UnreadRequestMessage">
+            <summary>
+            <see cref="T:GroupMeClientAvalonia.Messaging.UnreadRequestMessage"/> specifies a message to update the application-level number of notifications to display.
+            This request can be sent through <see cref="T:GalaSoft.MvvmLight.Messaging.Messenger"/>.
+            </summary>
+        </member>
+        <member name="M:GroupMeClientAvalonia.Messaging.UnreadRequestMessage.#ctor(System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:GroupMeClientAvalonia.Messaging.UnreadRequestMessage"/> class.
+            </summary>
+            <param name="count">The unread message/notification count to display.</param>
+        </member>
+        <member name="P:GroupMeClientAvalonia.Messaging.UnreadRequestMessage.Count">
+            <summary>
+            Gets the unread message/notification count to display.
+            </summary>
+        </member>
+        <member name="T:GroupMeClientAvalonia.Notifications.Display.IPopupNotificationSink">
+            <summary>
+            <see cref="T:GroupMeClientAvalonia.Notifications.Display.IPopupNotificationSink"/> defines an interface for a visual notification provider.
+            </summary>
+        </member>
+        <member name="M:GroupMeClientAvalonia.Notifications.Display.IPopupNotificationSink.ShowNotification(System.String,System.String,System.String,System.Boolean)">
+            <summary>
+            Show a plain notification.
+            </summary>
+            <param name="title">The notification title.</param>
+            <param name="body">The notification body text.</param>
+            <param name="avatarUrl">The URL of the avatar image to include in the notification.</param>
+            <param name="roundedAvatar">A value indicating whether the avatar image should be rounded.</param>
+            <returns>A <see cref="T:System.Threading.Tasks.Task"/> representing the asynchronous operation.</returns>
+        </member>
+        <member name="M:GroupMeClientAvalonia.Notifications.Display.IPopupNotificationSink.ShowLikableImageMessage(System.String,System.String,System.String,System.Boolean,System.String)">
+            <summary>
+            Show a notification and optionally include a "Like" button.
+            </summary>
+            <param name="title">The notification title.</param>
+            <param name="body">The notification body text.</param>
+            <param name="avatarUrl">The URL of the avatar image to include in the notification.</param>
+            <param name="roundedAvatar">A value indicating whether the avatar image should be rounded.</param>
+            <param name="imageUrl">The URL of the large image to include in the notification.</param>
+            <returns>A <see cref="T:System.Threading.Tasks.Task"/> representing the asynchronous operation.</returns>
+        </member>
+        <member name="M:GroupMeClientAvalonia.Notifications.Display.IPopupNotificationSink.ShowLikableMessage(System.String,System.String,System.String,System.Boolean)">
+            <summary>
+            Show a notification with image, and optionally include a "Like" button.
+            </summary>
+            <param name="title">The notification title.</param>
+            <param name="body">The notification body text.</param>
+            <param name="avatarUrl">The URL of the avatar image to include in the notification.</param>
+            <param name="roundedAvatar">A value indicating whether the avatar image should be rounded.</param>
+            <returns>A <see cref="T:System.Threading.Tasks.Task"/> representing the asynchronous operation.</returns>
+        </member>
+        <member name="M:GroupMeClientAvalonia.Notifications.Display.IPopupNotificationSink.RegisterClient(GroupMeClientApi.GroupMeClient)">
+            <summary>
+            Executed when an observer is registered with <see cref="T:GroupMeClientAvalonia.Notifications.NotificationRouter"/>.
+            Observers gain access the the <see cref="T:GroupMeClientApi.GroupMeClient"/> for API operations.
+            </summary>
+            <param name="client">The used API client.</param>
+        </member>
+        <member name="T:GroupMeClientAvalonia.Notifications.Display.PopupNotificationProvider">
+            <summary>
+            <see cref="T:GroupMeClientAvalonia.Notifications.Display.PopupNotificationProvider"/> provides an observer to display notifications from the <see cref="T:GroupMeClientAvalonia.Notifications.NotificationRouter"/> visually.
+            </summary>
+        </member>
+        <member name="M:GroupMeClientAvalonia.Notifications.Display.PopupNotificationProvider.CreatePlatformNotificationProvider">
+            <summary>
+            Creates a <see cref="T:GroupMeClientAvalonia.Notifications.Display.PopupNotificationProvider"/> to display operating system level notifications.
+            </summary>
+            <returns>A PopupNotificationProvider.</returns>
+        </member>
+        <member name="M:GroupMeClientAvalonia.Notifications.Display.PopupNotificationProvider.CreateInternalNotificationProvider(GroupMeClientAvalonia.Notifications.Display.WpfToast.ToastHolderViewModel)">
+            <summary>
+            Creates a <see cref="T:GroupMeClientAvalonia.Notifications.Display.PopupNotificationProvider"/> to display internal (popup) toast notifications.
+            </summary>
+            <param name="manager">The manager to use for displaying notifications.</param>
+            <returns>A PopupNotificationProvider.</returns>
+        </member>
+        <member name="M:GroupMeClientAvalonia.Notifications.Display.PopupNotificationProvider.GroupMeClientAvalonia#Notifications#INotificationSink#ChatUpdated(GroupMeClientApi.Push.Notifications.DirectMessageCreateNotification,GroupMeClientApi.Models.IMessageContainer)">
+            <inheritdoc/>
+        </member>
+        <member name="M:GroupMeClientAvalonia.Notifications.Display.PopupNotificationProvider.GroupMeClientAvalonia#Notifications#INotificationSink#GroupUpdated(GroupMeClientApi.Push.Notifications.LineMessageCreateNotification,GroupMeClientApi.Models.IMessageContainer)">
+            <inheritdoc/>
+        </member>
+        <member name="M:GroupMeClientAvalonia.Notifications.Display.PopupNotificationProvider.GroupMeClientAvalonia#Notifications#INotificationSink#MessageUpdated(GroupMeClientApi.Models.Message,System.String,GroupMeClientApi.Models.IMessageContainer)">
+            <inheritdoc/>
+        </member>
+        <member name="M:GroupMeClientAvalonia.Notifications.Display.PopupNotificationProvider.GroupMeClientAvalonia#Notifications#INotificationSink#HeartbeatReceived">
+            <inheritdoc/>
+        </member>
+        <member name="M:GroupMeClientAvalonia.Notifications.Display.PopupNotificationProvider.GroupMeClientAvalonia#Notifications#INotificationSink#RegisterPushSubscriptions(GroupMeClientApi.Push.PushClient,GroupMeClientApi.GroupMeClient)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GroupMeClientAvalonia.Notifications.Display.Win10.GroupMeNotificationActivator">
+            <summary>
+            Provides a COM Interface to support activation when a user clicks on a Windows 10 Toast Notfication.
+            </summary>
+            <remarks>
+            Squirrel automatically generates a CLDID based on the NuGet package name.
+            For 'GroupMeDesktopClient', this generated GUID is 'c43177b6-7264-5132-b051-89078b372559'.
+            </remarks>
+        </member>
+        <member name="M:GroupMeClientAvalonia.Notifications.Display.Win10.GroupMeNotificationActivator.OnActivated(System.String,DesktopNotifications.NotificationUserInput,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GroupMeClientAvalonia.Notifications.Display.Win10.Win10ToastNotificationsProvider">
+            <summary>
+            Provides an adapter for <see cref="T:GroupMeClientAvalonia.Notifications.Display.PopupNotificationProvider"/> to use Toast Notifications within the Client Window.
+            </summary>
+        </member>
+        <member name="M:GroupMeClientAvalonia.Notifications.Display.Win10.Win10ToastNotificationsProvider.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:GroupMeClientAvalonia.Notifications.Display.Win10.Win10ToastNotificationsProvider"/> class.
+            </summary>
+        </member>
+        <member name="M:GroupMeClientAvalonia.Notifications.Display.Win10.Win10ToastNotificationsProvider.GroupMeClientAvalonia#Notifications#Display#IPopupNotificationSink#ShowNotification(System.String,System.String,System.String,System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="M:GroupMeClientAvalonia.Notifications.Display.Win10.Win10ToastNotificationsProvider.GroupMeClientAvalonia#Notifications#Display#IPopupNotificationSink#ShowLikableImageMessage(System.String,System.String,System.String,System.Boolean,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:GroupMeClientAvalonia.Notifications.Display.Win10.Win10ToastNotificationsProvider.GroupMeClientAvalonia#Notifications#Display#IPopupNotificationSink#ShowLikableMessage(System.String,System.String,System.String,System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="M:GroupMeClientAvalonia.Notifications.Display.Win10.Win10ToastNotificationsProvider.GroupMeClientAvalonia#Notifications#Display#IPopupNotificationSink#RegisterClient(GroupMeClientApi.GroupMeClient)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GroupMeClientAvalonia.Notifications.Display.WpfToast.ToastHolderViewModel">
+            <summary>
+            <see cref="T:GroupMeClientAvalonia.Notifications.Display.WpfToast.ToastHolderViewModel"/> provides a ViewModel for the <see cref="T:GroupMeClientAvalonia.Notifications.Display.WpfToast.ToastHolder"/> control.
+            Controls for sending messages are also included.
+            </summary>
+        </member>
+        <member name="M:GroupMeClientAvalonia.Notifications.Display.WpfToast.ToastHolderViewModel.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:GroupMeClientAvalonia.Notifications.Display.WpfToast.ToastHolderViewModel"/> class.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.Notifications.Display.WpfToast.ToastHolderViewModel.Notifications">
+            <summary>
+            Gets a collection of <see cref="T:GroupMeClientAvalonia.Notifications.Display.WpfToast.ToastNotification"/> to display.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.Notifications.Display.WpfToast.ToastHolderViewModel.MaximumNotifications">
+            <summary>
+            Gets or sets the maximum number of notifications that can be displayed at once.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.Notifications.Display.WpfToast.ToastHolderViewModel.AutomaticDismissalTime">
+            <summary>
+            Gets or sets the amount of time for which toast notifications are displayed.
+            After this time has elapsed, notifications will be automatically dismissed.
+            </summary>
+        </member>
+        <member name="M:GroupMeClientAvalonia.Notifications.Display.WpfToast.ToastHolderViewModel.DisplayNewToast(GroupMeClientAvalonia.Notifications.Display.WpfToast.ToastNotificationViewModel)">
+            <summary>
+            Displays a new Toast Notification.
+            </summary>
+            <param name="notification">The toast to display.</param>
+        </member>
+        <member name="T:GroupMeClientAvalonia.Notifications.Display.WpfToast.ToastNotificationViewModel">
+            <summary>
+            <see cref="!:GroupMeToastNotification"/> provides a ViewModel for the <see cref="T:GroupMeClientAvalonia.Notifications.Display.WpfToast.ToastNotificationViewModel"/> control.
+            </summary>
+        </member>
+        <member name="M:GroupMeClientAvalonia.Notifications.Display.WpfToast.ToastNotificationViewModel.#ctor(System.String,GroupMeClientApi.Models.IAvatarSource,GroupMeClientApi.ImageDownloader)">
+            <summary>
+            Initializes a new instance of the <see cref="T:GroupMeClientAvalonia.Notifications.Display.WpfToast.ToastNotificationViewModel"/> class.
+            </summary>
+            <param name="message">The notification body.</param>
+            <param name="avatar">The notification avatar.</param>
+            <param name="imageDownloader">The downloader to use when displaying the avatar.</param>
+        </member>
+        <member name="P:GroupMeClientAvalonia.Notifications.Display.WpfToast.ToastNotificationViewModel.Avatar">
+            <summary>
+            Gets the avatar to display.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.Notifications.Display.WpfToast.ToastNotificationViewModel.Message">
+            <summary>
+            Gets the message to display.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.Notifications.Display.WpfToast.ToastNotificationViewModel.CloseAction">
+            <summary>
+            Gets or sets the action to perform when the Toast Notification is dismissed.
+            </summary>
+        </member>
+        <member name="T:GroupMeClientAvalonia.Notifications.Display.WpfToast.WpfToastNotificationProvider">
+            <summary>
+            Provides an adapter for <see cref="T:GroupMeClientAvalonia.Notifications.Display.PopupNotificationProvider"/> to use Windows 10 Toast Notifications.
+            </summary>
+        </member>
+        <member name="M:GroupMeClientAvalonia.Notifications.Display.WpfToast.WpfToastNotificationProvider.#ctor(GroupMeClientAvalonia.Notifications.Display.WpfToast.ToastHolderViewModel)">
+            <summary>
+            Initializes a new instance of the <see cref="T:GroupMeClientAvalonia.Notifications.Display.WpfToast.WpfToastNotificationProvider"/> class.
+            </summary>
+            <param name="manager">The manager to use for displaying toast notifications.</param>
+        </member>
+        <member name="M:GroupMeClientAvalonia.Notifications.Display.WpfToast.WpfToastNotificationProvider.GroupMeClientAvalonia#Notifications#Display#IPopupNotificationSink#ShowNotification(System.String,System.String,System.String,System.Boolean)">
+            <inheritdoc />
+        </member>
+        <member name="M:GroupMeClientAvalonia.Notifications.Display.WpfToast.WpfToastNotificationProvider.GroupMeClientAvalonia#Notifications#Display#IPopupNotificationSink#ShowLikableImageMessage(System.String,System.String,System.String,System.Boolean,System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:GroupMeClientAvalonia.Notifications.Display.WpfToast.WpfToastNotificationProvider.GroupMeClientAvalonia#Notifications#Display#IPopupNotificationSink#ShowLikableMessage(System.String,System.String,System.String,System.Boolean)">
+            <inheritdoc />
+        </member>
+        <member name="M:GroupMeClientAvalonia.Notifications.Display.WpfToast.WpfToastNotificationProvider.GroupMeClientAvalonia#Notifications#Display#IPopupNotificationSink#RegisterClient(GroupMeClientApi.GroupMeClient)">
+            <inheritdoc />
+        </member>
+        <member name="T:GroupMeClientAvalonia.Notifications.INotificationSink">
+            <summary>
+            <see cref="T:GroupMeClientAvalonia.Notifications.INotificationSink"/> provides an interface to allow subscribing to GroupMe events.
+            By registering an <see cref="T:GroupMeClientAvalonia.Notifications.INotificationSink"/> with <see cref="T:GroupMeClientAvalonia.Notifications.NotificationRouter"/>, push events can be received.
+            </summary>
+        </member>
+        <member name="M:GroupMeClientAvalonia.Notifications.INotificationSink.GroupUpdated(GroupMeClientApi.Push.Notifications.LineMessageCreateNotification,GroupMeClientApi.Models.IMessageContainer)">
+            <summary>
+            Executed when a new message is posted to a <see cref="T:GroupMeClientApi.Models.Group"/>.
+            </summary>
+            <param name="notification">The raw GroupMe notification.</param>
+            <param name="container">The Group that was modified"/>.</param>
+            <returns>A <see cref="T:System.Threading.Tasks.Task"/> representing the asynchronous operation.</returns>
+        </member>
+        <member name="M:GroupMeClientAvalonia.Notifications.INotificationSink.ChatUpdated(GroupMeClientApi.Push.Notifications.DirectMessageCreateNotification,GroupMeClientApi.Models.IMessageContainer)">
+            <summary>
+            Executed when a new message is posted to a <see cref="T:GroupMeClientApi.Models.Chat"/>.
+            </summary>
+            <param name="notification">The raw GroupMe notification.</param>
+            <param name="container">The Chat that was modified"/>.</param>
+            <returns>A <see cref="T:System.Threading.Tasks.Task"/> representing the asynchronous operation.</returns>
+        </member>
+        <member name="M:GroupMeClientAvalonia.Notifications.INotificationSink.MessageUpdated(GroupMeClientApi.Models.Message,System.String,GroupMeClientApi.Models.IMessageContainer)">
+            <summary>
+            Exectuted when a <see cref="T:GroupMeClientApi.Models.Message"/> is updated.
+            This can occur when a <see cref="T:GroupMeClientApi.Models.Message"/> is 'Liked'.
+            </summary>
+            <param name="message">The message that was updated.</param>
+            <param name="alert">The raw GroupMe Notification.</param>
+            <param name="container">The Group or Chat containing the updated message.</param>
+            <returns>A <see cref="T:System.Threading.Tasks.Task"/> representing the asynchronous operation.</returns>
+        </member>
+        <member name="M:GroupMeClientAvalonia.Notifications.INotificationSink.HeartbeatReceived">
+            <summary>
+            Executed periodically to indicate the GroupMe Push Connection is alive.
+            </summary>
+        </member>
+        <member name="M:GroupMeClientAvalonia.Notifications.INotificationSink.RegisterPushSubscriptions(GroupMeClientApi.Push.PushClient,GroupMeClientApi.GroupMeClient)">
+            <summary>
+            Executed when an observer is registered with <see cref="T:GroupMeClientAvalonia.Notifications.NotificationRouter"/>.
+            Observers gain access the the <see cref="T:GroupMeClientApi.Push.PushClient"/> for subscribing and unsubscribing to channels.
+            The <see cref="T:GroupMeClientApi.GroupMeClient"/> is also returned for API operations.
+            </summary>
+            <param name="pushClient">The push client in use.</param>
+            <param name="client">The API client in use.</param>
+        </member>
+        <member name="T:GroupMeClientAvalonia.Notifications.NotificationRouter">
+            <summary>
+            <see cref="T:GroupMeClientAvalonia.Notifications.NotificationRouter"/> handles distributing GroupMe Push Events to <see cref="T:GroupMeClientAvalonia.Notifications.INotificationSink"/> objects.
+            </summary>
+        </member>
+        <member name="M:GroupMeClientAvalonia.Notifications.NotificationRouter.#ctor(GroupMeClientApi.GroupMeClient)">
+            <summary>
+            Initializes a new instance of the <see cref="T:GroupMeClientAvalonia.Notifications.NotificationRouter"/> class.
+            </summary>
+            <param name="client">The GroupMe API client that should be used for notifications.</param>
+        </member>
+        <member name="M:GroupMeClientAvalonia.Notifications.NotificationRouter.RegisterNewSubscriber(GroupMeClientAvalonia.Notifications.INotificationSink)">
+            <summary>
+            Adds a new subscriber to receive push notifications.
+            </summary>
+            <param name="subscriber">The observer that should receive updates.</param>
+        </member>
+        <member name="T:GroupMeClientAvalonia.Plugins.PluginManager">
+            <summary>
+            <see cref="T:GroupMeClientAvalonia.Plugins.PluginManager"/> provides functionality to dynamically load <see cref="!:IPluginBase"/>-based
+            plugins and register them to extend Client functionality.
+            </summary>
+            <remarks>
+            Based on https://code.msdn.microsoft.com/windowsdesktop/Creating-a-simple-plugin-b6174b62.
+            Adapted for .Net Core based on https://docs.microsoft.com/en-us/dotnet/core/tutorials/creating-app-with-plugin-support
+            </remarks>
+        </member>
+        <member name="P:GroupMeClientAvalonia.Plugins.PluginManager.Instance">
+            <summary>
+            Gets the instance of the <see cref="T:GroupMeClientAvalonia.Plugins.PluginManager"/> for the current application.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.Plugins.PluginManager.GroupChatPlugins">
+            <summary>
+            Gets the available <see cref="T:GroupMeClientPlugin.GroupChat.IGroupChatPlugin"/> plugins.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.Plugins.PluginManager.GroupChatCachePlugins">
+            <summary>
+            Gets the available <see cref="T:GroupMeClientPlugin.GroupChat.IGroupChatCachePlugin"/> plugins.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.Plugins.PluginManager.MessageComposePlugins">
+            <summary>
+            Gets the available <see cref="T:GroupMeClientPlugin.MessageCompose.IMessageComposePlugin"/> plugins.
+            </summary>
+        </member>
+        <member name="M:GroupMeClientAvalonia.Plugins.PluginManager.LoadPlugins(System.String)">
+            <summary>
+            Loads and registers all available plugins.
+            </summary>
+            <param name="pluginsPath">The folder to load plugins from.</param>
+        </member>
+        <member name="T:GroupMeClientAvalonia.Properties.Resources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.Properties.Resources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.Properties.Resources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.Properties.Resources.GroupMeAPIClientId">
+            <summary>
+              Looks up a localized string similar to e6zucCgRruqYZmEUMFF9uC4OoaCxmb54MuSOt3yFGtVloQcM.
+            </summary>
+        </member>
+        <member name="T:GroupMeClientAvalonia.Settings.ChatsSettings">
+            <summary>
+            <see cref="T:GroupMeClientAvalonia.Settings.ChatsSettings"/> defines the settings and persistant storage needed for Groups and Chats displays.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.Settings.ChatsSettings.GroupChatStates">
+            <summary>
+            Gets or sets a listing of <see cref="T:GroupMeClientAvalonia.Settings.ChatsSettings.GroupOrChatState"/> corresponding to each Group
+            or Chat available.
+            </summary>
+        </member>
+        <member name="T:GroupMeClientAvalonia.Settings.ChatsSettings.GroupOrChatState">
+            <summary>
+            <see cref="T:GroupMeClientAvalonia.Settings.ChatsSettings.GroupOrChatState"/> saves the state of a specific <see cref="T:GroupMeClientApi.Models.Group"/>
+            or <see cref="T:GroupMeClientApi.Models.Chat"/>.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.Settings.ChatsSettings.GroupOrChatState.GroupOrChatId">
+            <summary>
+            Gets or sets the identifier for the Group or Chat this configuration data applies to.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.Settings.ChatsSettings.GroupOrChatState.LastTotalMessageCount">
+            <summary>
+            Gets or sets the number of total messages in the Group or Chat
+            when it was last opened.
+            </summary>
+        </member>
+        <member name="T:GroupMeClientAvalonia.Settings.CoreSettings">
+            <summary>
+            <see cref="T:GroupMeClientAvalonia.Settings.CoreSettings"/> defines the settings needed for basic operation.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.Settings.CoreSettings.AuthToken">
+            <summary>
+            Gets or sets the authorization token used for GroupMe Api Operations.
+            </summary>
+        </member>
+        <member name="T:GroupMeClientAvalonia.Settings.SettingsManager">
+            <summary>
+            <see cref="T:GroupMeClientAvalonia.Settings.SettingsManager"/> provides runtime methods to access and save parameters for modules that
+            form the GroupMe Desktop Client UI.
+            </summary>
+        </member>
+        <member name="M:GroupMeClientAvalonia.Settings.SettingsManager.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:GroupMeClientAvalonia.Settings.SettingsManager"/> class.
+            </summary>
+            <param name="databaseName">The name of the database file to open.</param>
+        </member>
+        <member name="P:GroupMeClientAvalonia.Settings.SettingsManager.CoreSettings">
+            <summary>
+            Gets or sets the core settings instance.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.Settings.SettingsManager.ChatsSettings">
+            <summary>
+            Gets or sets the Grous and Chats settings instance.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.Settings.SettingsManager.UISettings">
+            <summary>
+            Gets or sets the UI Settings instance.
+            </summary>
+        </member>
+        <member name="M:GroupMeClientAvalonia.Settings.SettingsManager.LoadSettings">
+            <summary>
+            Reads the configuration file.
+            </summary>
+        </member>
+        <member name="M:GroupMeClientAvalonia.Settings.SettingsManager.SaveSettings">
+            <summary>
+            Saves the configuration file.
+            </summary>
+        </member>
+        <member name="T:GroupMeClientAvalonia.Settings.ThemeOptions">
+            <summary>
+            <see cref="T:GroupMeClientAvalonia.Settings.ThemeOptions"/> specifies the different theme options that can be applied to the UI.
+            </summary>
+        </member>
+        <member name="F:GroupMeClientAvalonia.Settings.ThemeOptions.Light">
+            <summary>
+            Use the light color theme (white background).
+            </summary>
+        </member>
+        <member name="F:GroupMeClientAvalonia.Settings.ThemeOptions.Dark">
+            <summary>
+            Use the dark color theme (black background).
+            </summary>
+        </member>
+        <member name="T:GroupMeClientAvalonia.Settings.UISettings">
+            <summary>
+            <see cref="T:GroupMeClientAvalonia.Settings.UISettings"/> defines the settings for customizing the user interface.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.Settings.UISettings.ShowPreviewsForMultiImages">
+            <summary>
+            Gets or sets a value indicating whether messages containing mutliple images are shown as previews.
+            GroupMe UWP and Web display small-resolution preview versions when multiple images are contained in a single message.
+            If enabled, preview versions will be shown. If disabled, full resolution versions will be shown instead.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.Settings.UISettings.MaximumNumberOfMultiChatsNormal">
+            <summary>
+            Gets or sets a value indicating the maximum number of chats that can be opened at any given time
+            when the program is in regular mode (with the full left sidebar displayed).
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.Settings.UISettings.MaximumNumberOfMultiChatsMinibar">
+            <summary>
+            Gets or sets a value indicating the maximum number of chats that can be opened at any given time
+            when the left sidebar is collapsed (minibar mode).
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.Settings.UISettings.Theme">
+            <summary>
+            Gets or sets the user selected theme that should be applied to the entire application UI.
+            </summary>
+        </member>
+        <member name="T:GroupMeClientAvalonia.Utilities.ImageUtils">
+            <summary>
+            Helper class to provide common Wpf image operations.
+            </summary>
+        </member>
+        <member name="M:GroupMeClientAvalonia.Utilities.ImageUtils.BitmapSourceToBytes(Avalonia.Media.Imaging.IBitmap)">
+            <summary>
+            Converts a <see cref="!:BitmapSource"/> to encoded raw image bytes.
+            </summary>
+            <param name="image">The source image.</param>
+            <returns>A png encoded array of raw bytes.</returns>
+        </member>
+        <member name="M:GroupMeClientAvalonia.Utilities.ImageUtils.BytesToImageSource(System.Byte[])">
+            <summary>
+            Converts raw image data into an <see cref="!:ImageSource"/>.
+            </summary>
+            <param name="image">The raw image data.</param>
+            <returns>A Wpf <see cref="!:ImageSource"/>.</returns>
+        </member>
+        <member name="M:GroupMeClientAvalonia.Utilities.ImageUtils.BytesToImageSource(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Converts raw image data into an <see cref="!:ImageSource"/>.
+            </summary>
+            <param name="image">The raw image data.</param>
+            <param name="maxWidth">The maximum image width.</param>
+            <param name="maxHeight">The maximum image height.</param>
+            <returns>A Wpf <see cref="!:ImageSource"/>.</returns>
+        </member>
+        <member name="T:GroupMeClientAvalonia.Utilities.RegexUtils">
+            <summary>
+            <see cref="T:GroupMeClientAvalonia.Utilities.RegexUtils"/> provides utility methods to help with Regular Expressions.
+            </summary>
+        </member>
+        <member name="F:GroupMeClientAvalonia.Utilities.RegexUtils.UrlRegex">
+            <summary>
+            Regular Expression to match URLs in strings.
+            </summary>
+        </member>
+        <member name="T:GroupMeClientAvalonia.Utilities.ReliabilityStateMachine">
+            <summary>
+            <see cref="T:GroupMeClientAvalonia.Utilities.ReliabilityStateMachine"/> provides state machine functionality for variable timing for subsequent retry attempts.
+            </summary>
+        </member>
+        <member name="M:GroupMeClientAvalonia.Utilities.ReliabilityStateMachine.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:GroupMeClientAvalonia.Utilities.ReliabilityStateMachine"/> class.
+            </summary>
+        </member>
+        <member name="M:GroupMeClientAvalonia.Utilities.ReliabilityStateMachine.TryUntilSuccess``1(System.Func{System.Threading.Tasks.Task{``0}},System.Threading.CancellationToken)">
+            <summary>
+            Performs a specific action repeatedly until the action succeeds or cancellation is requested.
+            Upon completion, the result of the operation is returned.
+            A <see cref="T:GroupMeClientAvalonia.Utilities.ReliabilityStateMachine"/> will be used to determine the automatic retry sequence.
+            </summary>
+            <typeparam name="T">The return type of the action to be reliably performed.</typeparam>
+            <param name="action">The action to be performed.</param>
+            <param name="cancellationToken">A token to cancel the operation.</param>
+            <returns>The result of the operation.</returns>
+        </member>
+        <member name="M:GroupMeClientAvalonia.Utilities.ReliabilityStateMachine.GetRetryTimer(System.Action)">
+            <summary>
+            Generates a new timer to retry an action again after the appropriate timeout has elapsed. Determining the appropriate
+            wait time is handled automatically.
+            </summary>
+            <param name="retryAction">The action to perform again.</param>
+            <returns>A timer configured for the correct retry duration. After the wait period has elasped, the specified action will be retried.</returns>
+        </member>
+        <member name="M:GroupMeClientAvalonia.Utilities.ReliabilityStateMachine.Succeeded">
+            <summary>
+            Resets the state-machine status. This method should called after a retry-attempt succeeds.
+            </summary>
+        </member>
+        <member name="T:GroupMeClientAvalonia.ViewModels.ChatsViewModel">
+            <summary>
+            <see cref="T:GroupMeClientAvalonia.ViewModels.ChatsViewModel"/> provides a ViewModel for the Chats page in the GroupMe Desktop Client.
+            </summary>
+        </member>
+        <member name="M:GroupMeClientAvalonia.ViewModels.ChatsViewModel.#ctor(GroupMeClientApi.GroupMeClient,GroupMeClientAvalonia.Settings.SettingsManager)">
+            <summary>
+            Initializes a new instance of the <see cref="T:GroupMeClientAvalonia.ViewModels.ChatsViewModel"/> class.
+            </summary>
+            <param name="groupMeClient">The API client that should be used.</param>
+            <param name="settingsManager">The application settings manager.</param>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.ChatsViewModel.SortedFilteredGroupChats">
+            <summary>
+            Gets a view of the Groups and Chats that are sorted and filtered to
+            display in the left-panel.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.ChatsViewModel.ActiveGroupsChats">
+            <summary>
+            Gets a collection of all the Groups and Chats currently opened.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.ChatsViewModel.MarkAllAsRead">
+            <summary>
+            Gets the action to be performed to mark all Groups/Chats as "read".
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.ChatsViewModel.SearchToggled">
+            <summary>
+            Gets the action to be performed when the Group Search box is toggled.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.ChatsViewModel.GroupChatFilter">
+            <summary>
+            Gets or sets the string entered to filter the available groups or chat with.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.ChatsViewModel.MiniBarModeEnabled">
+            <summary>
+            Gets or sets a value indicating whether minibar mode is enabled.
+            </summary>
+        </member>
+        <member name="M:GroupMeClientAvalonia.ViewModels.ChatsViewModel.GroupMeClientAvalonia#Notifications#INotificationSink#GroupUpdated(GroupMeClientApi.Push.Notifications.LineMessageCreateNotification,GroupMeClientApi.Models.IMessageContainer)">
+            <inheritdoc/>
+        </member>
+        <member name="M:GroupMeClientAvalonia.ViewModels.ChatsViewModel.GroupMeClientAvalonia#Notifications#INotificationSink#ChatUpdated(GroupMeClientApi.Push.Notifications.DirectMessageCreateNotification,GroupMeClientApi.Models.IMessageContainer)">
+            <inheritdoc/>
+        </member>
+        <member name="M:GroupMeClientAvalonia.ViewModels.ChatsViewModel.GroupMeClientAvalonia#Notifications#INotificationSink#MessageUpdated(GroupMeClientApi.Models.Message,System.String,GroupMeClientApi.Models.IMessageContainer)">
+            <inheritdoc/>
+        </member>
+        <member name="M:GroupMeClientAvalonia.ViewModels.ChatsViewModel.GroupMeClientAvalonia#Notifications#INotificationSink#HeartbeatReceived">
+            <inheritdoc/>
+        </member>
+        <member name="M:GroupMeClientAvalonia.ViewModels.ChatsViewModel.GroupMeClientAvalonia#Notifications#INotificationSink#RegisterPushSubscriptions(GroupMeClientApi.Push.PushClient,GroupMeClientApi.GroupMeClient)">
+            <inheritdoc/>
+        </member>
+        <member name="M:GroupMeClientAvalonia.ViewModels.ChatsViewModel.RefreshEverything">
+            <summary>
+            Refreshes all elements displayed in the Chats View Tab. This includes the sidebar,
+            and any opened Groups or Chats.
+            </summary>
+            <returns>A <see cref="T:System.Threading.Tasks.Task"/> representing the asynchronous operation.</returns>
+        </member>
+        <member name="T:GroupMeClientAvalonia.ViewModels.Controls.Attachments.GenericLinkAttachmentControlViewModel">
+            <summary>
+            <see cref="T:GroupMeClientAvalonia.ViewModels.Controls.Attachments.GenericLinkAttachmentControlViewModel"/> provides a ViewModel for controls to display a generic webpage attachment.
+            </summary>
+        </member>
+        <member name="M:GroupMeClientAvalonia.ViewModels.Controls.Attachments.GenericLinkAttachmentControlViewModel.#ctor(System.String,GroupMeClientApi.ImageDownloader)">
+            <summary>
+            Initializes a new instance of the <see cref="T:GroupMeClientAvalonia.ViewModels.Controls.Attachments.GenericLinkAttachmentControlViewModel"/> class.
+            </summary>
+            <param name="url">The url of the attached website.</param>
+            <param name="imageDownloader">The downloader to use when retreiving data.</param>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.Attachments.GenericLinkAttachmentControlViewModel.Title">
+            <summary>
+            Gets the website title.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.Attachments.GenericLinkAttachmentControlViewModel.Site">
+            <summary>
+            Gets the website short URL name.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.Attachments.GenericLinkAttachmentControlViewModel.Clicked">
+            <summary>
+            Gets the action to occur when the website is clicked.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.Attachments.GenericLinkAttachmentControlViewModel.FaviconImage">
+            <summary>
+            Gets the favicon image.
+            </summary>
+        </member>
+        <member name="M:GroupMeClientAvalonia.ViewModels.Controls.Attachments.GenericLinkAttachmentControlViewModel.Dispose">
+            <inheritdoc/>
+        </member>
+        <member name="M:GroupMeClientAvalonia.ViewModels.Controls.Attachments.GenericLinkAttachmentControlViewModel.MetadataDownloadCompleted">
+            <inheritdoc/>
+        </member>
+        <member name="T:GroupMeClientAvalonia.ViewModels.Controls.Attachments.GroupMeImageAttachmentControlViewModel">
+            <summary>
+            <see cref="T:GroupMeClientAvalonia.ViewModels.Controls.Attachments.GroupMeImageAttachmentControlViewModel"/> provides a ViewModel for the <see cref="T:GroupMeClientAvalonia.Views.Controls.Attachments.GroupMeImageAttachmentControl"/> control.
+            </summary>
+        </member>
+        <member name="M:GroupMeClientAvalonia.ViewModels.Controls.Attachments.GroupMeImageAttachmentControlViewModel.#ctor(GroupMeClientApi.Models.Attachments.ImageAttachment,GroupMeClientApi.ImageDownloader,GroupMeClientAvalonia.ViewModels.Controls.Attachments.GroupMeImageAttachmentControlViewModel.GroupMeImageDisplayMode)">
+            <summary>
+            Initializes a new instance of the <see cref="T:GroupMeClientAvalonia.ViewModels.Controls.Attachments.GroupMeImageAttachmentControlViewModel"/> class.
+            </summary>
+            <param name="attachment">The attachment to display.</param>
+            <param name="imageDownloader">The downloader to use for loading the image.</param>
+            <param name="previewMode">The resolution in which to download and render the image.</param>
+        </member>
+        <member name="T:GroupMeClientAvalonia.ViewModels.Controls.Attachments.GroupMeImageAttachmentControlViewModel.GroupMeImageDisplayMode">
+            <summary>
+            Different resolution options in which GroupMe Attached Images can be rendered.
+            </summary>
+        </member>
+        <member name="F:GroupMeClientAvalonia.ViewModels.Controls.Attachments.GroupMeImageAttachmentControlViewModel.GroupMeImageDisplayMode.Large">
+            <summary>
+            Large resolution image
+            </summary>
+        </member>
+        <member name="F:GroupMeClientAvalonia.ViewModels.Controls.Attachments.GroupMeImageAttachmentControlViewModel.GroupMeImageDisplayMode.Small">
+            <summary>
+            Small resolution image. Original image is scaled down, but
+            aspect ratio is preserved.
+            </summary>
+        </member>
+        <member name="F:GroupMeClientAvalonia.ViewModels.Controls.Attachments.GroupMeImageAttachmentControlViewModel.GroupMeImageDisplayMode.Preview">
+            <summary>
+            Small, square image. The original photo will be cropped to fit.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.Attachments.GroupMeImageAttachmentControlViewModel.Clicked">
+            <summary>
+            Gets the command to be performed when the image is clicked.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.Attachments.GroupMeImageAttachmentControlViewModel.ImageAttachmentStream">
+            <summary>
+            Gets the attached image.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.Attachments.GroupMeImageAttachmentControlViewModel.IsLoading">
+            <summary>
+            Gets a value indicating whether the loading animation should be displayed.
+            </summary>
+        </member>
+        <member name="M:GroupMeClientAvalonia.ViewModels.Controls.Attachments.GroupMeImageAttachmentControlViewModel.Dispose">
+            <inheritdoc/>
+        </member>
+        <member name="M:GroupMeClientAvalonia.ViewModels.Controls.Attachments.GroupMeImageAttachmentControlViewModel.MetadataDownloadCompleted">
+            <inheritdoc/>
+        </member>
+        <member name="T:GroupMeClientAvalonia.ViewModels.Controls.Attachments.ImageLinkAttachmentControlViewModel">
+            <summary>
+            <see cref="T:GroupMeClientAvalonia.ViewModels.Controls.Attachments.ImageLinkAttachmentControlViewModel"/> provides a ViewModel for the <see cref="!:Views.Controls.Attachments.ImageLinkAttachmentControl"/> control.
+            </summary>
+        </member>
+        <member name="M:GroupMeClientAvalonia.ViewModels.Controls.Attachments.ImageLinkAttachmentControlViewModel.#ctor(System.String,GroupMeClientApi.ImageDownloader,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:GroupMeClientAvalonia.ViewModels.Controls.Attachments.ImageLinkAttachmentControlViewModel"/> class.
+            </summary>
+            <param name="url">The URL of the image to display.</param>
+            <param name="imageDownloader">The downloader to use when retreiving data.</param>
+            <param name="navigateToUrl">The URL of the image to open in a web browser when the user clicks on it.</param>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.Attachments.ImageLinkAttachmentControlViewModel.Clicked">
+            <summary>
+            Gets the command to be performed when the image is clicked.
+            </summary>
+        </member>
+        <member name="M:GroupMeClientAvalonia.ViewModels.Controls.Attachments.ImageLinkAttachmentControlViewModel.Dispose">
+            <inheritdoc/>
+        </member>
+        <member name="M:GroupMeClientAvalonia.ViewModels.Controls.Attachments.ImageLinkAttachmentControlViewModel.MetadataDownloadCompleted">
+            <inheritdoc/>
+        </member>
+        <member name="T:GroupMeClientAvalonia.ViewModels.Controls.Attachments.LinkAttachmentBaseViewModel">
+            <summary>
+            <see cref="T:GroupMeClientAvalonia.ViewModels.Controls.Attachments.LinkAttachmentBaseViewModel"/> provides a base for controls that display Web Content.
+            Access to GroupMe's Inline Downloader Service is provided.
+            </summary>
+        </member>
+        <member name="M:GroupMeClientAvalonia.ViewModels.Controls.Attachments.LinkAttachmentBaseViewModel.#ctor(GroupMeClientApi.ImageDownloader)">
+            <summary>
+            Initializes a new instance of the <see cref="T:GroupMeClientAvalonia.ViewModels.Controls.Attachments.LinkAttachmentBaseViewModel"/> class.
+            </summary>
+            <param name="imageDownloader">The downloader to use when retreiving data.</param>
+        </member>
+        <member name="M:GroupMeClientAvalonia.ViewModels.Controls.Attachments.LinkAttachmentBaseViewModel.#ctor(System.String,GroupMeClientApi.ImageDownloader)">
+            <summary>
+            Initializes a new instance of the <see cref="T:GroupMeClientAvalonia.ViewModels.Controls.Attachments.LinkAttachmentBaseViewModel"/> class
+            and begins retreiving data from GroupMe's Inline Downloader Service.
+            </summary>
+            <param name="url">The website to resolve against GroupMe's downloader.</param>
+            <param name="imageDownloader">The downloader to use when retreiving data.</param>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.Attachments.LinkAttachmentBaseViewModel.Uri">
+            <summary>
+            Gets or sets the <see cref="P:GroupMeClientAvalonia.ViewModels.Controls.Attachments.LinkAttachmentBaseViewModel.Uri"/> this ViewModel is displaying.
+            If the URL used to initialize this class is invalid, null will be returned.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.Attachments.LinkAttachmentBaseViewModel.Url">
+            <summary>
+            Gets or sets the raw Url this control is displaying.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.Attachments.LinkAttachmentBaseViewModel.RenderedImage">
+            <summary>
+            Gets the rendered image.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.Attachments.LinkAttachmentBaseViewModel.LinkInfo">
+            <summary>
+            Gets the information downloaded from GroupMe's Downloader Service.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.Attachments.LinkAttachmentBaseViewModel.ImageDownloader">
+            <summary>
+            Gets the downloader that should be used for GroupMe operations.
+            </summary>
+        </member>
+        <member name="M:GroupMeClientAvalonia.ViewModels.Controls.Attachments.LinkAttachmentBaseViewModel.Dispose">
+            <inheritdoc/>
+        </member>
+        <member name="M:GroupMeClientAvalonia.ViewModels.Controls.Attachments.LinkAttachmentBaseViewModel.DownloadImageAsync(System.String,System.Int32,System.Int32)">
+            <summary>
+            Downloads an image and stores it in <see cref="P:GroupMeClientAvalonia.ViewModels.Controls.Attachments.LinkAttachmentBaseViewModel.RenderedImage"/>.
+            </summary>
+            <param name="url">The image to download.</param>
+            <param name="maxWidth">The maximum image width.</param>
+            <param name="maxHeight">The maximum image height.</param>
+            <returns>A <see cref="T:System.Threading.Tasks.Task"/> representing the asynchronous operation.</returns>
+        </member>
+        <member name="M:GroupMeClientAvalonia.ViewModels.Controls.Attachments.LinkAttachmentBaseViewModel.LoadGroupMeInfoAsync">
+            <summary>
+            Downloads metadata from GroupMe and stores it in <see cref="P:GroupMeClientAvalonia.ViewModels.Controls.Attachments.LinkAttachmentBaseViewModel.LinkInfo"/>.
+            </summary>
+            <param name="url">The website to download metadata for.</param>
+            <returns>A <see cref="T:System.Threading.Tasks.Task"/> representing the asynchronous operation.</returns>
+        </member>
+        <member name="M:GroupMeClientAvalonia.ViewModels.Controls.Attachments.LinkAttachmentBaseViewModel.MetadataDownloadCompleted">
+            <summary>
+            Callback when the Metadata download is completed.
+            Results are available in <see cref="P:GroupMeClientAvalonia.ViewModels.Controls.Attachments.LinkAttachmentBaseViewModel.LinkInfo"/>.
+            </summary>
+        </member>
+        <member name="T:GroupMeClientAvalonia.ViewModels.Controls.Attachments.LinkAttachmentBaseViewModel.GroupMeInlineDownloaderInfo">
+            <summary>
+            <see cref="T:GroupMeClientAvalonia.ViewModels.Controls.Attachments.LinkAttachmentBaseViewModel.GroupMeInlineDownloaderInfo"/> can be deserialized from GroupMe's Inline Downloader JSON response.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.Attachments.LinkAttachmentBaseViewModel.GroupMeInlineDownloaderInfo.Title">
+            <summary>
+            Gets the website title.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.Attachments.LinkAttachmentBaseViewModel.GroupMeInlineDownloaderInfo.Favicon">
+            <summary>
+            Gets the favicon for the website.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.Attachments.LinkAttachmentBaseViewModel.GroupMeInlineDownloaderInfo.Summary">
+            <summary>
+            Gets a brief description of the website.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.Attachments.LinkAttachmentBaseViewModel.GroupMeInlineDownloaderInfo.ImageUrl">
+            <summary>
+            Gets the Url of the website preview image.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.Attachments.LinkAttachmentBaseViewModel.GroupMeInlineDownloaderInfo.Text">
+            <summary>
+            Gets a brief description of the website's contents.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.Attachments.LinkAttachmentBaseViewModel.GroupMeInlineDownloaderInfo.Name">
+            <summary>
+            Gets the name of the website.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.Attachments.LinkAttachmentBaseViewModel.GroupMeInlineDownloaderInfo.ScreenName">
+            <summary>
+            Gets the social media handle for social media posts.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.Attachments.LinkAttachmentBaseViewModel.GroupMeInlineDownloaderInfo.ProfileImageUrl">
+            <summary>
+            Gets the social media avatar for social media posts.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.Attachments.LinkAttachmentBaseViewModel.GroupMeInlineDownloaderInfo.ThumbnailUrl">
+            <summary>
+            Gets the Url of the website preview image.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.Attachments.LinkAttachmentBaseViewModel.GroupMeInlineDownloaderInfo.AnyPreviewPictureUrl">
+            <summary>
+            Gets any available preview image for a website.
+            This property should be available for any website type.
+            </summary>
+        </member>
+        <member name="T:GroupMeClientAvalonia.ViewModels.Controls.Attachments.TwitterAttachmentControlViewModel">
+            <summary>
+            <see cref="T:GroupMeClientAvalonia.ViewModels.Controls.Attachments.TwitterAttachmentControlViewModel"/> provides a ViewModel for the <see cref="T:GroupMeClientAvalonia.Views.Controls.Attachments.TwitterAttachmentControl"/> control.
+            </summary>
+        </member>
+        <member name="M:GroupMeClientAvalonia.ViewModels.Controls.Attachments.TwitterAttachmentControlViewModel.#ctor(System.String,GroupMeClientApi.ImageDownloader)">
+            <summary>
+            Initializes a new instance of the <see cref="T:GroupMeClientAvalonia.ViewModels.Controls.Attachments.TwitterAttachmentControlViewModel"/> class.
+            </summary>
+            <param name="tweetUrl">The URL of the Tweet to display.</param>
+            <param name="imageDownloader">The downloader to use when retreiving data.</param>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.Attachments.TwitterAttachmentControlViewModel.Sender">
+            <summary>
+            Gets the sender's name for the Tweet.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.Attachments.TwitterAttachmentControlViewModel.Text">
+            <summary>
+            Gets the contents of the Tweet.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.Attachments.TwitterAttachmentControlViewModel.Handle">
+            <summary>
+            Gets the sender's Twitter Handle.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.Attachments.TwitterAttachmentControlViewModel.Clicked">
+            <summary>
+            Gets the command to be performed when the Tweet is clicked.
+            </summary>
+        </member>
+        <member name="M:GroupMeClientAvalonia.ViewModels.Controls.Attachments.TwitterAttachmentControlViewModel.Dispose">
+            <inheritdoc/>
+        </member>
+        <member name="M:GroupMeClientAvalonia.ViewModels.Controls.Attachments.TwitterAttachmentControlViewModel.MetadataDownloadCompleted">
+            <inheritdoc/>
+        </member>
+        <member name="T:GroupMeClientAvalonia.ViewModels.Controls.Attachments.VideoAttachmentControlViewModel">
+            <summary>
+            <see cref="T:GroupMeClientAvalonia.ViewModels.Controls.Attachments.VideoAttachmentControlViewModel"/> provides a ViewModel for the <see cref="T:GroupMeClientAvalonia.Views.Controls.Attachments.VideoAttachmentControl"/> control.
+            </summary>
+        </member>
+        <member name="M:GroupMeClientAvalonia.ViewModels.Controls.Attachments.VideoAttachmentControlViewModel.#ctor(System.String,GroupMeClientApi.ImageDownloader)">
+            <summary>
+            Initializes a new instance of the <see cref="T:GroupMeClientAvalonia.ViewModels.Controls.Attachments.VideoAttachmentControlViewModel"/> class.
+            </summary>
+            <param name="url">The URL of the video to display.</param>
+            <param name="imageDownloader">The downloader to use when retreiving data.</param>
+        </member>
+        <member name="M:GroupMeClientAvalonia.ViewModels.Controls.Attachments.VideoAttachmentControlViewModel.#ctor(GroupMeClientApi.Models.Attachments.VideoAttachment,GroupMeClientApi.ImageDownloader)">
+            <summary>
+            Initializes a new instance of the <see cref="T:GroupMeClientAvalonia.ViewModels.Controls.Attachments.VideoAttachmentControlViewModel"/> class.
+            </summary>
+            <param name="attachment">The GroupMe Video Attachment to display.</param>
+            <param name="imageDownloader">The downloader to use when retreiving data.</param>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.Attachments.VideoAttachmentControlViewModel.Clicked">
+            <summary>
+            Gets the command to be performed when the Tweet is clicked.
+            </summary>
+        </member>
+        <member name="M:GroupMeClientAvalonia.ViewModels.Controls.Attachments.VideoAttachmentControlViewModel.Dispose">
+            <inheritdoc/>
+        </member>
+        <member name="M:GroupMeClientAvalonia.ViewModels.Controls.Attachments.VideoAttachmentControlViewModel.MetadataDownloadCompleted">
+            <inheritdoc/>
+        </member>
+        <member name="T:GroupMeClientAvalonia.ViewModels.Controls.AvatarControlViewModel">
+            <summary>
+            <see cref="T:GroupMeClientAvalonia.ViewModels.Controls.AvatarControlViewModel"/> provides the ViewModel for a control to display a GroupMe Avatar.
+            </summary>
+        </member>
+        <member name="M:GroupMeClientAvalonia.ViewModels.Controls.AvatarControlViewModel.#ctor(GroupMeClientApi.Models.IAvatarSource,GroupMeClientApi.ImageDownloader)">
+            <summary>
+            Initializes a new instance of the <see cref="T:GroupMeClientAvalonia.ViewModels.Controls.AvatarControlViewModel"/> class.
+            </summary>
+            <param name="avatarSource">The avatar that should be displayed.</param>
+            <param name="imageDownloader">The downloader used to retreive the avatar.</param>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.AvatarControlViewModel.AvatarSource">
+            <summary>
+            Gets the <see cref="T:GroupMeClientApi.Models.IAvatarSource"/> this control is displaying.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.AvatarControlViewModel.ImageDownloader">
+            <summary>
+            Gets the <see cref="P:GroupMeClientAvalonia.ViewModels.Controls.AvatarControlViewModel.ImageDownloader"/> that should be used to retreive avatars.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.AvatarControlViewModel.IsRounded">
+            <summary>
+            Gets a value indicating whether the avatar should be cropped to be circular.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.AvatarControlViewModel.Avatar">
+            <summary>
+            Gets the image that should be used for square avatars.
+            If the avatar shouldn't be rectangular, null is returned.
+            </summary>
+        </member>
+        <member name="M:GroupMeClientAvalonia.ViewModels.Controls.AvatarControlViewModel.LoadAvatarAsync">
+            <summary>
+            Asychronously downloads the avatar image from GroupMe.
+            </summary>
+            <returns>A <see cref="T:System.Threading.Tasks.Task"/> with the download status.</returns>
+        </member>
+        <member name="T:GroupMeClientAvalonia.ViewModels.Controls.GroupContentsControlViewModel">
+            <summary>
+            <see cref="T:GroupMeClientAvalonia.ViewModels.Controls.GroupContentsControlViewModel"/> provides a ViewModel for the <see cref="T:GroupMeClientAvalonia.Views.Controls.GroupContentsControl"/> control that displays the contents (messages) of a Group or Chat.
+            Controls for sending messages are also included.
+            </summary>
+        </member>
+        <member name="M:GroupMeClientAvalonia.ViewModels.Controls.GroupContentsControlViewModel.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:GroupMeClientAvalonia.ViewModels.Controls.GroupContentsControlViewModel"/> class.
+            </summary>
+        </member>
+        <member name="M:GroupMeClientAvalonia.ViewModels.Controls.GroupContentsControlViewModel.#ctor(GroupMeClientApi.Models.IMessageContainer,GroupMeClientAvalonia.Settings.SettingsManager)">
+            <summary>
+            Initializes a new instance of the <see cref="T:GroupMeClientAvalonia.ViewModels.Controls.GroupContentsControlViewModel"/> class.
+            </summary>
+            <param name="messageContainer">The Group or Chat to bind to.</param>
+            <param name="settings">The settings instance to use.</param>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.GroupContentsControlViewModel.CloseGroup">
+            <summary>
+            Gets or sets the action to be performed when the close button is pressed.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.GroupContentsControlViewModel.SendMessage">
+            <summary>
+            Gets or sets the action to be performed when a message is ready to send.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.GroupContentsControlViewModel.SendAttachment">
+            <summary>
+            Gets or sets the action to be performed when the user wants to send an attachment file.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.GroupContentsControlViewModel.OpenMessageSuggestions">
+            <summary>
+            Gets or sets the action to be performd when the user has selected the Message Effects Generator.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.GroupContentsControlViewModel.ReloadView">
+            <summary>
+            Gets the action to be performed when more messages need to be loaded.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.GroupContentsControlViewModel.SelectionChangedCommand">
+            <summary>
+            Gets the action to be be performed when the selected messages have changed.
+            This is used by the Multi-Like plugin.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.GroupContentsControlViewModel.ScrollToEnd">
+            <summary>
+            Gets or sets the action to be performd to scroll the messages list to the end.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.GroupContentsControlViewModel.SortedMessages">
+            <summary>
+            Gets the collection of ViewModels for <see cref="T:GroupMeClientApi.Models.Message"/>s to be displayed, in sorted order.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.GroupContentsControlViewModel.GroupChatPlugins">
+            <summary>
+            Gets the collection of available Group/Chat UI Plugins to display.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.GroupContentsControlViewModel.GroupChatCachePlugins">
+            <summary>
+            Gets the collection of available Group/Chat Cache UI Plugins to display.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.GroupContentsControlViewModel.GroupChatPluginActivated">
+            <summary>
+            Gets the action to be performed when a Plugin in the
+            Options Menu is activated.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.GroupContentsControlViewModel.GroupChatCachePluginActivated">
+            <summary>
+            Gets the action to be performed when a Cache-type Plugin in the
+            Options Menu is activated.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.GroupContentsControlViewModel.PopupManager">
+            <summary>
+            Gets or sets the popup manager to be used for popups 
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.GroupContentsControlViewModel.Title">
+            <summary>
+            Gets the title of the <see cref="T:GroupMeClientApi.Models.Group"/> or <see cref="T:GroupMeClientApi.Models.Chat"/>.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.GroupContentsControlViewModel.Id">
+            <summary>
+            Gets the unique identifier for the <see cref="T:GroupMeClientApi.Models.Group"/> or <see cref="T:GroupMeClientApi.Models.Chat"/>.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.GroupContentsControlViewModel.CurrentlySelectedMessages">
+            <summary>
+            Gets the list of messages that are currently selected.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.GroupContentsControlViewModel.MessageContainer">
+            <summary>
+            Gets or sets the <see cref="T:GroupMeClientApi.Models.IMessageContainer"/> being displayed.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.GroupContentsControlViewModel.TopBarAvatar">
+            <summary>
+            Gets the avatar to be displayed in the top bar.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.GroupContentsControlViewModel.TypedMessageContents">
+            <summary>
+            Gets or sets the contents the user has typed for a new message.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.GroupContentsControlViewModel.IsNotAtBottom">
+            <summary>
+            Gets or sets a value indicating whether the messages list is not currently scrolled to the bottom.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.GroupContentsControlViewModel.IsSelectionAllowed">
+            <summary>
+            Gets or sets a value indicating whether selecting messages is allowed.
+            </summary>
+        </member>
+        <member name="M:GroupMeClientAvalonia.ViewModels.Controls.GroupContentsControlViewModel.LoadNewMessages">
+            <summary>
+            Reloads and redisplay the newest messages.
+            This will capture any messages send since the last reload.
+            </summary>
+            <returns>A <see cref="T:System.Threading.Tasks.Task"/> representing the asynchronous operation.</returns>
+        </member>
+        <member name="M:GroupMeClientAvalonia.ViewModels.Controls.GroupContentsControlViewModel.UpdateMessageLikes(GroupMeClientApi.Models.Message)">
+            <summary>
+            Updates the 'Likes' for a currently displayed <see cref="T:GroupMeClientApi.Models.Message"/>.
+            </summary>
+            <param name="message">The message containing the updated list of likers.</param>
+        </member>
+        <member name="M:GroupMeClientAvalonia.ViewModels.Controls.GroupContentsControlViewModel.System#IDisposable#Dispose">
+            <inheritdoc />
+        </member>
+        <member name="M:GroupMeClientAvalonia.ViewModels.Controls.GroupContentsControlViewModel.GroupMeClientAvalonia#Extensions#FileDragDropHelper#IDragDropTarget#OnFileDrop(System.String[])">
+            <inheritdoc />
+        </member>
+        <member name="M:GroupMeClientAvalonia.ViewModels.Controls.GroupContentsControlViewModel.GroupMeClientAvalonia#Extensions#FileDragDropHelper#IDragDropTarget#OnImageDrop(System.Byte[])">
+            <inheritdoc />
+        </member>
+        <member name="T:GroupMeClientAvalonia.ViewModels.Controls.GroupControlViewModel">
+            <summary>
+            <see cref="T:GroupMeClientAvalonia.ViewModels.Controls.GroupControlViewModel"/> provides a ViewModel for the <see cref="T:GroupMeClientAvalonia.Views.Controls.GroupControl"/> control.
+            </summary>
+        </member>
+        <member name="M:GroupMeClientAvalonia.ViewModels.Controls.GroupControlViewModel.#ctor(GroupMeClientApi.Models.IMessageContainer)">
+            <summary>
+            Initializes a new instance of the <see cref="T:GroupMeClientAvalonia.ViewModels.Controls.GroupControlViewModel"/> class.
+            </summary>
+            <param name="messageContainer">The Group or Chat to show in this control.</param>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.GroupControlViewModel.GroupSelected">
+            <summary>
+            Gets or sets the command to be performed when this Group or Chat is clicked.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.GroupControlViewModel.Title">
+            <summary>
+            Gets the title of this Group or Chat.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.GroupControlViewModel.LastUpdated">
+            <summary>
+            Gets the last updated time for this Group or Chat.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.GroupControlViewModel.Id">
+            <summary>
+            Gets the unique identifier for this Group or Chat.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.GroupControlViewModel.MessageContainer">
+            <summary>
+            Gets or sets the Container (Group or Chat) this control is displaying.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.GroupControlViewModel.Avatar">
+            <summary>
+            Gets the avatar for this Group or Chat.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.GroupControlViewModel.TotalUnreadCount">
+            <summary>
+            Gets or sets the number of unread messages shown for this Group or Chat.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.GroupControlViewModel.LastUpdatedFriendlyTime">
+            <summary>
+            Gets a string showing an easily readable timestamp for the last update to this Group or Chat.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.GroupControlViewModel.QuickPreview">
+            <summary>
+            Gets an string showing the most recent post in this Group or Chat.
+            </summary>
+        </member>
+        <member name="T:GroupMeClientAvalonia.ViewModels.Controls.InlineReadSentMarkerControlViewModel">
+            <summary>
+            <see cref="T:GroupMeClientAvalonia.ViewModels.Controls.InlineReadSentMarkerControlViewModel"/> provides a ViewModel for the <see cref="T:GroupMeClientAvalonia.Views.Controls.InlineReadSentMarkerControl"/> control.
+            </summary>
+        </member>
+        <member name="M:GroupMeClientAvalonia.ViewModels.Controls.InlineReadSentMarkerControlViewModel.#ctor(System.DateTime,System.Boolean,System.String,Avalonia.Media.Brush)">
+            <summary>
+            Initializes a new instance of the <see cref="T:GroupMeClientAvalonia.ViewModels.Controls.InlineReadSentMarkerControlViewModel"/> class.
+            </summary>
+            <param name="timestamp">The timestamp to display.</param>
+            <param name="showRead">Indicates whether this control displays a Read or Sent messge.</param>
+            <param name="id">The message ID to show the timestamp near.</param>
+            <param name="messageColor">The color to render the timestamp with.</param>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.InlineReadSentMarkerControlViewModel.Id">
+            <inheritdoc/>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.InlineReadSentMarkerControlViewModel.Message">
+            <inheritdoc/>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.InlineReadSentMarkerControlViewModel.MessageColor">
+            <summary>
+            Gets the background color to render the timestamp with.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.InlineReadSentMarkerControlViewModel.IsSelectable">
+            <inheritdoc />
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.InlineReadSentMarkerControlViewModel.Timestamp">
+            <summary>
+            Gets the timestamp for this marker.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.InlineReadSentMarkerControlViewModel.ShowRead">
+            <summary>
+            Gets a value indicating whether this marker shows a 'Read' message.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.InlineReadSentMarkerControlViewModel.LabelString">
+            <summary>
+            Gets the label string for this marker.
+            </summary>
+        </member>
+        <member name="M:GroupMeClientAvalonia.ViewModels.Controls.InlineReadSentMarkerControlViewModel.System#IDisposable#Dispose">
+            <inheritdoc/>
+        </member>
+        <member name="T:GroupMeClientAvalonia.ViewModels.Controls.InlineTimestampControlViewModel">
+            <summary>
+            <see cref="T:GroupMeClientAvalonia.ViewModels.Controls.InlineTimestampControlViewModel"/> provides a ViewModel for the <see cref="T:GroupMeClientAvalonia.Views.Controls.InlineTimestampControl"/> control.
+            </summary>
+        </member>
+        <member name="M:GroupMeClientAvalonia.ViewModels.Controls.InlineTimestampControlViewModel.#ctor(System.DateTime,System.String,Avalonia.Media.Brush)">
+            <summary>
+            Initializes a new instance of the <see cref="T:GroupMeClientAvalonia.ViewModels.Controls.InlineTimestampControlViewModel"/> class.
+            </summary>
+            <param name="timestamp">The timestamp to display.</param>
+            <param name="id">The message ID to show the timestamp near.</param>
+            <param name="messageColor">The color to render the timestamp with.</param>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.InlineTimestampControlViewModel.Id">
+            <inheritdoc/>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.InlineTimestampControlViewModel.Message">
+            <inheritdoc/>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.InlineTimestampControlViewModel.MessageColor">
+            <summary>
+            Gets the background color to render the timestamp with.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.InlineTimestampControlViewModel.IsSelectable">
+            <inheritdoc />
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.InlineTimestampControlViewModel.Timestamp">
+            <summary>
+            Gets the timestamp for this marker.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.InlineTimestampControlViewModel.TimestampString">
+            <summary>
+            Gets the timestamp string for this marker.
+            </summary>
+        </member>
+        <member name="M:GroupMeClientAvalonia.ViewModels.Controls.InlineTimestampControlViewModel.System#IDisposable#Dispose">
+            <inheritdoc/>
+        </member>
+        <member name="T:GroupMeClientAvalonia.ViewModels.Controls.LoadingControlViewModel">
+            <summary>
+            <see cref="T:GroupMeClientAvalonia.ViewModels.Controls.LoadingControlViewModel"/> provides a ViewModel for the <see cref="T:GroupMeClientAvalonia.Views.Controls.LoadingControl"/> control.
+            </summary>
+        </member>
+        <member name="M:GroupMeClientAvalonia.ViewModels.Controls.LoadingControlViewModel.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:GroupMeClientAvalonia.ViewModels.Controls.LoadingControlViewModel"/> class.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.LoadingControlViewModel.Message">
+            <summary>
+            Gets or sets the progress message.
+            </summary>
+        </member>
+        <member name="T:GroupMeClientAvalonia.ViewModels.Controls.MessageControlViewModel">
+            <summary>
+            <see cref="T:GroupMeClientAvalonia.ViewModels.Controls.MessageControlViewModel"/> provides a ViewModel for the <see cref="T:GroupMeClientAvalonia.Views.Controls.MessageControl"/> control.
+            </summary>
+        </member>
+        <member name="M:GroupMeClientAvalonia.ViewModels.Controls.MessageControlViewModel.#ctor(GroupMeClientApi.Models.Message,System.Boolean,System.Boolean)">
+            <summary>
+            Initializes a new instance of the <see cref="T:GroupMeClientAvalonia.ViewModels.Controls.MessageControlViewModel"/> class.
+            </summary>
+            <param name="message">The message to bind to this control.</param>
+            <param name="showLikers">Indicates whether the like status for a message should be displayed.</param>
+            <param name="showPreviewsOnlyForMultiImages">Indicates whether only previews, or full images, should be shown for multi-images.</param>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.MessageControlViewModel.AttachedItems">
+            <summary>
+            Gets or sets the attached items (Tweets, Web Links, Videos, etc.), if present.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.MessageControlViewModel.LikeAction">
+            <summary>
+            Gets the command to be performed when this <see cref="P:GroupMeClientAvalonia.ViewModels.Controls.MessageControlViewModel.Message"/> is 'Liked'.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.MessageControlViewModel.ToggleMessageDetails">
+            <summary>
+            Gets the command to be performed to toggle whether details are shwon for this <see cref="P:GroupMeClientAvalonia.ViewModels.Controls.MessageControlViewModel.Message"/>.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.MessageControlViewModel.Id">
+            <summary>
+            Gets the unique identifier for this <see cref="P:GroupMeClientAvalonia.ViewModels.Controls.MessageControlViewModel.Message"/>.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.MessageControlViewModel.Sender">
+            <summary>
+            Gets the sender of this <see cref="P:GroupMeClientAvalonia.ViewModels.Controls.MessageControlViewModel.Message"/>.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.MessageControlViewModel.SentTimeString">
+            <summary>
+            Gets a formatted string with the date and time this <see cref="P:GroupMeClientAvalonia.ViewModels.Controls.MessageControlViewModel.Message"/> was sent.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.MessageControlViewModel.IsSelectable">
+            <inheritdoc />
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.MessageControlViewModel.Message">
+            <summary>
+            Gets or sets the displayed <see cref="P:GroupMeClientAvalonia.ViewModels.Controls.MessageControlViewModel.Message"/>.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.MessageControlViewModel.Avatar">
+            <summary>
+            Gets avatar to use when displaying this <see cref="P:GroupMeClientAvalonia.ViewModels.Controls.MessageControlViewModel.Message"/>.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.MessageControlViewModel.ShowDetails">
+            <summary>
+            Gets or sets a value indicating whether details should be shown for this message.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.MessageControlViewModel.Text">
+            <summary>
+            Gets the contents of the message, without any additional formatting.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.MessageControlViewModel.SenderPlatform">
+            <summary>
+            Gets a string indicating which GroupMe Platform was used to send this <see cref="P:GroupMeClientAvalonia.ViewModels.Controls.MessageControlViewModel.Message"/>.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.MessageControlViewModel.MessageColor">
+            <summary>
+            Gets the background color to use when rendering this <see cref="P:GroupMeClientAvalonia.ViewModels.Controls.MessageControlViewModel.Message"/>.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.MessageControlViewModel.LikeStatus">
+            <summary>
+            Gets the icon to display for the like status of this <see cref="P:GroupMeClientAvalonia.ViewModels.Controls.MessageControlViewModel.Message"/>.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.MessageControlViewModel.LikeColor">
+            <summary>
+            Gets the brush color to render the like icon with for this <see cref="P:GroupMeClientAvalonia.ViewModels.Controls.MessageControlViewModel.Message"/>.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.MessageControlViewModel.LikeCount">
+            <summary>
+            Gets the number of people who have liked this <see cref="P:GroupMeClientAvalonia.ViewModels.Controls.MessageControlViewModel.Message"/>.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.MessageControlViewModel.LikedByAvatars">
+            <summary>
+            Gets the avatars of the people who have liked this <see cref="P:GroupMeClientAvalonia.ViewModels.Controls.MessageControlViewModel.Message"/>.
+            </summary>
+        </member>
+        <member name="M:GroupMeClientAvalonia.ViewModels.Controls.MessageControlViewModel.UpdateDisplay">
+            <summary>
+            Redraw the message immediately.
+            </summary>
+        </member>
+        <member name="M:GroupMeClientAvalonia.ViewModels.Controls.MessageControlViewModel.LikeMessageAsync">
+            <summary>
+            Likes a message and updates the Liker's Display area for the current <see cref="P:GroupMeClientAvalonia.ViewModels.Controls.MessageControlViewModel.Message"/>.
+            </summary>
+            <returns>A <see cref="T:System.Threading.Tasks.Task"/> representing the asynchronous operation.</returns>
+        </member>
+        <member name="M:GroupMeClientAvalonia.ViewModels.Controls.MessageControlViewModel.UpdateLikers(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Updates the list of Likers for the <see cref="P:GroupMeClientAvalonia.ViewModels.Controls.MessageControlViewModel.Message"/>, and re-draws
+            the message on-screen.
+            </summary>
+            <param name="newLikersList">The list of new likers for the <see cref="P:GroupMeClientAvalonia.ViewModels.Controls.MessageControlViewModel.Message"/>.</param>
+        </member>
+        <member name="M:GroupMeClientAvalonia.ViewModels.Controls.MessageControlViewModel.System#IDisposable#Dispose">
+            <inheritdoc />
+        </member>
+        <member name="T:GroupMeClientAvalonia.ViewModels.Controls.MessageControlViewModelBase">
+            <summary>
+            Provides a base class for controls that can be displayed inline with messages.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.MessageControlViewModelBase.Id">
+            <summary>
+            Gets the unique identifier for the message.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.MessageControlViewModelBase.Message">
+            <summary>
+            Gets or sets the message.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.MessageControlViewModelBase.IsSelectable">
+            <summary>
+            Gets a value indicating whether this control is selectable.
+            </summary>
+        </member>
+        <member name="M:GroupMeClientAvalonia.ViewModels.Controls.MessageControlViewModelBase.System#IDisposable#Dispose">
+            <inheritdoc/>
+        </member>
+        <member name="T:GroupMeClientAvalonia.ViewModels.Controls.MessageEffectsControlViewModel">
+            <summary>
+            <see cref="T:GroupMeClientAvalonia.ViewModels.Controls.MessageEffectsControlViewModel"/> provides a ViewModel for the <see cref="T:GroupMeClientAvalonia.Views.Controls.MessageEffectsControl"/> control.
+            </summary>
+        </member>
+        <member name="M:GroupMeClientAvalonia.ViewModels.Controls.MessageEffectsControlViewModel.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:GroupMeClientAvalonia.ViewModels.Controls.MessageEffectsControlViewModel"/> class.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.MessageEffectsControlViewModel.GeneratedMessages">
+            <summary>
+            Gets a collection of generated messages produced by plugins, sorted by source.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.MessageEffectsControlViewModel.UpdateMessage">
+            <summary>
+            Gets or sets the command to be performed when the message is updated.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.MessageEffectsControlViewModel.TypedMessageContents">
+            <summary>
+            Gets or sets the message the user has composed to send.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.MessageEffectsControlViewModel.SelectedMessageContents">
+            <summary>
+            Gets or sets the message (with effects) the user has selected to send.
+            </summary>
+        </member>
+        <member name="T:GroupMeClientAvalonia.ViewModels.Controls.MessageEffectsControlViewModel.SuggestedMessage">
+            <summary>
+            <see cref="T:GroupMeClientAvalonia.ViewModels.Controls.MessageEffectsControlViewModel.SuggestedMessage"/> represents a generated result from a plugin
+            for a message to suggest to the user.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.MessageEffectsControlViewModel.SuggestedMessage.Message">
+            <summary>
+            Gets or sets the message contents.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.MessageEffectsControlViewModel.SuggestedMessage.Plugin">
+            <summary>
+            Gets or sets the name of the plugin that generated this message.
+            </summary>
+        </member>
+        <member name="M:GroupMeClientAvalonia.ViewModels.Controls.MessageEffectsControlViewModel.SuggestedMessage.ToString">
+            <inheritdoc />
+        </member>
+        <member name="T:GroupMeClientAvalonia.ViewModels.Controls.MultiLikeControlViewModel">
+            <summary>
+            <see cref="T:GroupMeClientAvalonia.ViewModels.Controls.MultiLikeControlViewModel"/> provides a ViewModel for the <see cref="T:GroupMeClientAvalonia.Views.Controls.MultiLikeControl"/> control.
+            </summary>
+        </member>
+        <member name="M:GroupMeClientAvalonia.ViewModels.Controls.MultiLikeControlViewModel.#ctor(GroupMeClientAvalonia.ViewModels.Controls.GroupContentsControlViewModel)">
+            <summary>
+            Initializes a new instance of the <see cref="T:GroupMeClientAvalonia.ViewModels.Controls.MultiLikeControlViewModel"/> class.
+            </summary>
+            <param name="groupContentsControlViewModel">The Group to perform MultiLike operations on.</param>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.MultiLikeControlViewModel.EnableMultiLikeCommand">
+            <summary>
+            Gets or sets the command to be performed to enable MultiLike.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.MultiLikeControlViewModel.DisableMultiLikeCommand">
+            <summary>
+            Gets or sets the command to be performed to enable MultiLike.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.MultiLikeControlViewModel.PerformMultiLikeCommand">
+            <summary>
+            Gets or sets the command to be performed to enable MultiLike.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.MultiLikeControlViewModel.IsEnabled">
+            <summary>
+            Gets or sets a value indicating whether MultiLiking mode is enabled.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.MultiLikeControlViewModel.IsDisabled">
+            <summary>
+            Gets a value indicating whether MultiLiking mode is diabled.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.MultiLikeControlViewModel.AnyMessagesSelected">
+            <summary>
+            Gets a value indicating whether any messages are currently selected for liking.
+            </summary>
+        </member>
+        <member name="M:GroupMeClientAvalonia.ViewModels.Controls.MultiLikeControlViewModel.System#IDisposable#Dispose">
+            <inheritdoc />
+        </member>
+        <member name="T:GroupMeClientAvalonia.ViewModels.Controls.MultiLikeControlViewModel.MultiLikePseudoPlugin">
+            <summary>
+            <see cref="T:GroupMeClientAvalonia.ViewModels.Controls.MultiLikeControlViewModel.MultiLikePseudoPlugin"/> defines a plugin-style object that can be used to integrate
+            Multi-Like functionality into a <see cref="P:GroupMeClientAvalonia.ViewModels.Controls.MultiLikeControlViewModel.MultiLikePseudoPlugin.GroupContentsControlViewModel"/>.
+            </summary>
+        </member>
+        <member name="M:GroupMeClientAvalonia.ViewModels.Controls.MultiLikeControlViewModel.MultiLikePseudoPlugin.#ctor(GroupMeClientAvalonia.ViewModels.Controls.GroupContentsControlViewModel)">
+            <summary>
+            Initializes a new instance of the <see cref="T:GroupMeClientAvalonia.ViewModels.Controls.MultiLikeControlViewModel.MultiLikePseudoPlugin"/> class.
+            </summary>
+            <param name="groupContentsControlViewModel">The Group to perform MultiLike operations on.</param>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.MultiLikeControlViewModel.MultiLikePseudoPlugin.PluginDisplayName">
+            <inheritdoc/>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.MultiLikeControlViewModel.MultiLikePseudoPlugin.PluginVersion">
+            <inheritdoc/>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.MultiLikeControlViewModel.MultiLikePseudoPlugin.PluginName">
+            <inheritdoc/>
+        </member>
+        <member name="M:GroupMeClientAvalonia.ViewModels.Controls.MultiLikeControlViewModel.MultiLikePseudoPlugin.Activated(GroupMeClientApi.Models.IMessageContainer)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GroupMeClientAvalonia.ViewModels.Controls.PaginatedMessagesControlViewModel">
+            <summary>
+            <see cref="T:GroupMeClientAvalonia.ViewModels.Controls.PaginatedMessagesControlViewModel"/> provides a ViewModel for the <see cref="!:Views.Controls.PaginatedMessagesControlViewModel"/> control that displays paginated messages.
+            Controls for sending messages are also included.
+            </summary>
+        </member>
+        <member name="M:GroupMeClientAvalonia.ViewModels.Controls.PaginatedMessagesControlViewModel.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:GroupMeClientAvalonia.ViewModels.Controls.PaginatedMessagesControlViewModel"/> class.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.PaginatedMessagesControlViewModel.CurrentPage">
+            <summary>
+            Gets the collection of ViewModels for <see cref="T:GroupMeClientApi.Models.Message"/>s to be displayed.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.PaginatedMessagesControlViewModel.MessagesPerPage">
+            <summary>
+            Gets or sets the number of <see cref="T:GroupMeClientApi.Models.Message"/>s displayed per page.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.PaginatedMessagesControlViewModel.CurrentPageNumber">
+            <summary>
+            Gets the currently displayed page number.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.PaginatedMessagesControlViewModel.TotalMessagesCount">
+            <summary>
+            Gets the total number of messages displayed in all pages.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.PaginatedMessagesControlViewModel.AssociateWith">
+            <summary>
+            Gets or sets the <see cref="T:GroupMeClientApi.Models.Group"/> or <see cref="T:GroupMeClientApi.Models.Chat"/> the displayed messages are associated with.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.PaginatedMessagesControlViewModel.ShowLikers">
+            <summary>
+            Gets or sets a value indicating whether 'Like' status will be shown on Messages.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.PaginatedMessagesControlViewModel.SyncAndUpdate">
+            <summary>
+            Gets or sets a value indicating whether displayed messages will be sychronized with GroupMe,
+            and displayed with up-to-date information.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.PaginatedMessagesControlViewModel.NewestAtBottom">
+            <summary>
+            Gets or sets a value indicating whether the ordering of <see cref="P:GroupMeClientAvalonia.ViewModels.Controls.PaginatedMessagesControlViewModel.Messages"/>
+            places new messages at the bottom.
+            This value is used when placing inline timestamps.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.PaginatedMessagesControlViewModel.GoBackCommand">
+            <summary>
+            Gets the action to be performed when the back button is clicked.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.PaginatedMessagesControlViewModel.GoForwardCommand">
+            <summary>
+            Gets the action to be performed when the forward/next button is clicked.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.PaginatedMessagesControlViewModel.MessageSelectedCommand">
+            <summary>
+            Gets or sets the action to be performed when a <see cref="T:GroupMeClientApi.Models.Message"/> is selected.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.PaginatedMessagesControlViewModel.ShowTitle">
+            <summary>
+            Gets or sets a value indicating whether a title is shown.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.PaginatedMessagesControlViewModel.Title">
+            <summary>
+            Gets the title to display above the messages view.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.PaginatedMessagesControlViewModel.Messages">
+            <summary>
+            Gets or sets the complete set of <see cref="T:GroupMeClientApi.Models.Message"/>s to paginate and display.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.PaginatedMessagesControlViewModel.SelectedMessage">
+            <summary>
+            Gets or sets the selected <see cref="T:GroupMeClientApi.Models.Message"/>.
+            </summary>
+        </member>
+        <member name="M:GroupMeClientAvalonia.ViewModels.Controls.PaginatedMessagesControlViewModel.EnsureVisible(GroupMeClientApi.Models.Message)">
+            <summary>
+            Ensures the page containing a specific <see cref="T:GroupMeClientApi.Models.Message"/> is displayed.
+            </summary>
+            <param name="message">The message to display.</param>
+        </member>
+        <member name="M:GroupMeClientAvalonia.ViewModels.Controls.PaginatedMessagesControlViewModel.ChangePage(System.Int32)">
+            <summary>
+            Changes the currently displayed page.
+            </summary>
+            <param name="pageNumber">The page number to display.</param>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.PopupViewModel.PopupDialog">
+            <summary>
+            Gets or sets the Popup Dialog that should be displayed.
+            Null specifies that no popup is shown.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.PopupViewModel.CheckEasyClose">
+            <summary>
+            Gets a command checking whether the input conditions for easy closing have been satisfied. If so,
+            the <see cref="P:GroupMeClientAvalonia.ViewModels.Controls.PopupViewModel.EasyClosePopup"/> command is executed.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.PopupViewModel.ShowPopup">
+            <summary>
+            Gets or sets a value indicating whether the popup should be shown.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.PopupViewModel.ClosePopup">
+            <summary>
+            Gets or sets the action to be be performed when the big popup has been closed.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.PopupViewModel.EasyClosePopup">
+            <summary>
+            Gets or sets the action to be be performed when the big popup has been closed indirectly.
+            This typically is from the user clicking in the gray area around the popup to dismiss it.
+            </summary>
+        </member>
+        <member name="T:GroupMeClientAvalonia.ViewModels.Controls.SendImageControlViewModel">
+            <summary>
+            <see cref="T:GroupMeClientAvalonia.ViewModels.Controls.SendImageControlViewModel"/> provides a ViewModel for the <see cref="T:GroupMeClientAvalonia.Views.Controls.SendImageControl"/> control.
+            </summary>
+        </member>
+        <member name="M:GroupMeClientAvalonia.ViewModels.Controls.SendImageControlViewModel.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:GroupMeClientAvalonia.ViewModels.Controls.SendImageControlViewModel"/> class.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.SendImageControlViewModel.SendMessage">
+            <summary>
+            Gets or sets the command to be performed when the message is ready to send.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.SendImageControlViewModel.Image">
+            <summary>
+            Gets or sets the image to preview.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.SendImageControlViewModel.ImageData">
+            <summary>
+            The raw encoded image data corresponding to <see cref="P:GroupMeClientAvalonia.ViewModels.Controls.SendImageControlViewModel.Image"/>.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.SendImageControlViewModel.TypedMessageContents">
+            <summary>
+            Gets or sets the message the user has composed to send.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.SendImageControlViewModel.IsSending">
+            <summary>
+            Gets or sets a value indicating whether the sending animation should be displayed.
+            </summary>
+        </member>
+        <member name="M:GroupMeClientAvalonia.ViewModels.Controls.SendImageControlViewModel.System#IDisposable#Dispose">
+            <inheritdoc />
+        </member>
+        <member name="T:GroupMeClientAvalonia.ViewModels.Controls.ViewImageControlViewModel">
+            <summary>
+            <see cref="T:GroupMeClientAvalonia.ViewModels.Controls.ViewImageControlViewModel"/> provides a ViewModel for the <see cref="T:GroupMeClientAvalonia.Views.Controls.ViewImageControl"/> control.
+            </summary>
+        </member>
+        <member name="M:GroupMeClientAvalonia.ViewModels.Controls.ViewImageControlViewModel.#ctor(GroupMeClientApi.Models.Attachments.ImageAttachment,GroupMeClientApi.ImageDownloader)">
+            <summary>
+            Initializes a new instance of the <see cref="T:GroupMeClientAvalonia.ViewModels.Controls.ViewImageControlViewModel"/> class.
+            </summary>
+            <param name="attachment">The attachment display.</param>
+            <param name="downloader">The downloader to use.</param>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.ViewImageControlViewModel.SaveImage">
+            <summary>
+            Gets the action to be performed when the save image button is clicked.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.ViewImageControlViewModel.CopyImage">
+            <summary>
+            Gets the action to be performed when the copy image button is clicked.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.ViewImageControlViewModel.Image">
+            <summary>
+            Gets the attached image.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.Controls.ViewImageControlViewModel.IsLoading">
+            <summary>
+            Gets a value indicating whether the loading animation should be displayed.
+            </summary>
+        </member>
+        <member name="M:GroupMeClientAvalonia.ViewModels.Controls.ViewImageControlViewModel.System#IDisposable#Dispose">
+            <inheritdoc/>
+        </member>
+        <member name="T:GroupMeClientAvalonia.ViewModels.LoginViewModel">
+            <summary>
+            <see cref="T:GroupMeClientAvalonia.ViewModels.LoginViewModel"/> provides the ViewModel for the login screen.
+            </summary>
+        </member>
+        <member name="M:GroupMeClientAvalonia.ViewModels.LoginViewModel.#ctor(GroupMeClientAvalonia.Settings.SettingsManager)">
+            <summary>
+            Initializes a new instance of the <see cref="T:GroupMeClientAvalonia.ViewModels.LoginViewModel"/> class.
+            </summary>
+            <param name="settings">The settings manager that should be used.</param>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.LoginViewModel.LoginButtonClicked">
+            <summary>
+            Gets the action when the login button is clicked.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.LoginViewModel.LoginCompleted">
+            <summary>
+            Gets or sets the action when the login process has been completed.
+            </summary>
+        </member>
+        <member name="M:GroupMeClientAvalonia.ViewModels.MainWindowViewModel.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="!:MainViewModel"/> class.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.MainWindowViewModel.MenuItems">
+            <summary>
+            Gets or sets the list of main items shown in the hamburger menu.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.MainWindowViewModel.MenuOptionItems">
+            <summary>
+            Gets or sets the list of options items shown in the hamburger menu (at the bottom).
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.MainWindowViewModel.SelectedItem">
+            <summary>
+            Gets or sets the currently selected Hamburger Menu Tab.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.MainWindowViewModel.UnreadCount">
+            <summary>
+            Gets or sets the number of unread notifications that should be displayed in the
+            taskbar badge.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.MainWindowViewModel.IsReconnecting">
+            <summary>
+            Gets or sets a value indicating whether the application is currently reconnecting to GroupMe.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.MainWindowViewModel.IsRefreshing">
+            <summary>
+            Gets or sets a value indicating whether the application is currently refreshing the displayed content
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.MainWindowViewModel.PopupManager">
+            <summary>
+            Gets or sets the popup manager to be used for popups 
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.MainWindowViewModel.RefreshEverythingCommand">
+            <summary>
+            Gets or sets the command to be performed to refresh all displayed messages and groups.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.MainWindowViewModel.ToastHolderManager">
+            <summary>
+            Gets the Toast Holder Manager for this application.
+            </summary>
+        </member>
+        <member name="T:GroupMeClientAvalonia.ViewModels.SearchViewModel">
+            <summary>
+            <see cref="T:GroupMeClientAvalonia.ViewModels.SearchViewModel"/> provides a ViewModel for the <see cref="!:Controls.SearchView"/> view.
+            </summary>
+        </member>
+        <member name="M:GroupMeClientAvalonia.ViewModels.SearchViewModel.#ctor(GroupMeClientApi.GroupMeClient,GroupMeClientAvalonia.Caching.CacheContext)">
+            <summary>
+            Initializes a new instance of the <see cref="T:GroupMeClientAvalonia.ViewModels.SearchViewModel"/> class.
+            </summary>
+            <param name="groupMeClient">The client to use.</param>
+            <param name="cacheContext">The cache database to use.</param>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.SearchViewModel.Loaded">
+            <summary>
+            Gets the action that should be executed when the search page loads.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.SearchViewModel.SortedGroupChats">
+            <summary>
+            Gets a listing of all available Groups and Chats.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.SearchViewModel.PopupManager">
+            <summary>
+            Gets or sets the popup manager to be used for popups 
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.SearchViewModel.ResultsView">
+            <summary>
+            Gets the ViewModel for the paginated search results.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.SearchViewModel.ContextView">
+            <summary>
+            Gets the ViewModel for the in-context message view.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.SearchViewModel.GroupChatCachePlugins">
+            <summary>
+            Gets the collection of ViewModels for <see cref="T:GroupMeClientApi.Models.Message"/>s to be displayed.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.SearchViewModel.GroupChatCachePluginActivated">
+            <summary>
+            Gets the action to be performed when a Plugin in the
+            Options Menu is activated.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.SearchViewModel.ActivatePluginOnLoad">
+            <summary>
+            Gets or sets the plugin that should be automatically executed when indexing is complete.
+            This property is only used for UI-automation tasks. If null, the UI will be displayed normally
+            when loading is complete. If a plugin is specified, the group specified in <see cref="P:GroupMeClientAvalonia.ViewModels.SearchViewModel.ActivatePluginForGroupOnLoad"/>
+            will be used as a parameter.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.SearchViewModel.ActivatePluginForGroupOnLoad">
+            <summary>
+            Gets or sets a value indicating which group should be passed as a parameter to an automatically executed
+            plugin. See <see cref="P:GroupMeClientAvalonia.ViewModels.SearchViewModel.ActivatePluginOnLoad"/> for more information.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.SearchViewModel.SearchTerm">
+            <summary>
+            Gets or sets the string entered to search for.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.SearchViewModel.FilterHasAttachedImage">
+            <summary>
+            Gets or sets a value indicating whether only messages containing an image attachment should be shown.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.SearchViewModel.FilterHasAttachedLinkedImage">
+            <summary>
+            Gets or sets a value indicating whether only messages containing a linked image attachment should be shown.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.SearchViewModel.FilterHasAttachedMentions">
+            <summary>
+            Gets or sets a value indicating whether only messages mentioning other users should be shown.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.SearchViewModel.FilterHasAttachedVideo">
+            <summary>
+            Gets or sets a value indicating whether only messages containing a video attachment should be shown.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.SearchViewModel.FilterStartDate">
+            <summary>
+            Gets or sets the beginning date for the time period of messages to display.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.SearchViewModel.FilterEndDate">
+            <summary>
+            Gets or sets the ending date for the time period of messages to display.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.SearchViewModel.SelectedGroupName">
+            <summary>
+            Gets the name of the selected group.
+            </summary>
+        </member>
+        <member name="M:GroupMeClientAvalonia.ViewModels.SearchViewModel.GroupMeClientPlugin#GroupChat#ICachePluginUIIntegration#GotoContextView(GroupMeClientApi.Models.Message,GroupMeClientApi.Models.IMessageContainer)">
+            <inheritdoc/>
+        </member>
+        <member name="T:GroupMeClientAvalonia.ViewModels.SettingsViewModel">
+            <summary>
+            <see cref="T:GroupMeClientAvalonia.ViewModels.SettingsViewModel"/> provides a ViewModel for the <see cref="T:GroupMeClientAvalonia.Views.SettingsView"/>.
+            </summary>
+        </member>
+        <member name="M:GroupMeClientAvalonia.ViewModels.SettingsViewModel.#ctor(GroupMeClientAvalonia.Settings.SettingsManager)">
+            <summary>
+            Initializes a new instance of the <see cref="T:GroupMeClientAvalonia.ViewModels.SettingsViewModel"/> class.
+            </summary>
+            <param name="settingsManager">The settings manager to use.</param>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.SettingsViewModel.InstalledPlugins">
+            <summary>
+            Gets a collection installed plugins, sorted and grouped by type.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.SettingsViewModel.ApplicationVersion">
+            <summary>
+            Gets a string displaying the friendly version number for the application.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.SettingsViewModel.ApplicationCommit">
+            <summary>
+            Gets a string describing the git commit the application has built from.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.SettingsViewModel.ShowPreviewsForMultiImages">
+            <summary>
+            Gets or sets a value indicating whether the UI Setting for only showing previews when multiple images are attached to a single message is enabled.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.SettingsViewModel.MaximumNumberOfMultiChats">
+            <summary>
+            Gets or sets a value indicating how many Multi-Chats are allowed in regular mode.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.SettingsViewModel.MaximumNumberOfMultiChatsMiniBar">
+            <summary>
+            Gets or sets a value indicating how many Multi-Chats are allowed in MiniBar mode.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.SettingsViewModel.Theme">
+            <summary>
+            Gets or sets a value indicating which UI theme should be applied.
+            </summary>
+        </member>
+        <member name="T:GroupMeClientAvalonia.ViewModels.SettingsViewModel.Plugin">
+            <summary>
+            <see cref="T:GroupMeClientAvalonia.ViewModels.SettingsViewModel.Plugin"/> provides metadata and display information about a GroupMe Desktop Client plugin.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.SettingsViewModel.Plugin.Name">
+            <summary>
+            Gets or sets the plugin name.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.SettingsViewModel.Plugin.Version">
+            <summary>
+            Gets or sets the plugin version.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewModels.SettingsViewModel.Plugin.Type">
+            <summary>
+            Gets or sets the plugin type.
+            </summary>
+        </member>
+        <member name="T:GroupMeClientAvalonia.Views.Controls.AvatarControl">
+            <summary>
+            Interaction logic for AvatarControl.xaml
+            </summary>
+        </member>
+        <member name="T:ThisAssembly">
+            <summary>
+            Defines Version Numbers used for automatic assembly versioning.
+            </summary>
+            <summary>Provides access to the current assembly information.</summary>
+        </member>
+        <member name="F:ThisAssembly.SimpleVersion">
+            <summary>
+            Simple release-like version number, like 4.0.1.
+            </summary>
+        </member>
+        <member name="F:ThisAssembly.InformationalVersion">
+            <summary>
+            Full version, plus branch and commit short sha, like 4.0.1-39cf84e-branch.
+            </summary>
+        </member>
+        <member name="T:ThisAssembly.Git">
+            <summary>Provides access to the git information for the current assembly.</summary>
+        </member>
+        <member name="F:ThisAssembly.Git.IsDirty">
+            <summary>IsDirty: false</summary>
+        </member>
+        <member name="F:ThisAssembly.Git.IsDirtyString">
+            <summary>IsDirtyString: false</summary>
+        </member>
+        <member name="F:ThisAssembly.Git.Branch">
+            <summary>Branch: feature/InlineDocumentation</summary>
+        </member>
+        <member name="F:ThisAssembly.Git.Commit">
+            <summary>Commit: 2ecf920</summary>
+        </member>
+        <member name="F:ThisAssembly.Git.Sha">
+            <summary>Sha: 2ecf920b3a7bdab177e7c19e9c85155e2b2e93b4</summary>
+        </member>
+        <member name="F:ThisAssembly.Git.Commits">
+            <summary>Commits on top of base version: 77</summary>
+        </member>
+        <member name="F:ThisAssembly.Git.Tag">
+            <summary>Tag: </summary>
+        </member>
+        <member name="F:ThisAssembly.Git.BaseTag">
+            <summary>Base tag: </summary>
+        </member>
+        <member name="T:ThisAssembly.Git.BaseVersion">
+            <summary>Provides access to the base version information used to determine the <see cref="T:ThisAssembly.Git.SemVer" />.</summary>      
+        </member>
+        <member name="F:ThisAssembly.Git.BaseVersion.Major">
+            <summary>Major: 0</summary>
+        </member>
+        <member name="F:ThisAssembly.Git.BaseVersion.Minor">
+            <summary>Minor: 0</summary>
+        </member>
+        <member name="F:ThisAssembly.Git.BaseVersion.Patch">
+            <summary>Patch: 0</summary>
+        </member>
+        <member name="T:ThisAssembly.Git.SemVer">
+            <summary>Provides access to SemVer information for the current assembly.</summary>
+        </member>
+        <member name="F:ThisAssembly.Git.SemVer.Major">
+            <summary>Major: 0</summary>
+        </member>
+        <member name="F:ThisAssembly.Git.SemVer.Minor">
+            <summary>Minor: 0</summary>
+        </member>
+        <member name="F:ThisAssembly.Git.SemVer.Patch">
+            <summary>Patch: 77</summary>
+        </member>
+        <member name="F:ThisAssembly.Git.SemVer.Label">
+            <summary>Label: </summary>
+        </member>
+        <member name="F:ThisAssembly.Git.SemVer.DashLabel">
+            <summary>Label with dash prefix: </summary>
+        </member>
+        <member name="F:ThisAssembly.Git.SemVer.Source">
+            <summary>Source: Default</summary>
+        </member>
+        <member name="M:DesktopNotifications.DesktopNotificationManagerCompat.RegisterAumidAndComServer``1(System.String)">
+            <summary>
+            If not running under the Desktop Bridge, you must call this method to register your AUMID with the Compat library and to
+            register your COM CLSID and EXE in LocalServer32 registry. Feel free to call this regardless, and we will no-op if running
+            under Desktop Bridge. Call this upon application startup, before calling any other APIs.
+            </summary>
+            <param name="aumid">An AUMID that uniquely identifies your application.</param>
+        </member>
+        <member name="M:DesktopNotifications.DesktopNotificationManagerCompat.RegisterActivator``1">
+            <summary>
+            Registers the activator type as a COM server client so that Windows can launch your activator.
+            </summary>
+            <typeparam name="T">Your implementation of NotificationActivator. Must have GUID and ComVisible attributes on class.</typeparam>
+        </member>
+        <member name="M:DesktopNotifications.DesktopNotificationManagerCompat.CreateToastNotifier">
+            <summary>
+            Creates a toast notifier. You must have called <see cref="M:DesktopNotifications.DesktopNotificationManagerCompat.RegisterActivator``1"/> first (and also <see cref="M:DesktopNotifications.DesktopNotificationManagerCompat.RegisterAumidAndComServer``1(System.String)"/> if you're a classic Win32 app), or this will throw an exception.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:DesktopNotifications.DesktopNotificationManagerCompat.History">
+            <summary>
+            Gets the <see cref="T:DesktopNotifications.DesktopNotificationHistoryCompat"/> object. You must have called <see cref="M:DesktopNotifications.DesktopNotificationManagerCompat.RegisterActivator``1"/> first (and also <see cref="M:DesktopNotifications.DesktopNotificationManagerCompat.RegisterAumidAndComServer``1(System.String)"/> if you're a classic Win32 app), or this will throw an exception.
+            </summary>
+        </member>
+        <member name="P:DesktopNotifications.DesktopNotificationManagerCompat.CanUseHttpImages">
+            <summary>
+            Gets a boolean representing whether http images can be used within toasts. This is true if running under Desktop Bridge.
+            </summary>
+        </member>
+        <member name="T:DesktopNotifications.DesktopNotificationManagerCompat.DesktopBridgeHelpers">
+            <summary>
+            Code from https://github.com/qmatteoq/DesktopBridgeHelpers/edit/master/DesktopBridge.Helpers/Helpers.cs.
+            </summary>
+        </member>
+        <member name="T:DesktopNotifications.DesktopNotificationHistoryCompat">
+            <summary>
+            Manages the toast notifications for an app including the ability the clear all toast history and removing individual toasts.
+            </summary>
+        </member>
+        <member name="M:DesktopNotifications.DesktopNotificationHistoryCompat.#ctor(System.String)">
+            <summary>
+            Do not call this. Instead, call <see cref="P:DesktopNotifications.DesktopNotificationManagerCompat.History"/> to obtain an instance.
+            </summary>
+            <param name="aumid"></param>
+        </member>
+        <member name="M:DesktopNotifications.DesktopNotificationHistoryCompat.Clear">
+            <summary>
+            Removes all notifications sent by this app from action center.
+            </summary>
+        </member>
+        <member name="M:DesktopNotifications.DesktopNotificationHistoryCompat.GetHistory">
+            <summary>
+            Gets all notifications sent by this app that are currently still in Action Center.
+            </summary>
+            <returns>A collection of toasts.</returns>
+        </member>
+        <member name="M:DesktopNotifications.DesktopNotificationHistoryCompat.Remove(System.String)">
+            <summary>
+            Removes an individual toast, with the specified tag label, from action center.
+            </summary>
+            <param name="tag">The tag label of the toast notification to be removed.</param>
+        </member>
+        <member name="M:DesktopNotifications.DesktopNotificationHistoryCompat.Remove(System.String,System.String)">
+            <summary>
+            Removes a toast notification from the action using the notification's tag and group labels.
+            </summary>
+            <param name="tag">The tag label of the toast notification to be removed.</param>
+            <param name="group">The group label of the toast notification to be removed.</param>
+        </member>
+        <member name="M:DesktopNotifications.DesktopNotificationHistoryCompat.RemoveGroup(System.String)">
+            <summary>
+            Removes a group of toast notifications, identified by the specified group label, from action center.
+            </summary>
+            <param name="group">The group label of the toast notifications to be removed.</param>
+        </member>
+        <member name="T:DesktopNotifications.NotificationActivator">
+            <summary>
+            Apps must implement this activator to handle notification activation.
+            </summary>
+        </member>
+        <member name="M:DesktopNotifications.NotificationActivator.OnActivated(System.String,DesktopNotifications.NotificationUserInput,System.String)">
+            <summary>
+            This method will be called when the user clicks on a foreground or background activation on a toast. Parent app must implement this method.
+            </summary>
+            <param name="arguments">The arguments from the original notification. This is either the launch argument if the user clicked the body of your toast, or the arguments from a button on your toast.</param>
+            <param name="userInput">Text and selection values that the user entered in your toast.</param>
+            <param name="appUserModelId">Your AUMID.</param>
+        </member>
+        <member name="T:DesktopNotifications.NotificationUserInput">
+            <summary>
+            Text and selection values that the user entered on your notification. The Key is the ID of the input, and the Value is what the user entered.
+            </summary>
+        </member>
+    </members>
+</doc>

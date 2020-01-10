@@ -19,6 +19,9 @@ using MicroCubeAvalonia.IconPack.Icons;
 
 namespace GroupMeClientAvalonia.ViewModels
 {
+    /// <summary>
+    /// <see cref="MainWindowViewModel"/> is the top-level ViewModel for the GroupMe Desktop Client Avalonia.
+    /// </summary>
     public class MainWindowViewModel : ViewModelBase
     {
         private AvaloniaList<HamburgerMenuItem> menuItems = new AvaloniaList<HamburgerMenuItem>();
@@ -29,7 +32,7 @@ namespace GroupMeClientAvalonia.ViewModels
         private bool isRefreshing;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MainViewModel"/> class.
+        /// Initializes a new instance of the <see cref="MainWindowViewModel"/> class.
         /// </summary>
         public MainWindowViewModel()
         {
@@ -83,7 +86,7 @@ namespace GroupMeClientAvalonia.ViewModels
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the application is currently refreshing the displayed content
+        /// Gets or sets a value indicating whether the application is currently refreshing the displayed content.
         /// </summary>
         public bool IsRefreshing
         {
@@ -92,7 +95,7 @@ namespace GroupMeClientAvalonia.ViewModels
         }
 
         /// <summary>
-        /// Gets or sets the popup manager to be used for popups 
+        /// Gets or sets the popup manager to be used for popups.
         /// </summary>
         public Controls.PopupViewModel PopupManager { get; set; }
 
@@ -182,7 +185,7 @@ namespace GroupMeClientAvalonia.ViewModels
             this.PopupManager = new Controls.PopupViewModel()
             {
                 ClosePopup = new RelayCommand(this.CloseBigPopup),
-                EasyClosePopup = new RelayCommand(this.CloseBigPopup)
+                EasyClosePopup = new RelayCommand(this.CloseBigPopup),
             };
 
             //this.UpdateAssist = new UpdateAssist();

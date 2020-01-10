@@ -99,13 +99,11 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
             saveFileDialog.Filters.Add(new FileDialogFilter() { Name = "PNG Image", Extensions = { "png" } });
 
             var fileName = await saveFileDialog.ShowAsync(Program.GroupMeMainWindow);
-            
+
             if (!string.IsNullOrEmpty(fileName))
             {
-                using (var fs = File.OpenWrite(fileName))
-                {
-                    this.Image.Save(fs);
-                }
+                using var fs = File.OpenWrite(fileName);
+                this.Image.Save(fs);
             }
         }
 

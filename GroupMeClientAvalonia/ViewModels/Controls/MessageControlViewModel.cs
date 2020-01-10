@@ -6,12 +6,12 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using Avalonia;
 using Avalonia.Media;
 using GalaSoft.MvvmLight.Command;
-using GroupMeClientAvalonia.ViewModels.Controls.Attachments;
 using GroupMeClientApi.Models;
 using GroupMeClientApi.Models.Attachments;
-using Avalonia;
+using GroupMeClientAvalonia.ViewModels.Controls.Attachments;
 
 namespace GroupMeClientAvalonia.ViewModels.Controls
 {
@@ -88,7 +88,6 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
         public override Message Message
         {
             get => this.message;
-            
             set
             {
                 if (this.message == value)
@@ -529,7 +528,7 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
             //}
         }
 
-        // TODO fix 
+        // TODO fix
         //private List<Inline> ProcessHyperlinks(Run run)
         //{
         //    var result = new List<Inline>();

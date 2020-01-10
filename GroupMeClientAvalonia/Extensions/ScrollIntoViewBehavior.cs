@@ -1,9 +1,9 @@
-﻿using Avalonia.Controls;
-using Avalonia.Xaml.Interactivity;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Reactive.Linq;
 using System.Text;
+using Avalonia.Controls;
+using Avalonia.Xaml.Interactivity;
 
 namespace GroupMeClientAvalonia.Extensions
 {

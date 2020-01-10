@@ -113,7 +113,6 @@ namespace GroupMeClientAvalonia.ViewModels
             }
         }
 
-
         private Settings.SettingsManager SettingsManager { get; }
 
         private void LoadPluginInfo()
