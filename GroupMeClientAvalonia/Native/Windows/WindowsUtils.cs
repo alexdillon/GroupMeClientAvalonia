@@ -1,4 +1,6 @@
-﻿namespace GroupMeClientAvalonia.Native.Windows
+﻿using System;
+
+namespace GroupMeClientAvalonia.Native.Windows
 {
     /// <summary>
     /// <see cref="WindowsUtils"/> provides helper methods to invoke native operating system functionality when running on Windows.
@@ -23,8 +25,8 @@
                     result = false;
                 }
             }
-            catch 
-            { 
+            catch (Exception)
+            {
             }
 
             return result;
