@@ -19,6 +19,9 @@ using MicroCubeAvalonia.IconPack.Icons;
 
 namespace GroupMeClientAvalonia.ViewModels
 {
+    /// <summary>
+    /// <see cref="MainWindowViewModel"/> is the top-level ViewModel for the GroupMe Desktop Client Avalonia.
+    /// </summary>
     public class MainWindowViewModel : ViewModelBase
     {
         private AvaloniaList<HamburgerMenuItem> menuItems = new AvaloniaList<HamburgerMenuItem>();
@@ -29,7 +32,7 @@ namespace GroupMeClientAvalonia.ViewModels
         private bool isRefreshing;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MainViewModel"/> class.
+        /// Initializes a new instance of the <see cref="MainWindowViewModel"/> class.
         /// </summary>
         public MainWindowViewModel()
         {
@@ -83,7 +86,7 @@ namespace GroupMeClientAvalonia.ViewModels
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the application is currently refreshing the displayed content
+        /// Gets or sets a value indicating whether the application is currently refreshing the displayed content.
         /// </summary>
         public bool IsRefreshing
         {
@@ -92,7 +95,7 @@ namespace GroupMeClientAvalonia.ViewModels
         }
 
         /// <summary>
-        /// Gets or sets the popup manager to be used for popups 
+        /// Gets or sets the popup manager to be used for popups.
         /// </summary>
         public Controls.PopupViewModel PopupManager { get; set; }
 
@@ -124,7 +127,7 @@ namespace GroupMeClientAvalonia.ViewModels
 
         private NotificationRouter NotificationRouter { get; set; }
 
-        //private UpdateAssist UpdateAssist { get; set; }
+        /*private UpdateAssist UpdateAssist { get; set; }*/
 
         private ChatsViewModel ChatsViewModel { get; set; }
 
@@ -182,11 +185,13 @@ namespace GroupMeClientAvalonia.ViewModels
             this.PopupManager = new Controls.PopupViewModel()
             {
                 ClosePopup = new RelayCommand(this.CloseBigPopup),
-                EasyClosePopup = new RelayCommand(this.CloseBigPopup)
+                EasyClosePopup = new RelayCommand(this.CloseBigPopup),
             };
 
-            //this.UpdateAssist = new UpdateAssist();
-            //Application.Current.MainWindow.Closing += new CancelEventHandler(this.MainWindow_Closing);
+            /*
+            this.UpdateAssist = new UpdateAssist();
+            Application.Current.MainWindow.Closing += new CancelEventHandler(this.MainWindow_Closing);
+            */
         }
 
         private void RegisterNotifications()
@@ -263,22 +268,22 @@ namespace GroupMeClientAvalonia.ViewModels
 
         private void MainWindow_Closing(object sender, CancelEventArgs e)
         {
-            //if (!this.UpdateAssist.CanShutdown)
-            //{
-            //    this.UpdateAssist.UpdateMonitor.Task.ContinueWith(this.UpdateCompleted);
-            //    e.Cancel = true;
+            /*if (!this.UpdateAssist.CanShutdown)
+            {
+                this.UpdateAssist.UpdateMonitor.Task.ContinueWith(this.UpdateCompleted);
+                e.Cancel = true;
 
-            //    var updatingTab = new HamburgerMenuIconItem()
-            //    {
-            //        Icon = this.UpdatingSpinner,
-            //        Label = "Updating",
-            //        ToolTip = "Updating",
-            //        Tag = new UpdatingViewModel(),
-            //    };
+                var updatingTab = new HamburgerMenuIconItem()
+                {
+                    Icon = this.UpdatingSpinner,
+                    Label = "Updating",
+                    ToolTip = "Updating",
+                    Tag = new UpdatingViewModel(),
+                };
 
-            //    this.MenuItems.Add(updatingTab);
-            //    this.SelectedItem = updatingTab;
-            //}
+                this.MenuItems.Add(updatingTab);
+                this.SelectedItem = updatingTab;
+            }*/
         }
 
         private void OpenBigPopup(Messaging.DialogRequestMessage dialog)

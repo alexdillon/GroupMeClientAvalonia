@@ -1,7 +1,7 @@
-﻿using Avalonia;
+﻿using System.Linq;
+using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Media;
-using System.Linq;
 
 namespace GroupMeClientAvalonia.Extensions
 {
@@ -18,6 +18,7 @@ namespace GroupMeClientAvalonia.Extensions
 
         private bool IsMouseDown { get; set; }
 
+        /// <inheritdoc/>
         public override void EndInit()
         {
             base.EndInit();
@@ -90,7 +91,7 @@ namespace GroupMeClientAvalonia.Extensions
                 {
                     return;
                 }
-                
+
                 double zoom = e.Delta.Y > 0 ? .1 : -.1;
                 if (!(e.Delta.Y > 0) && (st.ScaleX < .4 || st.ScaleY < .4))
                 {
@@ -139,7 +140,6 @@ namespace GroupMeClientAvalonia.Extensions
             {
                 this.IsMouseDown = false;
                 this.Cursor = new Avalonia.Input.Cursor(Avalonia.Input.StandardCursorType.Arrow);
-                //this.Cursor = Cursors.Arrow;
             }
         }
 

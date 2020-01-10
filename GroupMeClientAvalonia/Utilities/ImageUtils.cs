@@ -1,5 +1,5 @@
-﻿using Avalonia.Media.Imaging;
-using System.IO;
+﻿using System.IO;
+using Avalonia.Media.Imaging;
 
 namespace GroupMeClientAvalonia.Utilities
 {
@@ -15,11 +15,9 @@ namespace GroupMeClientAvalonia.Utilities
         /// <returns>A png encoded array of raw bytes.</returns>
         public static byte[] BitmapSourceToBytes(IBitmap image)
         {
-            using (var stream = new MemoryStream())
-            {
-                image.Save(stream);
-                return stream.ToArray();
-            }
+            using var stream = new MemoryStream();
+            image.Save(stream);
+            return stream.ToArray();
         }
 
         /// <summary>
@@ -29,10 +27,8 @@ namespace GroupMeClientAvalonia.Utilities
         /// <returns>A Wpf <see cref="ImageSource"/>.</returns>
         public static IBitmap BytesToImageSource(byte[] image)
         {
-            using (var ms = new MemoryStream(image))
-            {
-                return new Bitmap(ms);
-            }
+            using var ms = new MemoryStream(image);
+            return new Bitmap(ms);
         }
 
         /// <summary>
@@ -44,30 +40,30 @@ namespace GroupMeClientAvalonia.Utilities
         /// <returns>A Wpf <see cref="ImageSource"/>.</returns>
         public static IBitmap BytesToImageSource(byte[] image, int maxWidth, int maxHeight)
         {
-            //TODO
+            // TODO: Can the maximum width and height optimizations be applied in Avalonia?
             return BytesToImageSource(image);
 
-            //using (var ms = new MemoryStream(image))
-            //{
-            //    var bitmapImage = new BitmapImage();
-            //    bitmapImage.BeginInit();
-            //    bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
-            //    bitmapImage.StreamSource = ms;
+            /*using (var ms = new MemoryStream(image))
+            {
+                var bitmapImage = new BitmapImage();
+                bitmapImage.BeginInit();
+                bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+                bitmapImage.StreamSource = ms;
 
-            //    if (maxWidth > maxHeight)
-            //    {
-            //        bitmapImage.DecodePixelWidth = maxWidth;
-            //    }
-            //    else
-            //    {
-            //        bitmapImage.DecodePixelHeight = maxHeight;
-            //    }
+                if (maxWidth > maxHeight)
+                {
+                    bitmapImage.DecodePixelWidth = maxWidth;
+                }
+                else
+                {
+                    bitmapImage.DecodePixelHeight = maxHeight;
+                }
 
-            //    bitmapImage.EndInit();
-            //    bitmapImage.Freeze();
+                bitmapImage.EndInit();
+                bitmapImage.Freeze();
 
-            //    return bitmapImage;
-            //}
+                return bitmapImage;
+            }*/
         }
     }
 }

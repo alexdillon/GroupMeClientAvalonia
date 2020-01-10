@@ -1,10 +1,10 @@
-﻿using Avalonia;
-using Avalonia.Controls;
-using Avalonia.Xaml.Interactivity;
-using System;
+﻿using System;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Windows.Input;
+using Avalonia;
+using Avalonia.Controls;
+using Avalonia.Xaml.Interactivity;
 
 namespace GroupMeClientAvalonia.Extensions
 {
@@ -14,19 +14,13 @@ namespace GroupMeClientAvalonia.Extensions
     /// </summary>
     public class InfiniteScrollBehavior : Behavior<ListBox>
     {
-        private double verticalHeightMax = 0.0;
-        private readonly CompositeDisposable disposables = new CompositeDisposable();
-        private ICommand reachedTopCommand;
-        private bool autoScrollToBottom;
-        private bool isLockedToBottom = true;
-
         /// <summary>
         /// Gets an Avalonia Property for the command to execute when scrolled to the top of the list.
         /// </summary>
         public static readonly DirectProperty<InfiniteScrollBehavior, ICommand> ReachedTopCommandProperty =
             AvaloniaProperty.RegisterDirect<InfiniteScrollBehavior, ICommand>(
                 nameof(ReachedTopCommand),
-                isb => isb.ReachedTopCommand, 
+                isb => isb.ReachedTopCommand,
                 (isb, command) => isb.ReachedTopCommand = command);
 
         /// <summary>
@@ -44,6 +38,13 @@ namespace GroupMeClientAvalonia.Extensions
           AvaloniaProperty.RegisterDirect<InfiniteScrollBehavior, bool>(
               nameof(LockedToBottom),
               isb => isb.LockedToBottom);
+
+        private readonly CompositeDisposable disposables = new CompositeDisposable();
+
+        private double verticalHeightMax = 0.0;
+        private ICommand reachedTopCommand;
+        private bool autoScrollToBottom;
+        private bool isLockedToBottom = true;
 
         /// <summary>
         /// Gets or sets the command to execute when the list is scrolled to the top.
@@ -84,7 +85,7 @@ namespace GroupMeClientAvalonia.Extensions
                     var scrollViewer = this.AssociatedObject.Scroll as ScrollViewer;
 
                     scrollViewer.GetObservable(ScrollViewer.VerticalScrollBarMaximumProperty)
-                    .Subscribe(vscroll => 
+                    .Subscribe(vscroll =>
                     {
                         this.verticalHeightMax = vscroll;
 
@@ -104,7 +105,7 @@ namespace GroupMeClientAvalonia.Extensions
                             this.LockedToBottom = scrollViewer.Bounds.Height == 0;
                         }
 
-                        if (offset.Y <= Double.Epsilon)
+                        if (offset.Y <= double.Epsilon)
                         {
                             // At top
                             if (this.ReachedTopCommand.CanExecute(scrollViewer))
@@ -115,7 +116,7 @@ namespace GroupMeClientAvalonia.Extensions
 
                         var delta = Math.Abs(this.verticalHeightMax - offset.Y);
 
-                        if (delta <= Double.Epsilon)
+                        if (delta <= double.Epsilon)
                         {
                             // At bottom
                             this.AssociatedObject.SetValue(InfiniteScrollBehaviorPositionHelper.IsNotAtBottomProperty, false);
@@ -145,42 +146,5 @@ namespace GroupMeClientAvalonia.Extensions
             {
             }
         }
-    }
-
-    /// <summary>
-    /// <see cref="InfiniteScrollBehaviorPositionHelper"/> provides support for easily binding to the scroll position
-    /// of a <see cref="ListBox"/> when used in conjunction with the <see cref="InfiniteScrollBehavior"/> behavior.
-    /// </summary>
-    public class InfiniteScrollBehaviorPositionHelper
-    {
-        /// <summary>
-        /// Gets an Avalonia Property indicating whether the list is not scrolled to the bottom.
-        /// </summary>
-        public static readonly AvaloniaProperty IsNotAtBottomProperty =
-          AvaloniaProperty.RegisterAttached<ListBox, bool>(
-              "IsNotAtBottom",
-              typeof(InfiniteScrollBehavior),
-              defaultValue: false);
-
-        /// <summary>
-        /// Gets a value indiciating whether the list is currently not scrolled to the bottom.
-        /// </summary>
-        /// <param name="obj">The dependency object to retreive the property from.</param>
-        /// <returns>A boolean indicating whether the list is not at the bottom.</returns>
-        public static bool GetIsNotAtBottom(AvaloniaObject obj)
-        {
-            return (bool)obj.GetValue(IsNotAtBottomProperty);
-        }
-
-        /// <summary>
-        /// Sets a value indicating whether the list is currently not scrolled to the bottom.
-        /// </summary>
-        /// <param name="obj">The dependency object to retreive the property from.</param>
-        /// <param name="value">Whether the list is not at the bottom.</param>
-        public static void SetIsNotAtBottom(AvaloniaObject obj, bool value)
-        {
-            obj.SetValue(IsNotAtBottomProperty, value);
-        }
-
     }
 }

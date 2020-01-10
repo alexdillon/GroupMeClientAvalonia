@@ -34,9 +34,10 @@ namespace GroupMeClientAvalonia.Notifications.Display
             }
             else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
             {
-                // TODO 
+                // TODO
                 return null;
             }
+
             return null;
         }
 

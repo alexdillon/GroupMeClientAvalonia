@@ -27,7 +27,7 @@ namespace GroupMeClientAvalonia.ViewModels
         }
 
         /// <summary>
-        /// Gets a collection installed plugins, sorted and grouped by type.
+        /// Gets or sets a collection installed plugins, sorted and grouped by type.
         /// </summary>
         public DataGridCollectionView InstalledPlugins { get; set; }
 
@@ -112,7 +112,6 @@ namespace GroupMeClientAvalonia.ViewModels
                 this.SettingsManager.SaveSettings();
             }
         }
-
 
         private Settings.SettingsManager SettingsManager { get; }
 

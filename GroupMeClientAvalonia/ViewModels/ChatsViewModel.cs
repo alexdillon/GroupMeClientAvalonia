@@ -1,25 +1,25 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Reactive;
+using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Avalonia;
+using DynamicData;
+using DynamicData.Binding;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
+using GroupMeClientApi.Models;
+using GroupMeClientApi.Push;
+using GroupMeClientApi.Push.Notifications;
 using GroupMeClientAvalonia.Notifications;
 using GroupMeClientAvalonia.Settings;
 using GroupMeClientAvalonia.Utilities;
 using GroupMeClientAvalonia.ViewModels.Controls;
-using GroupMeClientApi.Models;
-using GroupMeClientApi.Push;
-using GroupMeClientApi.Push.Notifications;
-using Avalonia;
-using System.Reactive.Linq;
-using DynamicData;
-using DynamicData.Binding;
 using ReactiveUI;
-using System.Reactive;
 
 namespace GroupMeClientAvalonia.ViewModels
 {
@@ -123,11 +123,6 @@ namespace GroupMeClientAvalonia.ViewModels
 
         private Timer RetryTimer { get; set; }
 
-        private Func<GroupControlViewModel, bool> BuildGroupFilter(string searchText)
-        {
-            return group => group.Title.Contains(searchText, StringComparison.OrdinalIgnoreCase);
-        }
-
         /// <inheritdoc/>
         async Task INotificationSink.GroupUpdated(LineMessageCreateNotification notification, IMessageContainer container)
         {
@@ -220,7 +215,6 @@ namespace GroupMeClientAvalonia.ViewModels
                     // Code to update the UI needs to be run on the Application Dispatcher
                     // This is typically the case, but Timer events from ReliabilityStateMachine for
                     // retry-callbacks will NOT run on the original thread.
-                    
                     await Avalonia.Threading.Dispatcher.UIThread.InvokeAsync(() =>
                     {
                         // calculate how many new messages have been added since the group/chat was last read
@@ -278,6 +272,11 @@ namespace GroupMeClientAvalonia.ViewModels
             {
                 this.ReloadGroupsSem.Release();
             }
+        }
+
+        private Func<GroupControlViewModel, bool> BuildGroupFilter(string searchText)
+        {
+            return group => group.Title.Contains(searchText, StringComparison.OrdinalIgnoreCase);
         }
 
         private void OpenNewGroupChat(GroupControlViewModel group)

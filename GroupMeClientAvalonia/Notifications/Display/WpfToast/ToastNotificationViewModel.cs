@@ -1,8 +1,8 @@
 ﻿using System.Windows.Input;
 using GalaSoft.MvvmLight;
-using GroupMeClientAvalonia.ViewModels.Controls;
 using GroupMeClientApi;
 using GroupMeClientApi.Models;
+using GroupMeClientAvalonia.ViewModels.Controls;
 
 namespace GroupMeClientAvalonia.Notifications.Display.WpfToast
 {

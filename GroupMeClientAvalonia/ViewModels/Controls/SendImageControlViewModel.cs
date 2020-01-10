@@ -1,9 +1,9 @@
-﻿using Avalonia.Input;
-using Avalonia.Media.Imaging;
-using GalaSoft.MvvmLight.Command;
-using System;
+﻿using System;
 using System.IO;
 using System.Windows.Input;
+using Avalonia.Input;
+using Avalonia.Media.Imaging;
+using GalaSoft.MvvmLight.Command;
 
 namespace GroupMeClientAvalonia.ViewModels.Controls
 {
@@ -33,7 +33,7 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
         public IBitmap Image { get; set; }
 
         /// <summary>
-        /// The raw encoded image data corresponding to <see cref="Image"/>.
+        /// Gets or sets the raw encoded image data corresponding to <see cref="Image"/>.
         /// </summary>
         public byte[] ImageData { get; set; }
 

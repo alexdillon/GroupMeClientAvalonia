@@ -99,26 +99,26 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
             saveFileDialog.Filters.Add(new FileDialogFilter() { Name = "PNG Image", Extensions = { "png" } });
 
             var fileName = await saveFileDialog.ShowAsync(Program.GroupMeMainWindow);
-            
+
             if (!string.IsNullOrEmpty(fileName))
             {
-                using (var fs = File.OpenWrite(fileName))
-                {
-                    this.Image.Save(fs);
-                }
+                using var fs = File.OpenWrite(fileName);
+                this.Image.Save(fs);
             }
         }
 
         private void CopyImageAction()
         {
-            //var ms = new MemoryStream();
-            //this.ImageStream.Seek(0, SeekOrigin.Begin);
-            //this.ImageStream.CopyTo(ms);
+            // TODO: Support copying images to clipboard.
+            /*
+            var ms = new MemoryStream();
+            this.ImageStream.Seek(0, SeekOrigin.Begin);
+            this.ImageStream.CopyTo(ms);
 
-            //var image = Utilities.ImageUtils.BytesToImageSource(ms.ToArray());
+            var image = Utilities.ImageUtils.BytesToImageSource(ms.ToArray());
 
-            // TODO
-            //System.Windows.Clipboard.SetImage(image as BitmapSource);
+            System.Windows.Clipboard.SetImage(image as BitmapSource);
+            */
         }
     }
 }

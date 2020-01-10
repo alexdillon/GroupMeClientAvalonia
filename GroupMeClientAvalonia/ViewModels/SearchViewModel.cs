@@ -2,21 +2,21 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Reactive;
+using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using DynamicData;
+using DynamicData.Binding;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
-using GroupMeClientAvalonia.ViewModels.Controls;
 using GroupMeClientApi.Models;
+using GroupMeClientApi.Models.Attachments;
+using GroupMeClientAvalonia.ViewModels.Controls;
 using GroupMeClientPlugin.GroupChat;
 using Microsoft.EntityFrameworkCore;
-using System.Reactive;
 using ReactiveUI;
-using DynamicData.Binding;
-using DynamicData;
-using System.Reactive.Linq;
-using GroupMeClientApi.Models.Attachments;
 
 namespace GroupMeClientAvalonia.ViewModels
 {
@@ -104,7 +104,7 @@ namespace GroupMeClientAvalonia.ViewModels
         public IObservableCollection<GroupControlViewModel> SortedGroupChats { get; }
 
         /// <summary>
-        /// Gets or sets the popup manager to be used for popups 
+        /// Gets or sets the popup manager to be used for popups.
         /// </summary>
         public Controls.PopupViewModel PopupManager { get; set; }
 

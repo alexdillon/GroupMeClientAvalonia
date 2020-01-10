@@ -6,12 +6,12 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using Avalonia;
 using Avalonia.Media;
 using GalaSoft.MvvmLight.Command;
-using GroupMeClientAvalonia.ViewModels.Controls.Attachments;
 using GroupMeClientApi.Models;
 using GroupMeClientApi.Models.Attachments;
-using Avalonia;
+using GroupMeClientAvalonia.ViewModels.Controls.Attachments;
 
 namespace GroupMeClientAvalonia.ViewModels.Controls
 {
@@ -38,7 +38,7 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
             this.Message = message;
 
             this.Avatar = new AvatarControlViewModel(this.Message, this.Message.ImageDownloader);
-            //this.Inlines = new ObservableCollection<Inline>();
+            /*this.Inlines = new ObservableCollection<Inline>();*/
             this.LikeAction = new RelayCommand(async () => { await this.LikeMessageAsync(); }, () => { return true; }, true);
             this.ToggleMessageDetails = new RelayCommand(() => this.ShowDetails = !this.ShowDetails);
 
@@ -88,7 +88,6 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
         public override Message Message
         {
             get => this.message;
-            
             set
             {
                 if (this.message == value)
@@ -140,10 +139,13 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
             }
         }
 
-        ///// <summary>
-        ///// Gets a collection of inline text blocks to display for the message.
-        ///// </summary>
-        //public ObservableCollection<Inline> Inlines { get; }
+        // TODO: Support inlines for message content for displaying hyperlinks, bold mentions, etc.
+        /*
+        /// <summary>
+        /// Gets a collection of inline text blocks to display for the message.
+        /// </summary>
+        public ObservableCollection<Inline> Inlines { get; }
+        */
 
         /// <summary>
         /// Gets a string indicating which GroupMe Platform was used to send this <see cref="Message"/>.
@@ -467,118 +469,121 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
         }
 
         // TODO
-
         private void LoadInlinesForMessageBody()
         {
-            //var text = this.Message.Text ?? string.Empty;
+            /*
+            var text = this.Message.Text ?? string.Empty;
 
-            //if (!string.IsNullOrEmpty(this.HiddenText))
-            //{
-            //    text = text.Replace(this.HiddenText, string.Empty);
-            //}
+            if (!string.IsNullOrEmpty(this.HiddenText))
+            {
+                text = text.Replace(this.HiddenText, string.Empty);
+            }
 
-            //var inlinesTemp = new List<Inline>();
-            //var inlinesResult = new List<Inline>();
+            var inlinesTemp = new List<Inline>();
+            var inlinesResult = new List<Inline>();
 
-            //// Process Mentions
-            //var sortedMentions = this.Message.Attachments.OfType<MentionsAttachment>().FirstOrDefault()?.Mentions().ToList().OrderBy(m => m.startIndex) ?? null;
-            //if (sortedMentions != null)
-            //{
-            //    var remainingText = text;
-            //    var lastOffset = 0;
-            //    foreach (var mention in sortedMentions)
-            //    {
-            //        var leadingText = new Run(remainingText.Substring(0, mention.startIndex - lastOffset));
-            //        var mentionTag = new Bold(new Run(remainingText.Substring(mention.startIndex - lastOffset, mention.length)) { FontWeight = FontWeights.SemiBold });
+            // Process Mentions
+            var sortedMentions = this.Message.Attachments.OfType<MentionsAttachment>().FirstOrDefault()?.Mentions().ToList().OrderBy(m => m.startIndex) ?? null;
+            if (sortedMentions != null)
+            {
+                var remainingText = text;
+                var lastOffset = 0;
+                foreach (var mention in sortedMentions)
+                {
+                    var leadingText = new Run(remainingText.Substring(0, mention.startIndex - lastOffset));
+                    var mentionTag = new Bold(new Run(remainingText.Substring(mention.startIndex - lastOffset, mention.length)) { FontWeight = FontWeights.SemiBold });
 
-            //        remainingText = remainingText.Substring(mention.startIndex + mention.length - lastOffset);
-            //        lastOffset = mention.startIndex + mention.length;
+                    remainingText = remainingText.Substring(mention.startIndex + mention.length - lastOffset);
+                    lastOffset = mention.startIndex + mention.length;
 
-            //        inlinesTemp.Add(leadingText);
-            //        inlinesTemp.Add(mentionTag);
-            //    }
+                    inlinesTemp.Add(leadingText);
+                    inlinesTemp.Add(mentionTag);
+                }
 
-            //    inlinesTemp.Add(new Run(remainingText));
-            //}
-            //else
-            //{
-            //    inlinesTemp.Add(new Run(text));
-            //}
+                inlinesTemp.Add(new Run(remainingText));
+            }
+            else
+            {
+                inlinesTemp.Add(new Run(text));
+            }
 
-            //// Process Hyperlinks
-            //foreach (var part in inlinesTemp)
-            //{
-            //    if (part is Run r)
-            //    {
-            //        // scan this portion of the message for hyperlinks
-            //        inlinesResult.AddRange(this.ProcessHyperlinks(r));
-            //    }
-            //    else
-            //    {
-            //        // this part of the message has already been processed, pass it through
-            //        inlinesResult.Add(part);
-            //    }
-            //}
+            // Process Hyperlinks
+            foreach (var part in inlinesTemp)
+            {
+                if (part is Run r)
+                {
+                    // scan this portion of the message for hyperlinks
+                    inlinesResult.AddRange(this.ProcessHyperlinks(r));
+                }
+                else
+                {
+                    // this part of the message has already been processed, pass it through
+                    inlinesResult.Add(part);
+                }
+            }
 
-            ///* TODO: Swap inlinesTemp and inlinesResult and repeat for addition special content types */
+            // TODO: Swap inlinesTemp and inlinesResult and repeat for addition special content types
 
-            //this.Inlines.Clear();
-            //foreach (var result in inlinesResult)
-            //{
-            //    this.Inlines.Add(result);
-            //}
+            this.Inlines.Clear();
+            foreach (var result in inlinesResult)
+            {
+                this.Inlines.Add(result);
+            }
+            */
         }
 
-        // TODO fix 
-        //private List<Inline> ProcessHyperlinks(Run run)
-        //{
-        //    var result = new List<Inline>();
-        //    var text = run.Text;
+        // TODO fix
+        /*
+        private List<Inline> ProcessHyperlinks(Run run)
+        {
+            var result = new List<Inline>();
+            var text = run.Text;
 
-        //    while (true)
-        //    {
-        //        if (!Regex.IsMatch(text, Utilities.RegexUtils.UrlRegex))
-        //        {
-        //             no URLs contained
-        //            result.Add(new Run(text));
-        //            break;
-        //        }
-        //        else
-        //        {
-        //             url is contained in the input string
-        //            var match = Regex.Match(text, Utilities.RegexUtils.UrlRegex);
+            while (true)
+            {
+                if (!Regex.IsMatch(text, Utilities.RegexUtils.UrlRegex))
+                {
+                    no URLs contained
+                    result.Add(new Run(text));
+                    break;
+                }
+                else
+                {
+                    url is contained in the input string
+                   var match = Regex.Match(text, Utilities.RegexUtils.UrlRegex);
 
-        //            if (match.Index > 0)
-        //            {
-        //                 convert the leading text to a Run
-        //                result.Add(new Run(text.Substring(0, match.Index)));
-        //            }
+                    if (match.Index > 0)
+                    {
+                        convert the leading text to a Run
+                        result.Add(new Run(text.Substring(0, match.Index)));
+                    }
 
-        //            try
-        //            {
-        //                var hyperlink = new Hyperlink(new Run(match.Value))
-        //                {
-        //                    NavigateUri = new Uri(match.Value),
-        //                };
+                    try
+                    {
+                        var hyperlink = new Hyperlink(new Run(match.Value))
+                        {
+                            NavigateUri = new Uri(match.Value),
+                        };
 
-        //                Extensions.WebHyperlinkExtensions.SetIsWebLink(hyperlink, true);
+                        Extensions.WebHyperlinkExtensions.SetIsWebLink(hyperlink, true);
 
-        //                result.Add(hyperlink);
-        //            }
-        //            catch (Exception)
-        //            {
-        //                 Some super strange URLs pass the regex, but fail
-        //                 to decode correctly. Ignore if this happens.
-        //                result.Add(new Run(match.Value));
-        //            }
+                        result.Add(hyperlink);
+                    }
+                    catch (Exception)
+                    {
+                        Some super strange URLs pass the regex, but fail
+                         to decode correctly.Ignore if this happens.
+                       result.Add(new Run(match.Value));
+                    }
 
-        //             Keep looping over the rest of the string.
-        //            text = text.Substring(match.Index + match.Length);
-        //        }
-        //    }
+                    Keep looping over the rest of the string.
+                   text = text.Substring(match.Index + match.Length);
+                }
+            }
 
-        //    return result;
-        //}
+            return result;
+        }
+        */
 
         /// <summary>
         /// <see cref="Liker"/> represents an avatar/name pair for a person who has liked a <see cref="Message"/>.

@@ -1,9 +1,9 @@
-﻿using Avalonia.Collections;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Avalonia.Collections;
 
 namespace GroupMeClientAvalonia.ViewModels.Controls
 {
@@ -24,7 +24,7 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
         }
 
         /// <summary>
-        /// Gets a collection of generated messages produced by plugins, sorted by source.
+        /// Gets or sets a collection of generated messages produced by plugins, sorted by source.
         /// </summary>
         public DataGridCollectionView GeneratedMessages
         {

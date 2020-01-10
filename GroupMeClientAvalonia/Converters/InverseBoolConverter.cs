@@ -1,5 +1,5 @@
-﻿using Avalonia.Data.Converters;
-using System;
+﻿using System;
+using Avalonia.Data.Converters;
 
 namespace GroupMeClientAvalonia.Converters
 {

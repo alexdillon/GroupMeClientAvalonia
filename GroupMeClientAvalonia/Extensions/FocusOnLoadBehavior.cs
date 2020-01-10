@@ -1,7 +1,7 @@
-﻿using Avalonia;
+﻿using System;
+using Avalonia;
 using Avalonia.Input;
 using Avalonia.Xaml.Interactivity;
-using System;
 
 namespace GroupMeClientAvalonia.Extensions
 {
@@ -34,7 +34,7 @@ namespace GroupMeClientAvalonia.Extensions
             base.OnAttached();
             this.AssociatedObject.AttachedToVisualTree += this.AssociatedObject_AttachedToVisualTree;
         }
-     
+
         /// <inheritdoc />
         protected override void OnDetaching()
         {

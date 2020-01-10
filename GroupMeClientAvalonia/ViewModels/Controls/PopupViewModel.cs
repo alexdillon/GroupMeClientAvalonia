@@ -5,6 +5,9 @@ using GalaSoft.MvvmLight.Command;
 
 namespace GroupMeClientAvalonia.ViewModels.Controls
 {
+    /// <summary>
+    /// <see cref="PopupViewModel"/> provides a ViewModel for the <see cref="Views.Controls.Popup"/> control.
+    /// </summary>
     public class PopupViewModel : ViewModelBase
     {
         private ViewModelBase popupDialog;
@@ -12,6 +15,9 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
         private ICommand closePopup;
         private ICommand easyClosePopup;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PopupViewModel"/> class.
+        /// </summary>
         public PopupViewModel()
         {
             this.CheckEasyClose = new RelayCommand<object>(this.CheckEasyCloseHandler);
@@ -28,7 +34,7 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
             set
             {
                 this.Set(() => this.PopupDialog, ref this.popupDialog, value);
-                this.ShowPopup = (this.PopupDialog != null);
+                this.ShowPopup = this.PopupDialog != null;
             }
         }
 

@@ -1,9 +1,9 @@
-﻿using Avalonia;
+﻿using System;
+using System.Windows.Input;
+using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Xaml.Interactivity;
-using System;
-using System.Windows.Input;
 
 namespace GroupMeClientAvalonia.Extensions
 {
@@ -13,8 +13,6 @@ namespace GroupMeClientAvalonia.Extensions
     /// </summary>
     public class TextBoxSendBehavior : Behavior<TextBox>
     {
-        private ICommand sendCommand;
-
         /// <summary>
         /// Gets an Avalonia Property for the command to execute when sending is invoked.
         /// </summary>
@@ -23,6 +21,8 @@ namespace GroupMeClientAvalonia.Extensions
                 nameof(SendCommand),
                 tsb => tsb.SendCommand,
                 (tsb, command) => tsb.SendCommand = command);
+
+        private ICommand sendCommand;
 
         /// <summary>
         /// Gets or sets the command to execute when send behavior is invoked.
