@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Newtonsoft.Json.Converters;
+using System.Text.Json.Serialization;
 
 namespace GroupMeClientAvalonia.Settings
 {
@@ -35,6 +32,7 @@ namespace GroupMeClientAvalonia.Settings
         /// <summary>
         /// Gets or sets the user selected theme that should be applied to the entire application UI.
         /// </summary>
+        [JsonConverter(typeof(StringEnumConverter))]
         public ThemeOptions Theme
         {
             get => this.theme;
