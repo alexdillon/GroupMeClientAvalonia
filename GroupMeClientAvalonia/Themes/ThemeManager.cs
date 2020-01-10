@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 using Avalonia;
 using Avalonia.Markup.Xaml.Styling;
 
@@ -94,6 +95,31 @@ namespace GroupMeClientAvalonia.Themes
             else
             {
                 IsPending = true;
+            }
+        }
+
+        /// <summary>
+        /// Applies the system prefered theme.
+        /// </summary>
+        public static void SetSystemTheme()
+        {
+            var useDarkTheme = false;
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                useDarkTheme = !Native.Windows.WindowsUtils.IsAppLightThemePreferred();
+            }
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            {
+                // TODO
+            }
+
+            if (useDarkTheme)
+            {
+                SetDarkTheme();
+            }
+            else
+            {
+                SetLightTheme();
             }
         }
 

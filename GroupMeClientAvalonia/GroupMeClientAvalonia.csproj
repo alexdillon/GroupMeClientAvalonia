@@ -280,4 +280,9 @@
     </EmbeddedResource>
   </ItemGroup>
   
+  <ItemGroup>
+    <Folder Include="Native\macOS\" />
+    <Folder Include="Native\Linux\" />
+  </ItemGroup>
+  
 </Project>
