@@ -316,6 +316,9 @@
             Adapted from https://stackoverflow.com/a/6782715.
             </remarks>
         </member>
+        <member name="M:GroupMeClientAvalonia.Extensions.ZoomBorder.EndInit">
+            <inheritdoc/>
+        </member>
         <member name="M:GroupMeClientAvalonia.Extensions.ZoomBorder.Initialize">
             <summary>
             Initializes the <see cref="T:GroupMeClientAvalonia.Extensions.ZoomBorder"/> control.
@@ -699,6 +702,11 @@
             </summary>
             <param name="pluginsPath">The folder to load plugins from.</param>
         </member>
+        <member name="T:GroupMeClientAvalonia.Program">
+            <summary>
+            <see cref="T:GroupMeClientAvalonia.Program"/> is the entry-point for GroupMe Desktop Client Avalonia.
+            </summary>
+        </member>
         <member name="T:GroupMeClientAvalonia.Properties.Resources">
             <summary>
               A strongly-typed resource class, for looking up localized strings, etc.
@@ -839,6 +847,36 @@
             Gets or sets the user selected theme that should be applied to the entire application UI.
             </summary>
         </member>
+        <member name="T:GroupMeClientAvalonia.Themes.ThemeManager">
+            <summary>
+            <see cref="T:GroupMeClientAvalonia.Themes.ThemeManager"/> provides support for changing the GroupMe Desktop Client Avalonia theme at runtime.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.Themes.ThemeManager.CurrentAvaloniaTheme">
+            <summary>
+            Gets the style dictionary associated with the current base Avalonia theme.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.Themes.ThemeManager.CurrentGroupMeTheme">
+            <summary>
+            Gets the style dictionary associated with the current GroupMe theme.
+            </summary>
+        </member>
+        <member name="M:GroupMeClientAvalonia.Themes.ThemeManager.Initialize">
+            <summary>
+            Initializes the theme engine. The Main Window must be fully initialized prior to calling this method.
+            </summary>
+        </member>
+        <member name="M:GroupMeClientAvalonia.Themes.ThemeManager.SetLightTheme">
+            <summary>
+            Applies the light mode theme.
+            </summary>
+        </member>
+        <member name="M:GroupMeClientAvalonia.Themes.ThemeManager.SetDarkTheme">
+            <summary>
+            Applies the dark mode theme.
+            </summary>
+        </member>
         <member name="T:GroupMeClientAvalonia.Utilities.ImageUtils">
             <summary>
             Helper class to provide common Wpf image operations.
@@ -910,6 +948,20 @@
             <summary>
             Resets the state-machine status. This method should called after a retry-attempt succeeds.
             </summary>
+        </member>
+        <member name="T:GroupMeClientAvalonia.ViewLocator">
+            <summary>
+            <see cref="T:GroupMeClientAvalonia.ViewLocator"/> provides a universal Data Template to map between ViewModels and Views.
+            </summary>
+        </member>
+        <member name="P:GroupMeClientAvalonia.ViewLocator.SupportsRecycling">
+            <inheritdoc/>
+        </member>
+        <member name="M:GroupMeClientAvalonia.ViewLocator.Build(System.Object)">
+            <inheritdoc/>
+        </member>
+        <member name="M:GroupMeClientAvalonia.ViewLocator.Match(System.Object)">
+            <inheritdoc/>
         </member>
         <member name="T:GroupMeClientAvalonia.ViewModels.ChatsViewModel">
             <summary>
@@ -1410,7 +1462,7 @@
         </member>
         <member name="P:GroupMeClientAvalonia.ViewModels.Controls.GroupContentsControlViewModel.PopupManager">
             <summary>
-            Gets or sets the popup manager to be used for popups 
+            Gets or sets the popup manager to be used for popups.
             </summary>
         </member>
         <member name="P:GroupMeClientAvalonia.ViewModels.Controls.GroupContentsControlViewModel.Title">
@@ -1990,6 +2042,16 @@
             </summary>
             <param name="pageNumber">The page number to display.</param>
         </member>
+        <member name="T:GroupMeClientAvalonia.ViewModels.Controls.PopupViewModel">
+            <summary>
+            <see cref="T:GroupMeClientAvalonia.ViewModels.Controls.PopupViewModel"/> provides a ViewModel for the <see cref="T:GroupMeClientAvalonia.Views.Controls.Popup"/> control.
+            </summary>
+        </member>
+        <member name="M:GroupMeClientAvalonia.ViewModels.Controls.PopupViewModel.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:GroupMeClientAvalonia.ViewModels.Controls.PopupViewModel"/> class.
+            </summary>
+        </member>
         <member name="P:GroupMeClientAvalonia.ViewModels.Controls.PopupViewModel.PopupDialog">
             <summary>
             Gets or sets the Popup Dialog that should be displayed.
@@ -2040,7 +2102,7 @@
         </member>
         <member name="P:GroupMeClientAvalonia.ViewModels.Controls.SendImageControlViewModel.ImageData">
             <summary>
-            The raw encoded image data corresponding to <see cref="P:GroupMeClientAvalonia.ViewModels.Controls.SendImageControlViewModel.Image"/>.
+            Gets or sets the raw encoded image data corresponding to <see cref="P:GroupMeClientAvalonia.ViewModels.Controls.SendImageControlViewModel.Image"/>.
             </summary>
         </member>
         <member name="P:GroupMeClientAvalonia.ViewModels.Controls.SendImageControlViewModel.TypedMessageContents">
@@ -2112,9 +2174,14 @@
             Gets or sets the action when the login process has been completed.
             </summary>
         </member>
+        <member name="T:GroupMeClientAvalonia.ViewModels.MainWindowViewModel">
+            <summary>
+            <see cref="T:GroupMeClientAvalonia.ViewModels.MainWindowViewModel"/> is the top-level ViewModel for the GroupMe Desktop Client Avalonia.
+            </summary>
+        </member>
         <member name="M:GroupMeClientAvalonia.ViewModels.MainWindowViewModel.#ctor">
             <summary>
-            Initializes a new instance of the <see cref="!:MainViewModel"/> class.
+            Initializes a new instance of the <see cref="T:GroupMeClientAvalonia.ViewModels.MainWindowViewModel"/> class.
             </summary>
         </member>
         <member name="P:GroupMeClientAvalonia.ViewModels.MainWindowViewModel.MenuItems">
@@ -2145,12 +2212,12 @@
         </member>
         <member name="P:GroupMeClientAvalonia.ViewModels.MainWindowViewModel.IsRefreshing">
             <summary>
-            Gets or sets a value indicating whether the application is currently refreshing the displayed content
+            Gets or sets a value indicating whether the application is currently refreshing the displayed content.
             </summary>
         </member>
         <member name="P:GroupMeClientAvalonia.ViewModels.MainWindowViewModel.PopupManager">
             <summary>
-            Gets or sets the popup manager to be used for popups 
+            Gets or sets the popup manager to be used for popups.
             </summary>
         </member>
         <member name="P:GroupMeClientAvalonia.ViewModels.MainWindowViewModel.RefreshEverythingCommand">
@@ -2187,7 +2254,7 @@
         </member>
         <member name="P:GroupMeClientAvalonia.ViewModels.SearchViewModel.PopupManager">
             <summary>
-            Gets or sets the popup manager to be used for popups 
+            Gets or sets the popup manager to be used for popups.
             </summary>
         </member>
         <member name="P:GroupMeClientAvalonia.ViewModels.SearchViewModel.ResultsView">
@@ -2359,22 +2426,22 @@
             <summary>Provides access to the git information for the current assembly.</summary>
         </member>
         <member name="F:ThisAssembly.Git.IsDirty">
-            <summary>IsDirty: false</summary>
+            <summary>IsDirty: true</summary>
         </member>
         <member name="F:ThisAssembly.Git.IsDirtyString">
-            <summary>IsDirtyString: false</summary>
+            <summary>IsDirtyString: true</summary>
         </member>
         <member name="F:ThisAssembly.Git.Branch">
             <summary>Branch: feature/InlineDocumentation</summary>
         </member>
         <member name="F:ThisAssembly.Git.Commit">
-            <summary>Commit: 2ecf920</summary>
+            <summary>Commit: 24e1934</summary>
         </member>
         <member name="F:ThisAssembly.Git.Sha">
-            <summary>Sha: 2ecf920b3a7bdab177e7c19e9c85155e2b2e93b4</summary>
+            <summary>Sha: 24e193494738bccd6d8b7908ccb262e4e686a661</summary>
         </member>
         <member name="F:ThisAssembly.Git.Commits">
-            <summary>Commits on top of base version: 77</summary>
+            <summary>Commits on top of base version: 79</summary>
         </member>
         <member name="F:ThisAssembly.Git.Tag">
             <summary>Tag: </summary>
@@ -2404,7 +2471,7 @@
             <summary>Minor: 0</summary>
         </member>
         <member name="F:ThisAssembly.Git.SemVer.Patch">
-            <summary>Patch: 77</summary>
+            <summary>Patch: 79</summary>
         </member>
         <member name="F:ThisAssembly.Git.SemVer.Label">
             <summary>Label: </summary>

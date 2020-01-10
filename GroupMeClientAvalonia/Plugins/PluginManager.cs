@@ -16,7 +16,7 @@ namespace GroupMeClientAvalonia.Plugins
     /// </summary>
     /// <remarks>
     /// Based on https://code.msdn.microsoft.com/windowsdesktop/Creating-a-simple-plugin-b6174b62.
-    /// Adapted for .Net Core based on https://docs.microsoft.com/en-us/dotnet/core/tutorials/creating-app-with-plugin-support
+    /// Adapted for .Net Core based on https://docs.microsoft.com/en-us/dotnet/core/tutorials/creating-app-with-plugin-support.
     /// </remarks>
     public sealed class PluginManager
     {

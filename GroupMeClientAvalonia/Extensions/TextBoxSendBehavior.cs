@@ -22,6 +22,8 @@ namespace GroupMeClientAvalonia.Extensions
                 tsb => tsb.SendCommand,
                 (tsb, command) => tsb.SendCommand = command);
 
+        private ICommand sendCommand;
+
         /// <summary>
         /// Gets or sets the command to execute when send behavior is invoked.
         /// </summary>
@@ -30,8 +32,6 @@ namespace GroupMeClientAvalonia.Extensions
             get => this.sendCommand;
             set => this.SetAndRaise(SendCommandProperty, ref this.sendCommand, value);
         }
-
-        private ICommand sendCommand;
 
         /// <inheritdoc />
         protected override void OnAttached()

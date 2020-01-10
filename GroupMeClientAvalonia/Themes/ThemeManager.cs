@@ -43,6 +43,9 @@ namespace GroupMeClientAvalonia.Themes
 
         private static bool IsPending { get; set; }
 
+        /// <summary>
+        /// Initializes the theme engine. The Main Window must be fully initialized prior to calling this method.
+        /// </summary>
         public static void Initialize()
         {
             Program.GroupMeMainWindow.Styles.Add(AvaloniaLightTheme);
@@ -58,6 +61,9 @@ namespace GroupMeClientAvalonia.Themes
             }
         }
 
+        /// <summary>
+        /// Applies the light mode theme.
+        /// </summary>
         public static void SetLightTheme()
         {
             CurrentAvaloniaTheme = AvaloniaLightTheme;
@@ -73,6 +79,9 @@ namespace GroupMeClientAvalonia.Themes
             }
         }
 
+        /// <summary>
+        /// Applies the dark mode theme.
+        /// </summary>
         public static void SetDarkTheme()
         {
             CurrentAvaloniaTheme = AvaloniaDarkTheme;

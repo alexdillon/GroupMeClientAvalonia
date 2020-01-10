@@ -19,7 +19,6 @@ namespace GroupMeClientAvalonia.Extensions
                 "IsFileDragDropEnabled",
                 typeof(FileDragDropHelper),
                 defaultValue: false);
-        //DependencyProperty.RegisterAttached("IsFileDragDropEnabled", typeof(bool), typeof(FileDragDropHelper), new PropertyMetadata(OnFileDragDropEnabled));
 
         /// <summary>
         /// Gets a property containing the File Drag Drop handler target.
@@ -28,8 +27,6 @@ namespace GroupMeClientAvalonia.Extensions
             AvaloniaProperty.RegisterAttached<Control, FileDragDropHelper>(
                 "FileDragDropTarget",
                 typeof(FileDragDropHelper));
-
-        //DependencyProperty.RegisterAttached("FileDragDropTarget", typeof(object), typeof(FileDragDropHelper), null);
 
         /// <summary>
         /// <see cref="IDragDropTarget"/> enables receiving updates when data is dropped onto a control.
@@ -94,17 +91,12 @@ namespace GroupMeClientAvalonia.Extensions
 
         private static void OnFileDragDropEnabled(IAvaloniaObject d)
         {
-            //if (e.NewValue == e.OldValue)
-            //{
-            //    return;
-            //}
-
             if (d is Control control)
             {
                 control.AddHandler(DragDrop.DropEvent, OnDrop);
 
-                //CommandManager.AddPreviewExecutedHandler(control, OnPreviewExecuted);
-                //CommandManager.AddPreviewCanExecuteHandler(control, OnPreviewCanExecute);
+                /*CommandManager.AddPreviewExecutedHandler(control, OnPreviewExecuted);
+                CommandManager.AddPreviewCanExecuteHandler(control, OnPreviewCanExecute);*/
             }
         }
 
@@ -129,43 +121,46 @@ namespace GroupMeClientAvalonia.Extensions
             }
         }
 
-        //private static void OnPreviewCanExecute(object sender, CanExecuteRoutedEventArgs e)
-        //{
-        //    if (e.Command == ApplicationCommands.Paste)
-        //    {
-        //        e.CanExecute = true;
-        //        e.Handled = true;
-        //    }
-        //}
+        // TODO: Support pasting images into text boxes.
+        /*
+        private static void OnPreviewCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            if (e.Command == ApplicationCommands.Paste)
+            {
+                e.CanExecute = true;
+                e.Handled = true;
+            }
+        }
 
-        //private static void OnPreviewExecuted(object sender, ExecutedRoutedEventArgs e)
-        //{
-        //    if (e.Command == ApplicationCommands.Paste)
-        //    {
-        //        if (Clipboard.ContainsImage())
-        //        {
-        //            if (!(sender is DependencyObject d))
-        //            {
-        //                return;
-        //            }
+        private static void OnPreviewExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            if (e.Command == ApplicationCommands.Paste)
+            {
+                if (Clipboard.ContainsImage())
+                {
+                    if (!(sender is DependencyObject d))
+                    {
+                        return;
+                    }
 
-        //            var target = d.GetValue(FileDragDropTargetProperty);
+                    var target = d.GetValue(FileDragDropTargetProperty);
 
-        //            if (target is IDragDropTarget fileTarget)
-        //            {
-        //                var image = Clipboard.GetImage();
-        //                var imageBytes = Utilities.ImageUtils.BitmapSourceToBytes(image);
+                    if (target is IDragDropTarget fileTarget)
+                    {
+                        var image = Clipboard.GetImage();
+                        var imageBytes = Utilities.ImageUtils.BitmapSourceToBytes(image);
 
-        //                fileTarget.OnImageDrop(imageBytes);
-        //            }
-        //            else
-        //            {
-        //                throw new Exception("FileDragDropTarget object must be of type IFileDragDropTarget");
-        //            }
+                        fileTarget.OnImageDrop(imageBytes);
+                    }
+                    else
+                    {
+                        throw new Exception("FileDragDropTarget object must be of type IFileDragDropTarget");
+                    }
 
-        //            e.Handled = true;
-        //        }
-        //    }
-        //}
+                    e.Handled = true;
+                }
+            }
+        }
+        */
     }
 }

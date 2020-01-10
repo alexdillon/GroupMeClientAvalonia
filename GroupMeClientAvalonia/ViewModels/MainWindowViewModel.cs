@@ -127,7 +127,7 @@ namespace GroupMeClientAvalonia.ViewModels
 
         private NotificationRouter NotificationRouter { get; set; }
 
-        //private UpdateAssist UpdateAssist { get; set; }
+        /*private UpdateAssist UpdateAssist { get; set; }*/
 
         private ChatsViewModel ChatsViewModel { get; set; }
 
@@ -188,8 +188,10 @@ namespace GroupMeClientAvalonia.ViewModels
                 EasyClosePopup = new RelayCommand(this.CloseBigPopup),
             };
 
-            //this.UpdateAssist = new UpdateAssist();
-            //Application.Current.MainWindow.Closing += new CancelEventHandler(this.MainWindow_Closing);
+            /*
+            this.UpdateAssist = new UpdateAssist();
+            Application.Current.MainWindow.Closing += new CancelEventHandler(this.MainWindow_Closing);
+            */
         }
 
         private void RegisterNotifications()
@@ -266,22 +268,22 @@ namespace GroupMeClientAvalonia.ViewModels
 
         private void MainWindow_Closing(object sender, CancelEventArgs e)
         {
-            //if (!this.UpdateAssist.CanShutdown)
-            //{
-            //    this.UpdateAssist.UpdateMonitor.Task.ContinueWith(this.UpdateCompleted);
-            //    e.Cancel = true;
+            /*if (!this.UpdateAssist.CanShutdown)
+            {
+                this.UpdateAssist.UpdateMonitor.Task.ContinueWith(this.UpdateCompleted);
+                e.Cancel = true;
 
-            //    var updatingTab = new HamburgerMenuIconItem()
-            //    {
-            //        Icon = this.UpdatingSpinner,
-            //        Label = "Updating",
-            //        ToolTip = "Updating",
-            //        Tag = new UpdatingViewModel(),
-            //    };
+                var updatingTab = new HamburgerMenuIconItem()
+                {
+                    Icon = this.UpdatingSpinner,
+                    Label = "Updating",
+                    ToolTip = "Updating",
+                    Tag = new UpdatingViewModel(),
+                };
 
-            //    this.MenuItems.Add(updatingTab);
-            //    this.SelectedItem = updatingTab;
-            //}
+                this.MenuItems.Add(updatingTab);
+                this.SelectedItem = updatingTab;
+            }*/
         }
 
         private void OpenBigPopup(Messaging.DialogRequestMessage dialog)

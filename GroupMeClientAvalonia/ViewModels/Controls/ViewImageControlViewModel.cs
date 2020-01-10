@@ -109,14 +109,16 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
 
         private void CopyImageAction()
         {
-            //var ms = new MemoryStream();
-            //this.ImageStream.Seek(0, SeekOrigin.Begin);
-            //this.ImageStream.CopyTo(ms);
+            // TODO: Support copying images to clipboard.
+            /*
+            var ms = new MemoryStream();
+            this.ImageStream.Seek(0, SeekOrigin.Begin);
+            this.ImageStream.CopyTo(ms);
 
-            //var image = Utilities.ImageUtils.BytesToImageSource(ms.ToArray());
+            var image = Utilities.ImageUtils.BytesToImageSource(ms.ToArray());
 
-            // TODO
-            //System.Windows.Clipboard.SetImage(image as BitmapSource);
+            System.Windows.Clipboard.SetImage(image as BitmapSource);
+            */
         }
     }
 }

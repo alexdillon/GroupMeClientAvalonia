@@ -24,7 +24,7 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
         }
 
         /// <summary>
-        /// Gets a collection of generated messages produced by plugins, sorted by source.
+        /// Gets or sets a collection of generated messages produced by plugins, sorted by source.
         /// </summary>
         public DataGridCollectionView GeneratedMessages
         {
