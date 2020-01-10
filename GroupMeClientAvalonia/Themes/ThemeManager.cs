@@ -1,6 +1,7 @@
 ﻿using Avalonia;
 using Avalonia.Markup.Xaml.Styling;
 using System;
+using System.Runtime.InteropServices;
 
 namespace GroupMeClientAvalonia.Themes
 {
@@ -29,6 +30,9 @@ namespace GroupMeClientAvalonia.Themes
         private static bool IsInitialized { get; set; }
         private static bool IsPending { get; set; }
 
+        /// <summary>
+        /// Initializes the theme engine. The Main Window must be fully initialized prior to calling this method.
+        /// </summary>
         public static void Initialize()
         {
             Program.GroupMeMainWindow.Styles.Add(AvaloniaLightTheme);
@@ -44,6 +48,9 @@ namespace GroupMeClientAvalonia.Themes
             }
         }
 
+        /// <summary>
+        /// Applies the light mode theme.
+        /// </summary>
         public static void SetLightTheme()
         {
             CurrentAvaloniaTheme = AvaloniaLightTheme;
@@ -59,6 +66,9 @@ namespace GroupMeClientAvalonia.Themes
             }
         }
 
+        /// <summary>
+        /// Applies the dark mode theme.
+        /// </summary>
         public static void SetDarkTheme()
         {
             CurrentAvaloniaTheme = AvaloniaDarkTheme;
@@ -71,6 +81,31 @@ namespace GroupMeClientAvalonia.Themes
             else
             {
                 IsPending = true;
+            }
+        }
+
+        /// <summary>
+        /// Applies the system prefered theme.
+        /// </summary>
+        public static void SetSystemTheme()
+        {
+            var useDarkTheme = false;
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                useDarkTheme = !Native.Windows.WindowsUtils.IsAppLightThemePreferred();
+            }
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            {
+                // TODO
+            }
+
+            if (useDarkTheme)
+            {
+                SetDarkTheme();
+            }
+            else
+            {
+                SetLightTheme();
             }
         }
 
