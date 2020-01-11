@@ -148,6 +148,15 @@
           <CheckBox Content="Has Linked Attachment" IsChecked="{Binding FilterHasAttachedLinkedImage, Mode=TwoWay}" />
           <CheckBox Content="Has Video Attachment" IsChecked="{Binding FilterHasAttachedVideo, Mode=TwoWay}" />
           <CheckBox Content="Mentions Other Group Members" IsChecked="{Binding FilterHasAttachedMentions, Mode=TwoWay}" />
+
+          <Button Margin="0,5,0,0" Command="{Binding ResetFilters}">
+            <Button.Content>
+              <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Reset  " />
+                <iconPack:IconControl Kind="PackIconFontAwesomeKind.EraserSolid" VerticalAlignment="Center" Width="15" Height="15" />
+              </StackPanel>
+            </Button.Content>
+          </Button>
         </StackPanel>
       </Expander>
 
