@@ -110,7 +110,7 @@ namespace GroupMeClientAvalonia.Themes
             }
             else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
             {
-                // TODO
+                useDarkTheme = Native.MacOS.MacUtils.IsDarkModeEnabled();
             }
 
             if (useDarkTheme)
