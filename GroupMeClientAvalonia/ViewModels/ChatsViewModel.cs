@@ -124,33 +124,46 @@ namespace GroupMeClientAvalonia.ViewModels
         private Timer RetryTimer { get; set; }
 
         /// <inheritdoc/>
-        async Task INotificationSink.GroupUpdated(LineMessageCreateNotification notification, IMessageContainer container)
+        Task INotificationSink.GroupUpdated(LineMessageCreateNotification notification, IMessageContainer container)
         {
-            _ = this.LoadGroupsAndChats();
-
-            var groupVm = this.ActiveGroupsChats.FirstOrDefault(g => g.Id == container.Id);
-            if (groupVm != null)
+            Task.Run(async () =>
             {
-                await groupVm.LoadNewMessages();
-            }
+                _ = this.LoadGroupsAndChats();
+
+                var groupVm = this.ActiveGroupsChats.FirstOrDefault(g => g.Id == container.Id);
+                if (groupVm != null)
+                {
+                    await groupVm.LoadNewMessages();
+                }
+            });
+
+            return Task.CompletedTask;
         }
 
         /// <inheritdoc/>
-        async Task INotificationSink.ChatUpdated(DirectMessageCreateNotification notification, IMessageContainer container)
+        Task INotificationSink.ChatUpdated(DirectMessageCreateNotification notification, IMessageContainer container)
         {
-            _ = this.LoadGroupsAndChats();
-            var chatVm = this.ActiveGroupsChats.FirstOrDefault(g => g.Id == container.Id);
-            if (chatVm != null)
+            Task.Run(async () =>
             {
-                await chatVm.LoadNewMessages();
-            }
+                _ = this.LoadGroupsAndChats();
+                var chatVm = this.ActiveGroupsChats.FirstOrDefault(g => g.Id == container.Id);
+                if (chatVm != null)
+                {
+                    await chatVm.LoadNewMessages();
+                }
+            });
+
+            return Task.CompletedTask;
         }
 
         /// <inheritdoc/>
         Task INotificationSink.MessageUpdated(Message message, string alert, IMessageContainer container)
         {
-            var groupChatVm = this.ActiveGroupsChats.FirstOrDefault(g => g.Id == container.Id);
-            groupChatVm?.UpdateMessageLikes(message);
+            Task.Run(() =>
+            {
+                var groupChatVm = this.ActiveGroupsChats.FirstOrDefault(g => g.Id == container.Id);
+                groupChatVm?.UpdateMessageLikes(message);
+            });
 
             return Task.CompletedTask;
         }
