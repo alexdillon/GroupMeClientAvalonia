@@ -267,4 +267,17 @@
     </EmbeddedResource>
   </ItemGroup>
   
+  <ItemGroup>
+    <Folder Include="Notifications\Display\macOS\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Xamarin.Mac">
+      <HintPath>..\..\..\..\..\Library\Frameworks\Xamarin.Mac.framework\Versions\6.6.0.12\lib\x86_64\full\Xamarin.Mac.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="libxammac.dylib">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>

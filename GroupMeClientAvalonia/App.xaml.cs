@@ -1,5 +1,7 @@
-﻿using Avalonia;
+﻿using System.Windows.Input;
+using Avalonia;
 using Avalonia.Markup.Xaml;
+using GalaSoft.MvvmLight.Command;
 
 namespace GroupMeClientAvalonia
 {

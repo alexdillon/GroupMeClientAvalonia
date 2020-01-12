@@ -34,8 +34,7 @@ namespace GroupMeClientAvalonia.Notifications.Display
             }
             else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
             {
-                // TODO 
-                return null;
+                return new PopupNotificationProvider(new macOS.MacOSToastNotificationProvider());
             }
             return null;
         }
