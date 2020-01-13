@@ -13,10 +13,10 @@
           <ControlTemplate>
             <Border>
               <StackPanel>
-                <ContentPresenter TextBlock.FontWeight="Regular" 
+                <ContentPresenter TextBlock.FontWeight="Regular"
                                   TextBlock.Foreground="White"
                                   Padding="8,4,4,4"
-                                  Content="{TemplateBinding Header}" 
+                                  Content="{TemplateBinding Header}"
                                   Background="{DynamicResource LoadingSpinnerDarkBrush}" />
                 <Border BorderBrush="{DynamicResource LoadingSpinnerDarkBrush}"
                         BorderThickness="2"
@@ -33,7 +33,8 @@
   </UserControl.Styles>
 
   <ScrollViewer VerticalScrollBarVisibility="Auto">
-    <StackPanel Orientation="Vertical">
+    <StackPanel Orientation="Vertical"
+                Width="{Binding $parent[0].Viewport.Width}">
       <!--Settings Header-->
       <Grid>
         <Grid.ColumnDefinitions>
@@ -185,6 +186,6 @@
           <Hyperlink NavigateUri="http://creativecommons.org/licenses/by/3.0/" extensions:WebHyperlinkExtensions.IsWebLink="True">CC 3.0 BY</Hyperlink>-->
         </TextBlock>
       </HeaderedContentControl>
-  </StackPanel>
+    </StackPanel>
   </ScrollViewer>
 </UserControl>
