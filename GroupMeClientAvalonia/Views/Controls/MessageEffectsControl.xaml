@@ -29,6 +29,7 @@
               CanUserReorderColumns="False"
               CanUserResizeColumns="True"
               IsReadOnly="True"
+              Background="{DynamicResource ThemeBackgroundBrush}"
               HeadersVisibility="None">
       <DataGrid.Columns>
         <DataGridTextColumn Header="Message" Binding="{Binding Message}" Width="500" />
@@ -38,11 +39,23 @@
         <Style Selector="DataGridRow">
           <Setter Property="Background" Value="{DynamicResource ThemeBackgroundBrush}" />
         </Style>
+
+        <Style Selector="DataGridRow:selected /template/ Rectangle#BackgroundRectangle">
+          <Setter Property="Fill" Value="{DynamicResource ThemeAccentBrush}" />
+        </Style>
+
+        <Style Selector="DataGridRowGroupHeader">
+          <Setter Property="FontWeight" Value="SemiBold" />
+          <Setter Property="Background" Value="{DynamicResource ThemeBackgroundBrush}" />
+        </Style>
+        <Style Selector="DataGridRowGroupHeader /template/ ToggleButton#ExpanderButton">
+          <Setter Property="IsVisible" Value="False" />
+        </Style>
       </DataGrid.Styles>
     </DataGrid>
 
     <Grid Grid.Column="0" Grid.Row="3"
-          Background="White">
+          Background="{DynamicResource ThemeBackgroundBrush}">
       <Grid.ColumnDefinitions>
         <ColumnDefinition Width="40" />
         <ColumnDefinition Width="*" />
