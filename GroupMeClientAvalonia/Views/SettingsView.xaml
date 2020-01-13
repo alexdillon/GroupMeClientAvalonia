@@ -95,6 +95,7 @@
       <!--Plugins Area-->
       <HeaderedContentControl Margin="10" Padding="10" Header="Plugins" >
         <DataGrid Items="{Binding InstalledPlugins}"
+                  Background="{DynamicResource ThemeBackgroundBrush}"
                   CanUserReorderColumns="False"
                   CanUserResizeColumns="True"
                   IsReadOnly="True"
