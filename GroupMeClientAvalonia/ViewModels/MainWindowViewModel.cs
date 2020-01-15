@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Avalonia;
@@ -188,6 +189,19 @@ namespace GroupMeClientAvalonia.ViewModels
                 EasyClosePopup = new RelayCommand(this.CloseBigPopup),
             };
 
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                this.ConfigureForWindows();
+            }
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            {
+                this.ConfigureForMac();
+            }
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            {
+                this.ConfigureForLinux();
+            }
+
             /*
             this.UpdateAssist = new UpdateAssist();
             Application.Current.MainWindow.Closing += new CancelEventHandler(this.MainWindow_Closing);
@@ -337,6 +351,20 @@ namespace GroupMeClientAvalonia.ViewModels
             this.IsRefreshing = true;
             await this.ChatsViewModel.RefreshEverything();
             this.IsRefreshing = false;
+        }
+
+        private void ConfigureForWindows()
+        {
+            Native.Windows.RecoveryManager.RegisterForRecovery();
+            Native.Windows.RecoveryManager.RegisterForRestart();
+        }
+
+        private void ConfigureForMac()
+        {
+        }
+
+        private void ConfigureForLinux()
+        {
         }
     }
 }
