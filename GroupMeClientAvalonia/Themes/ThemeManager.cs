@@ -106,7 +106,9 @@ namespace GroupMeClientAvalonia.Themes
             var useDarkTheme = false;
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
-                useDarkTheme = !Native.Windows.WindowsUtils.IsAppLightThemePreferred();
+                useDarkTheme = !Native.Windows.WindowsThemeUtils.IsAppLightThemePreferred();
+                Native.Windows.WindowsThemeUtils.ThemeUpdateHook.Instance.ThemeChangedEvent -= Windows_ThemeChangedEvent;
+                Native.Windows.WindowsThemeUtils.ThemeUpdateHook.Instance.ThemeChangedEvent += Windows_ThemeChangedEvent;
             }
             else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
             {
@@ -121,6 +123,11 @@ namespace GroupMeClientAvalonia.Themes
             {
                 SetLightTheme();
             }
+        }
+
+        private static void Windows_ThemeChangedEvent()
+        {
+            SetSystemTheme();
         }
 
         private static void ApplyTheme()
