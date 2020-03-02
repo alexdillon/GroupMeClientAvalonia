@@ -7,7 +7,6 @@
              xmlns:extensions="clr-namespace:GroupMeClientAvalonia.Extensions"
              xmlns:microcube="clr-namespace:MicroCubeAvalonia.Controls;assembly=MicroCubeAvalonia"
              xmlns:iconPack="clr-namespace:MicroCubeAvalonia.IconPack;assembly=MicroCubeAvalonia"
-             xmlns:paz="clr-namespace:Avalonia.Controls.PanAndZoom;assembly=Avalonia.Controls.PanAndZoom"
              mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="300"
              ClipToBounds="False"
              Background="Transparent">
