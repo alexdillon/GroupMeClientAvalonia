@@ -24,10 +24,10 @@
       <extensions:FocusOnLoadBehavior FocusControl="{Binding #ImageMessageCaption}" />
     </i:Interaction.Behaviors>
 
-    <!--StretchDirection="DownOnly"-->
     <Image Grid.Row="0"
            MaxWidth="900"
            Stretch="Uniform"
+           StretchDirection="DownOnly"
            HorizontalAlignment="Center"
            Source="{Binding Image}" />
 

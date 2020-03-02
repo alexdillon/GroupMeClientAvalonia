@@ -12,10 +12,10 @@
 
   <Border BorderThickness="8" BorderBrush="White">
     <Grid>
-      <!--StretchDirection="DownOnly"-->
       <!--gif:AnimationBehavior.SourceStream="{Binding ImageAttachmentStream}"-->
       <Image MaxWidth="500"
              MaxHeight="600"
+             StretchDirection="DownOnly"
              Stretch="Uniform"
              HorizontalAlignment="Left"
              UseLayoutRounding="True"
