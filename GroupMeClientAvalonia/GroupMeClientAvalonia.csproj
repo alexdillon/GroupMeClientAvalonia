@@ -37,6 +37,7 @@
     <AvaloniaResource Remove="Notifications\Display\WpfToast\ToastNotification.xaml" />
     <AvaloniaResource Remove="Views\Controls\Attachments\GenericLinkAttachmentControl.xaml" />
     <AvaloniaResource Remove="Views\Controls\Attachments\GroupMeImageAttachmentControl.xaml" />
+    <AvaloniaResource Remove="Views\Controls\Attachments\ImageLinkAttachmentControl.xaml" />
     <AvaloniaResource Remove="Views\Controls\Attachments\TwitterAttachmentControl.xaml" />
     <AvaloniaResource Remove="Views\Controls\Attachments\VideoAttachmentControl.xaml" />
     <AvaloniaResource Remove="Views\Controls\AvatarControl.xaml" />
@@ -63,6 +64,7 @@
     <None Remove="Notifications\Display\WpfToast\ToastNotification.xaml" />
     <None Remove="Views\Controls\Attachments\GenericLinkAttachmentControl.xaml" />
     <None Remove="Views\Controls\Attachments\GroupMeImageAttachmentControl.xaml" />
+    <None Remove="Views\Controls\Attachments\ImageLinkAttachmentControl.xaml" />
     <None Remove="Views\Controls\Attachments\TwitterAttachmentControl.xaml" />
     <None Remove="Views\Controls\Attachments\VideoAttachmentControl.xaml" />
     <None Remove="Views\Controls\AvatarControl.xaml" />
@@ -105,7 +107,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="GroupMeClientApi" Version="1.0.1" />
+    <PackageReference Include="GroupMeClientApi" Version="1.0.3" />
     <PackageReference Include="GroupMeClientPlugin" Version="1.0.4" />
     <PackageReference Include="MessageBox.Avalonia" Version="0.9.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.2" />
@@ -125,6 +127,9 @@
   </ItemGroup>
   
   <ItemGroup>
+    <EmbeddedResource Include="Views\Controls\Attachments\GroupMeImageAttachmentControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\Controls\AvatarControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
@@ -184,12 +189,6 @@
   
   <ItemGroup>
     <EmbeddedResource Include="Views\Controls\Attachments\GenericLinkAttachmentControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </EmbeddedResource>
-  </ItemGroup>
-  
-  <ItemGroup>
-    <EmbeddedResource Include="Views\Controls\Attachments\GroupMeImageAttachmentControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
   </ItemGroup>
@@ -270,6 +269,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Update="Views\Controls\Attachments\GroupMeImageAttachmentControl.xaml.cs">
+      <DependentUpon>GroupMeImageAttachmentControl.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   
   <ItemGroup>
@@ -282,6 +284,12 @@
   <ItemGroup>
     <Folder Include="Native\macOS\" />
     <Folder Include="Native\Linux\" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Controls\Attachments\ImageLinkAttachmentControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
   </ItemGroup>
   
 </Project>
