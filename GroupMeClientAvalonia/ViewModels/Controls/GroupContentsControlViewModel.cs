@@ -480,39 +480,50 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
 
         private async Task SendFileImageAttachment()
         {
+            var supportedImages = GroupMeClientApi.Models.Attachments.ImageAttachment.SupportedExtensions
+                .ToList()
+                .Select(e => e.Trim('.'));
+            var supportedFiles = GroupMeClientApi.Models.Attachments.FileAttachment.GroupMeDocumentMimeTypeMapper.SupportedExtensions
+                .ToList()
+                .Select(e => e.Trim('.'));
+
             var openFileDialog = new OpenFileDialog();
-            openFileDialog.Filters.Add(new FileDialogFilter() { Name = "Images", Extensions = { "bmp", "jpg", "jpeg", "png", "gif" } });
+            openFileDialog.Filters.Add(new FileDialogFilter() { Name = "Images", Extensions = { supportedImages } });
+            openFileDialog.Filters.Add(new FileDialogFilter() { Name = "Documents", Extensions = { supportedFiles } });
 
             var fileName = await openFileDialog.ShowAsync(Program.GroupMeMainWindow);
             if (!string.IsNullOrEmpty(fileName.FirstOrDefault()))
             {
-                var data = File.ReadAllBytes(fileName.FirstOrDefault());
-                this.ShowImageSendDialog(data);
+                var extension = Path.GetExtension(fileName.FirstOrDefault()).Trim('.');
+                if (supportedImages.Contains(extension))
+                {
+                    this.ShowImageSendDialog(File.ReadAllBytes(fileName.FirstOrDefault()));
+                }
+                else if (supportedFiles.Contains(extension))
+                {
+                    this.ShowFileSendDialog(fileName.FirstOrDefault());
+                }
             }
         }
 
-        private async Task SendImageMessageAsync()
+        private async Task SendContentMessageAsync(GroupMeClientApi.Models.Attachments.Attachment attachment)
         {
-            if (!(this.PopupManager.PopupDialog is SendImageControlViewModel))
+            if (!(this.PopupManager.PopupDialog is SendContentControlViewModelBase))
             {
                 return;
             }
 
-            var imageSendDialog = this.PopupManager.PopupDialog as SendImageControlViewModel;
+            var contentSendDialog = this.PopupManager.PopupDialog as SendContentControlViewModelBase;
 
-            if (imageSendDialog.Image == null)
+            if (contentSendDialog.ContentStream == null)
             {
                 return;
             }
 
-            imageSendDialog.IsSending = true;
+            contentSendDialog.IsSending = true;
             this.IsSending = true;
 
-            var contents = imageSendDialog.TypedMessageContents;
-            var image = imageSendDialog.ImageData;
-
-            var attachment = await GroupMeClientApi.Models.Attachments.ImageAttachment.CreateImageAttachment(image, this.MessageContainer);
-
+            var contents = contentSendDialog.TypedMessageContents;
             var attachmentsList = new List<GroupMeClientApi.Models.Attachments.Attachment> { attachment };
 
             var message = Message.CreateMessage(
@@ -527,7 +538,7 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
             }
             else
             {
-                imageSendDialog.IsSending = false;
+                contentSendDialog.IsSending = false;
             }
         }
 
@@ -563,14 +574,26 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
 
         private void ShowImageSendDialog(byte[] imageData)
         {
-            var ms = new MemoryStream(imageData);
-            var image = new Avalonia.Media.Imaging.Bitmap(ms);
             var dialog = new SendImageControlViewModel()
             {
-                Image = image,
-                ImageData = imageData,
+                ContentStream = new MemoryStream(imageData),
+                MessageContainer = this.MessageContainer,
                 TypedMessageContents = this.TypedMessageContents,
-                SendMessage = new RelayCommand(async () => await this.SendImageMessageAsync(), () => !this.IsSending, true),
+                SendMessage = new RelayCommand<GroupMeClientApi.Models.Attachments.Attachment>(async (a) => await this.SendContentMessageAsync(a), (a) => !this.IsSending, true),
+            };
+
+            this.PopupManager.PopupDialog = dialog;
+        }
+
+        private void ShowFileSendDialog(string fileName)
+        {
+            var dialog = new SendFileControlViewModel()
+            {
+                ContentStream = File.Open(fileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite),
+                FileName = System.IO.Path.GetFileName(fileName),
+                MessageContainer = this.MessageContainer,
+                TypedMessageContents = this.TypedMessageContents,
+                SendMessage = new RelayCommand<GroupMeClientApi.Models.Attachments.Attachment>(async (a) => await this.SendContentMessageAsync(a), (a) => !this.IsSending, true),
             };
 
             this.PopupManager.PopupDialog = dialog;

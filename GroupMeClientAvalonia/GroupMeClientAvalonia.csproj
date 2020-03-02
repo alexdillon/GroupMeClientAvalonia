@@ -51,6 +51,7 @@
     <AvaloniaResource Remove="Views\Controls\MultiLikeControl.xaml" />
     <AvaloniaResource Remove="Views\Controls\PaginatedMessagesControl.xaml" />
     <AvaloniaResource Remove="Views\Controls\Popup.xaml" />
+    <AvaloniaResource Remove="Views\Controls\SendFileControl.xaml" />
     <AvaloniaResource Remove="Views\Controls\SendImageControl.xaml" />
     <AvaloniaResource Remove="Views\Controls\ViewImageControl.xaml" />
     <AvaloniaResource Remove="Views\LoginView.xaml" />
@@ -78,6 +79,7 @@
     <None Remove="Views\Controls\MultiLikeControl.xaml" />
     <None Remove="Views\Controls\PaginatedMessagesControl.xaml" />
     <None Remove="Views\Controls\Popup.xaml" />
+    <None Remove="Views\Controls\SendFileControl.xaml" />
     <None Remove="Views\Controls\SendImageControl.xaml" />
     <None Remove="Views\Controls\ViewImageControl.xaml" />
     <None Remove="Views\LoginView.xaml" />
@@ -284,6 +286,18 @@
   <ItemGroup>
     <Folder Include="Native\macOS\" />
     <Folder Include="Native\Linux\" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Controls\SendFileControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Controls\Attachments\FileAttachmentControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
   </ItemGroup>
   
 </Project>
