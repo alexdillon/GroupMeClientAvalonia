@@ -35,6 +35,7 @@
   <ItemGroup>
     <AvaloniaResource Remove="Notifications\Display\WpfToast\ToastHolder.xaml" />
     <AvaloniaResource Remove="Notifications\Display\WpfToast\ToastNotification.xaml" />
+    <AvaloniaResource Remove="Views\Controls\Attachments\FileAttachmentControl.xaml" />
     <AvaloniaResource Remove="Views\Controls\Attachments\GenericLinkAttachmentControl.xaml" />
     <AvaloniaResource Remove="Views\Controls\Attachments\GroupMeImageAttachmentControl.xaml" />
     <AvaloniaResource Remove="Views\Controls\Attachments\TwitterAttachmentControl.xaml" />
@@ -61,6 +62,7 @@
     <None Remove="groupme.ico" />
     <None Remove="Notifications\Display\WpfToast\ToastHolder.xaml" />
     <None Remove="Notifications\Display\WpfToast\ToastNotification.xaml" />
+    <None Remove="Views\Controls\Attachments\FileAttachmentControl.xaml" />
     <None Remove="Views\Controls\Attachments\GenericLinkAttachmentControl.xaml" />
     <None Remove="Views\Controls\Attachments\GroupMeImageAttachmentControl.xaml" />
     <None Remove="Views\Controls\Attachments\TwitterAttachmentControl.xaml" />
@@ -105,7 +107,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="GroupMeClientApi" Version="1.0.1" />
+    <PackageReference Include="GroupMeClientApi" Version="1.0.3" />
     <PackageReference Include="GroupMeClientPlugin" Version="1.0.4" />
     <PackageReference Include="MessageBox.Avalonia" Version="0.9.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.2" />
