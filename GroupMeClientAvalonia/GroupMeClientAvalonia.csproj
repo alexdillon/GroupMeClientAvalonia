@@ -35,6 +35,7 @@
   <ItemGroup>
     <AvaloniaResource Remove="Notifications\Display\WpfToast\ToastHolder.xaml" />
     <AvaloniaResource Remove="Notifications\Display\WpfToast\ToastNotification.xaml" />
+    <AvaloniaResource Remove="Views\Controls\Attachments\FileAttachmentControl.xaml" />
     <AvaloniaResource Remove="Views\Controls\Attachments\GenericLinkAttachmentControl.xaml" />
     <AvaloniaResource Remove="Views\Controls\Attachments\GroupMeImageAttachmentControl.xaml" />
     <AvaloniaResource Remove="Views\Controls\Attachments\ImageLinkAttachmentControl.xaml" />
@@ -51,6 +52,7 @@
     <AvaloniaResource Remove="Views\Controls\MultiLikeControl.xaml" />
     <AvaloniaResource Remove="Views\Controls\PaginatedMessagesControl.xaml" />
     <AvaloniaResource Remove="Views\Controls\Popup.xaml" />
+    <AvaloniaResource Remove="Views\Controls\SendFileControl.xaml" />
     <AvaloniaResource Remove="Views\Controls\SendImageControl.xaml" />
     <AvaloniaResource Remove="Views\Controls\ViewImageControl.xaml" />
     <AvaloniaResource Remove="Views\LoginView.xaml" />
@@ -62,6 +64,7 @@
     <None Remove="groupme.ico" />
     <None Remove="Notifications\Display\WpfToast\ToastHolder.xaml" />
     <None Remove="Notifications\Display\WpfToast\ToastNotification.xaml" />
+    <None Remove="Views\Controls\Attachments\FileAttachmentControl.xaml" />
     <None Remove="Views\Controls\Attachments\GenericLinkAttachmentControl.xaml" />
     <None Remove="Views\Controls\Attachments\GroupMeImageAttachmentControl.xaml" />
     <None Remove="Views\Controls\Attachments\ImageLinkAttachmentControl.xaml" />
@@ -78,6 +81,7 @@
     <None Remove="Views\Controls\MultiLikeControl.xaml" />
     <None Remove="Views\Controls\PaginatedMessagesControl.xaml" />
     <None Remove="Views\Controls\Popup.xaml" />
+    <None Remove="Views\Controls\SendFileControl.xaml" />
     <None Remove="Views\Controls\SendImageControl.xaml" />
     <None Remove="Views\Controls\ViewImageControl.xaml" />
     <None Remove="Views\LoginView.xaml" />
@@ -286,6 +290,18 @@
     <Folder Include="Native\Linux\" />
   </ItemGroup>
   
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Controls\SendFileControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Controls\Attachments\FileAttachmentControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+   
   <ItemGroup>
     <EmbeddedResource Include="Views\Controls\Attachments\ImageLinkAttachmentControl.xaml">
       <Generator>MSBuild:Compile</Generator>

@@ -143,6 +143,8 @@ namespace GroupMeClientAvalonia.ViewModels
         {
             Directory.CreateDirectory(this.DataRoot);
 
+            this.ClearTempFiles();
+
             this.SettingsManager = new Settings.SettingsManager(this.SettingsPath);
             this.SettingsManager.LoadSettings();
 
@@ -192,6 +194,26 @@ namespace GroupMeClientAvalonia.ViewModels
             this.UpdateAssist = new UpdateAssist();
             Application.Current.MainWindow.Closing += new CancelEventHandler(this.MainWindow_Closing);
             */
+        }
+
+        private void ClearTempFiles()
+        {
+            var tempFolder = Path.Combine(Path.GetTempPath(), "GroupMeDesktopClientAvalonia");
+            if (Directory.Exists(tempFolder))
+            {
+                foreach (var file in Directory.EnumerateFiles(tempFolder))
+                {
+                    try
+                    {
+                        File.Delete(file);
+                    }
+                    catch (Exception)
+                    {
+                    }
+                }
+            }
+
+            Directory.CreateDirectory(tempFolder);
         }
 
         private void RegisterNotifications()

@@ -4,10 +4,9 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Input;
-using Avalonia;
 using Avalonia.Media;
+using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GroupMeClientApi.Models;
 using GroupMeClientApi.Models.Attachments;
@@ -52,7 +51,7 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
         /// <summary>
         /// Gets or sets the attached items (Tweets, Web Links, Videos, etc.), if present.
         /// </summary>
-        public ObservableCollection<LinkAttachmentBaseViewModel> AttachedItems { get; set; } = new ObservableCollection<LinkAttachmentBaseViewModel>();
+        public ObservableCollection<ViewModelBase> AttachedItems { get; set; } = new ObservableCollection<ViewModelBase>();
 
         /// <summary>
         /// Gets the command to be performed when this <see cref="Message"/> is 'Liked'.
@@ -398,6 +397,25 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
 
                     // Videos can have captions, so only exclude the v.groupme url from the body
                     this.HiddenText = videoAttach.Url;
+
+                    // Don't allow any other attachment types to be included if a video is.
+                    return;
+                }
+                else if (attachment is FileAttachment fileAttach)
+                {
+                    var container = (IMessageContainer)this.Message.Group ?? (IMessageContainer)this.Message.Chat;
+                    var documentVm = new FileAttachmentControlViewModel(fileAttach, container);
+                    this.AttachedItems.Add(documentVm);
+
+                    // Videos can have captions, so only exclude the share url from the body
+                    if (this.Message.Text.Contains(" - Shared a document"))
+                    {
+                        this.HiddenText = this.Message.Text.Substring(this.Message.Text.LastIndexOf(" - Shared a document"));
+                    }
+                    else
+                    {
+                        this.HiddenText = this.Message.Text.Substring(this.Message.Text.LastIndexOf("Shared a document"));
+                    }
 
                     // Don't allow any other attachment types to be included if a video is.
                     return;

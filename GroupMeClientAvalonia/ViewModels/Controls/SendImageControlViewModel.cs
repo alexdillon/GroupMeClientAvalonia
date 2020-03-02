@@ -1,7 +1,6 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
+using System.Threading.Tasks;
 using System.Windows.Input;
-using Avalonia.Input;
 using Avalonia.Media.Imaging;
 using GalaSoft.MvvmLight.Command;
 
@@ -10,55 +9,45 @@ namespace GroupMeClientAvalonia.ViewModels.Controls
     /// <summary>
     /// <see cref="SendImageControlViewModel"/> provides a ViewModel for the <see cref="Views.Controls.SendImageControl"/> control.
     /// </summary>
-    public class SendImageControlViewModel : GalaSoft.MvvmLight.ViewModelBase, IDisposable
+    public class SendImageControlViewModel : SendContentControlViewModelBase
     {
-        private string typedMessageContents;
-        private bool isSending;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="SendImageControlViewModel"/> class.
         /// </summary>
         public SendImageControlViewModel()
         {
+            this.SendButtonClicked = new RelayCommand(async () => await this.Send(), () => !this.IsSending);
         }
 
         /// <summary>
-        /// Gets or sets the command to be performed when the message is ready to send.
+        /// Gets the command to be executed when the send button is clicked.
         /// </summary>
-        public ICommand SendMessage { get; set; }
+        public ICommand SendButtonClicked { get; }
 
         /// <summary>
-        /// Gets or sets the image to preview.
+        /// Gets a bitmap image representing image to be sent.
         /// </summary>
-        public IBitmap Image { get; set; }
+        public IBitmap Image => new Bitmap(this.ContentStream);
 
-        /// <summary>
-        /// Gets or sets the raw encoded image data corresponding to <see cref="Image"/>.
-        /// </summary>
-        public byte[] ImageData { get; set; }
-
-        /// <summary>
-        /// Gets or sets the message the user has composed to send.
-        /// </summary>
-        public string TypedMessageContents
+        private async Task Send()
         {
-            get => this.typedMessageContents;
-            set => this.Set(() => this.TypedMessageContents, ref this.typedMessageContents, value);
-        }
+            byte[] image;
 
-        /// <summary>
-        /// Gets or sets a value indicating whether the sending animation should be displayed.
-        /// </summary>
-        public bool IsSending
-        {
-            get => this.isSending;
-            set => this.Set(() => this.IsSending, ref this.isSending, value);
-        }
+            using (var ms = new MemoryStream())
+            {
+                this.ContentStream.Seek(0, SeekOrigin.Begin);
+                await this.ContentStream.CopyToAsync(ms);
+                image = ms.ToArray();
+            }
 
-        /// <inheritdoc />
-        void IDisposable.Dispose()
-        {
-            this.Image.Dispose();
+            this.IsSending = true;
+
+            var attachment = await GroupMeClientApi.Models.Attachments.ImageAttachment.CreateImageAttachment(image, this.MessageContainer);
+
+            if (this.SendMessage.CanExecute(attachment))
+            {
+                this.SendMessage.Execute(attachment);
+            }
         }
     }
 }

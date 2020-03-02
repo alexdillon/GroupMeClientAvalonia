@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="GroupMeClientAvalonia.Views.Controls.SendImageControl"
+﻿<UserControl x:Class="GroupMeClientAvalonia.Views.Controls.SendFileControl"
              xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -21,15 +21,24 @@
     </Grid.RowDefinitions>
 
     <i:Interaction.Behaviors>
-      <extensions:FocusOnLoadBehavior FocusControl="{Binding #ImageMessageCaption}" />
+      <extensions:FocusOnLoadBehavior FocusControl="{Binding #FileMessageCaption}" />
     </i:Interaction.Behaviors>
 
-    <Image Grid.Row="0"
-           MaxWidth="900"
-           Stretch="Uniform"
-           StretchDirection="DownOnly"
-           HorizontalAlignment="Center"
-           Source="{Binding Image}" />
+    <Grid ColumnDefinitions="55, *">
+      <iconPack:IconControl Kind="PackIconOcticonsKind.File"
+                            Foreground="White"
+                            Background="Transparent"
+                            VerticalAlignment="Center"
+                            Margin="5"
+                            Width="45" Height="45"/>
+
+      <TextBlock Grid.Column="1"
+                 VerticalAlignment="Center"
+                 FontSize="14"
+                 TextWrapping="Wrap"
+                 Foreground="White"
+                 Text="{Binding FileName}" />
+    </Grid>
 
     <microcube:ProgressRing IsVisible="{Binding IsSending}"
                             Foreground="{DynamicResource LoadingSpinnerDarkBrush}"
