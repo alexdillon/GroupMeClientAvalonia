@@ -8,9 +8,9 @@
              xmlns:microcube="clr-namespace:MicroCubeAvalonia.Controls;assembly=MicroCubeAvalonia"
              mc:Ignorable="d"
              d:DesignHeight="200" d:DesignWidth="200"
-             Background="White">
+             Background="{DynamicResource ThemeBackgroundBrush}">
 
-  <Border BorderThickness="8" BorderBrush="White">
+  <Border BorderThickness="8" BorderBrush="{DynamicResource ThemeBackgroundBrush}">
     <Grid>
       <!--gif:AnimationBehavior.SourceStream="{Binding ImageAttachmentStream}"-->
       <Image MaxWidth="500"
