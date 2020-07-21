@@ -39,7 +39,7 @@ GroupMe Desktop Client Avalonia supports displaying multiple chats simultaneousl
 ![MultiChat](./docs/screenshots/MultiChat.png)
 
 ### Full Windows 10 Notification Support
-GroupMe Desktop Client includes tight integration with Windows 10's Notification system. 
+GroupMe Desktop Client Avalonia includes tight integration with Windows 10's Notification system. 
 
 ![Windows 10 Toast](./docs/screenshots/Win10Toast.png)
 
