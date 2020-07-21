@@ -4,7 +4,7 @@
    <img alt="GitHub" src="https://img.shields.io/github/license/alexdillon/GroupMeClientAvalonia?color=blue">
 </p>
 
-GroupMe Desktop Client Avalonia is an in-progress port of [GroupMe Desktop Client](https://github.com/alexdillon/GroupMeClient) to the cross-platform [Avalonia](https://github.com/avaloniaui/avalonia) UI Framework. GroupMe Desktop Client Avalonia is a unoffical, modular, open-source, configurable client for using the GroupMe chat service. 
+GroupMe Desktop Client Avalonia is an in-progress port of [GroupMe Desktop Client](https://github.com/alexdillon/GroupMeClient) to the cross-platform [Avalonia](https://github.com/avaloniaui/avalonia) UI Framework. GroupMe Desktop Client Avalonia is a unofficial, modular, open-source, configurable client for using the GroupMe chat service. 
 
 ***For usage on Windows, check out [GroupMe Desktop Client](https://github.com/alexdillon/GroupMeClient), which is stable and suitable for daily use.***
 
@@ -34,7 +34,7 @@ GroupMe Desktop Client Avalonia offers offline searching functionality. Messages
 </table>
 
 ### Multi-Chat
-GroupMe Desktop Client supports displaying multiple chats simultaneously, side-by-side. The number of chats that can be opened both normally, and in collapsed-sidebar mode is full user configurable. 
+GroupMe Desktop Client Avalonia supports displaying multiple chats simultaneously, side-by-side. The number of chats that can be opened both normally, and in collapsed-sidebar mode is fully user configurable. 
 
 ![MultiChat](./docs/screenshots/MultiChat.png)
 
@@ -71,4 +71,4 @@ GMDCA is also compatible with macOS, and has been tested on Catalina with Visual
  ## See Also
  [GroupMeClientApi](https://github.com/alexdillon/GroupMeClientApi) is a custom C# Library created specifically for GroupMe Desktop Client in order to interact with the GroupMe API. While it was created for use with GMDC, it is fully open-source and usable for a variety of applications!
 
-[GroupMeClient](https://github.com/alexdillon/GroupMeClient) is the stable, daily-use-ready GroupMe Client on which GroupMe Desktop Client Avalonia is based. GMDC is feature rich,compatible with most versions of Windows, and actively updated.
+[GroupMeClient](https://github.com/alexdillon/GroupMeClient) is the stable, daily-use-ready GroupMe Client on which GroupMe Desktop Client Avalonia is based. GMDC is feature rich, compatible with most versions of Windows, and actively updated.
