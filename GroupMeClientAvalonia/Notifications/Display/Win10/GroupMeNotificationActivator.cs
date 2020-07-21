@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
-using DesktopNotifications;
+using Microsoft.Toolkit.Uwp.Notifications;
 
 namespace GroupMeClientAvalonia.Notifications.Display.Win10
 {
