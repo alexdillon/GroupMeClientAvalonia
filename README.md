@@ -4,6 +4,14 @@
    <img alt="GitHub" src="https://img.shields.io/github/license/alexdillon/GroupMeClientAvalonia?color=blue">
 </p>
 
+<h2 align="center">
+As of August 2020, development on GroupMe Desktop Client Avalonia has moved!
+</h2>
+<h2 align="center">
+Development with the Avalonia UI is now in a branch on the main <a href="https://github.com/alexdillon/GroupMeClient">GMDC Repo</a>. 
+</h2>
+
+[DEPRECATED]
 GroupMe Desktop Client Avalonia is an in-progress port of [GroupMe Desktop Client](https://github.com/alexdillon/GroupMeClient) to the cross-platform [Avalonia](https://github.com/avaloniaui/avalonia) UI Framework. GroupMe Desktop Client Avalonia is a unofficial, modular, open-source, configurable client for using the GroupMe chat service. 
 
 ***For usage on Windows, check out [GroupMe Desktop Client](https://github.com/alexdillon/GroupMeClient), which is stable and suitable for daily use.***
